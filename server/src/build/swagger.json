@@ -1,0 +1,640 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "REST API proyectoUTM",
+        "description": "<html><body>Esta es la documentación de la API para el sistema de Investigación Docencia.<p>Para poder usar esta API es necesario solicitar el token y con esto poder utilizar los servicios proporcionados.</p><br><p><b>Autenticación y token de API</b></p><p>La Universidad Tecnológica de la Mixteca (UTM) proporciona el api-token. Una vez que haya creado y confirmado su cuenta.</p></body></html>",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "",
+    "tags": [
+        {
+            "name": "Institutos",
+            "description": "API para obtener información de los institutos de la UTM"
+        },
+        {
+            "name": "Carreras",
+            "description": "API para obtener información de las carreras de la UTM"
+        },
+        {
+            "name": "Profesores",
+            "description": "API para obtener información de los profesores de la UTM"
+        }
+    ],
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/api/institutos": {
+            "get": {
+                "tags": [
+                    "Institutos"
+                ],
+                "summary": "Listado de todos los institutos que existen en la UTM.",
+                "description": "<p>Servicio que devuelve la información detallada de todos los institutos que existen en la UTM.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los institutos existentes en la UTM?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "idInstituto": 1,
+                                    "codigo": "001",
+                                    "nombre": "Instituto de electrónica y mecatrónica"
+                                },
+                                {
+                                    "idInstituto": 2,
+                                    "codigo": "002",
+                                    "nombre": "Instituto de computación"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Institutos"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/carreras": {
+            "get": {
+                "tags": [
+                    "Carreras"
+                ],
+                "summary": "Listado de todos las carreras que existen en la UTM.",
+                "description": "<p>Servicio que devuelve la información detallada de todos las carreras que existen en la UTM.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son las carreras existentes en la UTM?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "idCarrera": 1,
+                                    "codigo": "002",
+                                    "nombre": "Ing. en Computación"
+                                },
+                                {
+                                    "idCarrera": 2,
+                                    "codigo": "003",
+                                    "nombre": "Ing. en Diseño"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Carreras"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/institutos/{idInstituto}": {
+            "get": {
+                "tags": [
+                    "Institutos"
+                ],
+                "summary": "Listado de un instituto en particular.",
+                "description": "<p>Servicio ...</p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "idInstituto": 2,
+                                    "codigo": "002",
+                                    "nombreInstituto": "Instituto de computación"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Instituto"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "idInstituto",
+                        "in": "path",
+                        "required": true,
+                        "description": "idInstituto del instituto del cuál se requiere la información",
+                        "type": "number",
+                        "default": "8"
+                    }
+                ]
+            }
+        },
+        "/api/carreras/{idCarrera}": {
+            "get": {
+                "tags": [
+                    "Carreras"
+                ],
+                "summary": "Listado de una carrera en particular.",
+                "description": "<p>Servicio ...</p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "idCarrera": 1,
+                                    "codigoCarrera": "002",
+                                    "nombreCarrera": "Ing. en Computación",
+                                    "idInstituto": 1
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Carrera"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "idCarrera",
+                        "in": "path",
+                        "required": true,
+                        "description": "idCarrera de la carrera de la cuál se requiere la información",
+                        "type": "number",
+                        "default": "8"
+                    }
+                ]
+            }
+        },
+        "/api/institutos/eliminar/{idInstituto}": {
+            "delete": {
+                "summary": "Eliminar un instituto",
+                "operationId": "eliminar",
+                "parameters": [
+                    {
+                        "name": "idInstituto",
+                        "in": "path",
+                        "description": "id del Instituto a eliminar",
+                        "required": true,
+                        "default": 14
+                    }
+                ],
+                "tags": [
+                    "Institutos"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "respuesta vacía"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/institutos/create": {
+            "post": {
+                "summary": "Creando un instituto",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "instituto",
+                        "in": "body",
+                        "description": "Instituto agregado",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoInstituto"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Institutos"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "respuesta vacía"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/institutos/actualizar/{idInstituto}": {
+            "put": {
+                "summary": "Modificando un instituto",
+                "operationId": "actualizar",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "idInstituto",
+                        "in": "path",
+                        "description": "id del Instituto a eliminar",
+                        "required": true,
+                        "default": 18
+                    },
+                    {
+                        "name": "Instituto",
+                        "in": "body",
+                        "description": "Instituto a modificar",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ViejoInstituto"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Institutos"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "respuesta vacía"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/carrerass/eliminar/{idCarrera}": {
+            "delete": {
+                "summary": "Eliminar una carrera",
+                "operationId": "eliminar",
+                "parameters": [
+                    {
+                        "name": "idCarrera",
+                        "in": "path",
+                        "description": "id de la Carrera a eliminar",
+                        "required": true,
+                        "default": 14
+                    }
+                ],
+                "tags": [
+                    "Carreras"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "respuesta vacía"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/carreras/create": {
+            "post": {
+                "summary": "Creando una carrera",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "carrera",
+                        "in": "body",
+                        "description": "Carrera agregada",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaCarrera"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Carreras"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "respuesta vacía"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/carreras/actualizar/{idCarrera}": {
+            "put": {
+                "summary": "Modificando una carrera",
+                "operationId": "actualizar",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "idCarrera",
+                        "in": "path",
+                        "description": "id de la Carrera a eliminar",
+                        "required": true,
+                        "default": 18
+                    },
+                    {
+                        "name": "Carrera",
+                        "in": "body",
+                        "description": "Carrera a modificar",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ViejaCarrera"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Carreras"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "respuesta vacía"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/profesores": {
+            "get": {
+                "tags": [
+                    "Profesores"
+                ],
+                "summary": "Listado de todos los profesores que existen en la UTM.",
+                "description": "<p>Servicio que devuelve la información detallada de todos los profesores que existen en la UTM.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los institutos existentes en la UTM?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "idProfesor": 1,
+                                    "nombresP": "Juan",
+                                    "apellidoP": "Ruiz",
+                                    "apellidoM": "Cruz",
+                                    "correoProfesor": "jrc@gs.utm.mx",
+                                    "password": "prueba",
+                                    "nivel": "3",
+                                    "idCarrera": "2",
+                                    "grado": "aa",
+                                    "idTipoProfesor": "1"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Profesor"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/profesores/{idProfesor}": {
+            "get": {
+                "tags": [
+                    "Profesores"
+                ],
+                "summary": "Listado de un profesor en particular.",
+                "description": "<p>Servicio ...</p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "idProfesor": 1,
+                                    "nombresP": "Juan",
+                                    "apellidoP": "Ruiz",
+                                    "apellidoM": "Cruz",
+                                    "correoProfesor": "jrc@gs.utm.mx",
+                                    "password": "prueba",
+                                    "nivel": "3",
+                                    "idCarrera": "2",
+                                    "grado": "aa",
+                                    "idTipoProfesor": "1"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Profesor"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "idProfesor",
+                        "in": "path",
+                        "required": true,
+                        "description": "idProfesor del profesor del cuál se requiere la información",
+                        "type": "number",
+                        "default": "8"
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "Instituto": {
+            "type": "object",
+            "properties": {
+                "idInstituto": {
+                    "type": "number",
+                    "description": "Identificador del instituto"
+                },
+                "codigo": {
+                    "type": "string",
+                    "description": "Código del instituto"
+                },
+                "nombreInstituto": {
+                    "type": "string",
+                    "description": "Nombre del instituto"
+                }
+            }
+        },
+        "ViejoInstituto": {
+            "type": "object",
+            "required": [
+                "codigo",
+                "nombre"
+            ],
+            "properties": {
+                "codigo": {
+                    "type": "string",
+                    "default": "111"
+                },
+                "nombre": {
+                    "type": "string",
+                    "default": "Instituto patito"
+                }
+            }
+        },
+        "Institutos": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Instituto"
+            }
+        },
+        "NuevoInstituto": {
+            "type": "object",
+            "required": [
+                "codigo",
+                "nombre"
+            ],
+            "properties": {
+                "codigo": {
+                    "type": "string",
+                    "default": "111"
+                },
+                "nombre": {
+                    "type": "string",
+                    "default": "Instituto patito"
+                }
+            }
+        },
+        "Carrera": {
+            "type": "object",
+            "properties": {
+                "idCarrera": {
+                    "type": "number",
+                    "description": "Identificador de la carrera"
+                },
+                "codigoCarrera": {
+                    "type": "string",
+                    "description": "Código de la carrera"
+                },
+                "nombreCarrera": {
+                    "type": "string",
+                    "description": "Nombre de la carrera"
+                },
+                "idInstituto": {
+                    "type": "number",
+                    "description": "Identificador del instituto"
+                }
+            }
+        },
+        "Carreras": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Carrera"
+            }
+        },
+        "NuevaCarrera": {
+            "type": "object",
+            "required": [
+                "codigo",
+                "nombre",
+                "idInstituto"
+            ],
+            "properties": {
+                "codigo": {
+                    "type": "string",
+                    "default": "11"
+                },
+                "nombre": {
+                    "type": "string",
+                    "default": "Carrera patito"
+                },
+                "idInstituto": {
+                    "type": "number",
+                    "default": "11"
+                }
+            }
+        },
+        "ViejaCarrera": {
+            "type": "object",
+            "required": [
+                "codigo",
+                "nombre",
+                "idInstituto"
+            ],
+            "properties": {
+                "codigo": {
+                    "type": "string",
+                    "default": "11"
+                },
+                "nombre": {
+                    "type": "string",
+                    "default": "Carrera patito"
+                },
+                "idInstituto": {
+                    "type": "number",
+                    "default": "11"
+                }
+            }
+        },
+        "Profesor": {
+            "type": "object",
+            "properties": {
+                "idProfesor": {
+                    "type": "number",
+                    "description": "Identificador del profesor"
+                },
+                "nombresP": {
+                    "type": "string",
+                    "description": "Nombre o nombres del profesor"
+                },
+                "apellidoP": {
+                    "type": "string",
+                    "description": "Apellido paterno del profesor"
+                },
+                "apellidoM": {
+                    "type": "string",
+                    "description": "Apellido materno del profesor"
+                },
+                "correoProfesor": {
+                    "type": "string",
+                    "description": "Correo personal del profesor"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "Contraseña personal del profesor"
+                },
+                "nivel": {
+                    "type": "number",
+                    "description": "Nivel del profesor"
+                },
+                "idCarrera": {
+                    "type": "number",
+                    "description": "Id de la Carrera asociada al profesor"
+                },
+                "grado": {
+                    "type": "string",
+                    "description": "Grado del profesor"
+                },
+                "idTipoProfesor": {
+                    "type": "number",
+                    "description": "Tipo de profesor"
+                }
+            }
+        }
+    }
+}
