@@ -21,27 +21,27 @@ export class RecuperarComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.paramMap.subscribe(params => {
+            //obtenemos el token de la url
             this.token = params.get('token');
             let dato = {
                 'token': this.token
             }
             this.correoService.decodificarMail(dato).subscribe((resCorreo: any) => {
+                //decodificamos el token para asi obtener el email
                 console.log(resCorreo);
                 this.respuestaMail = resCorreo.idProfesor;
                 //Si no tiene nada respuestaMail significa que no esta en la base de datos entonces redirecciona a login
                 if(!this.respuestaMail) {
-                    this.router.navigateByUrl("/login")
+                    this.router.navigateByUrl("/login");
                 }
                     
             }, err => console.error(err));
         });
-
-        console.log(this.respuestaMail);
         
     }
 
     contrasenaCambio(): void {
-        if(this.pass1 == this.pass2) {
+        if((this.pass1 == this.pass2) && (this.pass1 !== '' && this.pass2 == this.pass1)) {
             //Pasamos el json de la peticion para cambiar la contra 
             let contraUsuario: any;    
             contraUsuario = {
@@ -56,6 +56,12 @@ export class RecuperarComponent implements OnInit {
                     timer: 1500
                 })
                 this.router.navigateByUrl("/login")
+            })
+        }else if(this.pass1 == '' || this.pass2 == ''){
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'No puede dejar campos vacios, porfavor rellene los campos vacios',
             })
         }else{
             Swal.fire({

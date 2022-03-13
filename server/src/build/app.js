@@ -22,7 +22,6 @@ const correoAcceso = require('./correoAcceso');
 class Server {
     constructor() {
         this.queryProfesor = (decodificado) => {
-            console.log('**', decodificado);
             return new Promise((resolve, reject) => {
                 let consulta = 'SELECT * FROM Profesores WHERE correoProfesor="' + decodificado + '"';
                 console.log(consulta);

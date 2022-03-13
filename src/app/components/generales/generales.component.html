@@ -1,20 +1,51 @@
 <div class="contenedor-principal">
-	<table class="striped">
-		<tr>
-			<td>
-				nombre
-			</td>
-			<td>
-				{{profesor.nombresP}} {{profesor.apellidoP}} {{profesor.apellidoM}}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				correo
-			</td>
-			<td>
-				{{profesor.correoP}}
-			</td>
-		</tr>
+	<table class="highlight">
+		<thead>
+			<tr>
+				<th colspan="5">Datos Generales</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td></td>
+				<td><b>Nombre(s)</b></td>
+				<td>{{profesor.nombresP}}</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><b>Apellido paterno</b></td>
+				<td>{{profesor.apellidoP}}</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><b>Apellido materno</b></td>
+				<td>{{profesor.apellidoM}}</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><b>Correo</b></td>
+				<td>{{profesor.correoProfesor}}</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><b>Nivel</b></td>
+				<td>{{profesor.nivel}}</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><b>Grado</b></td>
+				<td>{{profesor.grado}}</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><b>Nombre en Apa</b></td>
+				<td>{{profesor.nombreApa}}</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><b>Id del instituto</b></td>
+				<td>{{profesor.idInstituto}}</td>
+			</tr>
+		</tbody>
 	</table>
 </div>

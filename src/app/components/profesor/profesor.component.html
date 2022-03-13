@@ -1,64 +1,161 @@
 <div class="bodyProfesor">
-	<div class="container">
-		<div class="row">
-			<div class="col s12 m12 l8 offset-l2 profesorDiv">
-				<div class="row profesorContainer">
-					<div class="col s12 m5 l5 offset-l1 offset-m1">
-						<div class="profesorTitulo">
-							<h5>Alta Profesor</h5>
-						</div>
-						<div class="row">
-                            <div class="col s12 customInput">
-								<i class="material-icons prefix">create</i>
-								<input [(ngModel)]="profesor.nombresP" class="browser-default" type="string" name="nombreP" id="nombresP" placeholder="nombre(s)" autocomplete="off">
-							</div>
-                            <div class="col s12 customInput">
-								<i class="material-icons prefix">edit</i>
-								<input [(ngModel)]="profesor.apellidoP" class="browser-default" type="string" name="apellidoP" id="apellidoP" placeholder="apellido paterno" autocomplete="off">
-							</div>
-                            <div class="col s12 customInput">
-								<i class="material-icons prefix">edit</i>
-								<input [(ngModel)]="profesor.apellidoM" class="browser-default" type="string" name="apellidoM" id="apellidoM" placeholder="apellido materno" autocomplete="off">
-							</div>
-							<div class="col s12 customInput">
-								<i class="material-icons prefix">email</i>
-								<input [(ngModel)]="profesor.correoP" class="browser-default" type="email" name="emailP" id="emailP" placeholder="correo" autocomplete="off">
-							</div>
-							<div class="col s12 customInput">
-								<i class="material-icons prefix">vpn_key</i>
-								<input [(ngModel)]="profesor.passwordP" class="browser-default" type="password" name="password" id="password" placeholder="contraseña" autocomplete="off">
-							</div>
-                            <div class="col s12 customInput">
-								<i class="material-icons prefix">assessment</i>
-								<select [(ngModel)]="profesor.nivelP" class="browser-default" type="int" name="nivelP" id="nivelP" placeholder="nivel" autocomplete="off">
-								</select>
-							</div>
-                            <div class="col s12 customInput">
-								<i class="material-icons prefix">class</i>
-								<select [(ngModel)]="profesor.idCarreraP" class="browser-default" type="int" name="idCarreraP" id="idCarreraP" placeholder="carrera" autocomplete="off">
-								</select>
-							</div>
-                            <div class="col s12 customInput">
-								<i class="material-icons prefix">assistant</i>
-								<input [(ngModel)]="profesor.gradoP" class="browser-default" type="string" name="gradoP" id="gradoP" placeholder="grado" autocomplete="off">
-							</div>
-                            <div class="col s12 customInput">
-								<i class="material-icons prefix">person</i>
-								<select [(ngModel)]="profesor.tipoP" class="browser-default" type="int" name="idTipoProfesorP" id="idTipoProfesorP" placeholder="tipo_profesor" autocomplete="off">
-								</select>
-							</div>
-						</div>
-						<div class="row">
-							<button (click)="altaProfesor()" class="btn col l12 s12 m12 btnProfesor ">
-								LOGIN
-							</button>
-							<div class="col s12 m12 l12 divOlvide">
-								<a href="">Olvidé mi contraseña!</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m12 l8 offset-l2 profesorDiv">
+        <div class="row profesorContainer">
+          <div class="col s12 m5 l10 offset-l1 offset-m1">
+            <div class="profesorTitulo">
+              <h5>Alta Profesor</h5>
+            </div>
+            <div class="row">
+              <div class="col s12 customInput">
+                <i class="material-icons prefix">create</i>
+                <input
+                  [(ngModel)]="profesor.nombresP"
+                  class="browser-default"
+                  type="string"
+                  name="nombreP"
+                  id="nombresP"
+                  placeholder="nombre(s)"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="col s12 customInput">
+                <i class="material-icons prefix">edit</i>
+                <input
+                  [(ngModel)]="profesor.apellidoP"
+                  class="browser-default"
+                  type="string"
+                  name="apellidoP"
+                  id="apellidoP"
+                  placeholder="apellido paterno"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="col s12 customInput">
+                <i class="material-icons prefix">edit</i>
+                <input
+                  [(ngModel)]="profesor.apellidoM"
+                  class="browser-default"
+                  type="string"
+                  name="apellidoM"
+                  id="apellidoM"
+                  placeholder="apellido materno"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="col s12 customInput">
+                <i class="material-icons prefix">email</i>
+                <input
+                  [(ngModel)]="profesor.correoProfesor"
+                  class="browser-default"
+                  type="email"
+                  name="emailP"
+                  id="emailP"
+                  placeholder="correo"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="col s12 customInput">
+                <i class="material-icons prefix">vpn_key</i>
+                <input
+                  [(ngModel)]="profesor.password"
+                  class="browser-default"
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="contraseña"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="col s12 customInput">
+                <i class="material-icons prefix">assessment</i>
+                <input
+                  [(ngModel)]="profesor.nivel"
+                  class="browser-default"
+                  type="int"
+                  name="nivelP"
+                  id="nivelP"
+                  placeholder="nivel"
+                  autocomplete="off"
+                >
+              </div>
+              <div class="col s12 customInput">
+                <i class="material-icons prefix">class</i>
+                <input
+                  [(ngModel)]="profesor.idCarrera"
+                  class="browser-default"
+                  type="int"
+                  name="idCarreraP"
+                  id="idCarreraP"
+                  placeholder="carrera"
+                  autocomplete="off"
+                >
+              </div>
+              <div class="col s12 customInput">
+                <i class="material-icons prefix">assistant</i>
+                <input
+                  [(ngModel)]="profesor.grado"
+                  class="browser-default"
+                  type="string"
+                  name="gradoP"
+                  id="gradoP"
+                  placeholder="grado"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="col s12 customInput">
+                <i class="material-icons prefix">person</i>
+                <input
+                  [(ngModel)]="profesor.idTipoProfesor"
+                  class="browser-default"
+                  type="int"
+                  name="idTipoProfesorP"
+                  id="idTipoProfesorP"
+                  placeholder="tipo_profesor"
+                  autocomplete="off"
+                >
+              </div>
+              <div class="col s12 customInput">
+                <i class="material-icons prefix">badge</i>
+                <input
+                  [(ngModel)]="profesor.nombreApa"
+                  class="browser-default"
+                  type="string"
+                  name="gradoP"
+                  id="gradoP"
+                  placeholder="Nombre Apa"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="col s12 customInput">
+                <i class="material-icons prefix">class</i>
+                <input
+                  [(ngModel)]="profesor.idInstituto"
+                  class="browser-default"
+                  type="int"
+                  name="idInstituto"
+                  id="idCarreraP"
+                  placeholder="id Instituto"
+                  autocomplete="off"
+                >
+              </div>
+            </div>
+            <div class="row">
+              <button
+                (click)="altaProfesor()"
+                class="btn col l12 s12 m12 btnProfesor"
+              >
+                Ingresar nuevo profesor
+              </button>
+              <div class="col s12 m12 l12 divOlvide">
+                <a href="">Olvidé mi contraseña!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -10,10 +10,10 @@ export class ArticuloService {
 
 	constructor(private http: HttpClient) { }
 	listByProfesor(idProfesor: number) {
-		return this.http.get(`${environment.API_URI}/Articulo/listByProfesor/${idProfesor}`);
+		return this.http.get(`${environment.API_URI}/articulo/listByProfesor/${idProfesor}`);
 	}
 	listByPeriodo(ini:any, fin:any){
 		console.log(ini,fin)
-		return this.http.get(`${environment.API_URI}/Articulo/listByPeriodo/${ini}/${fin}`);
+		return this.http.get(`${environment.API_URI}/articulo/listByPeriodo/${ini}/${fin}`);
 	}
 }
