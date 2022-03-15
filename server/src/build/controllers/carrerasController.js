@@ -59,7 +59,7 @@ class CarrerasController {
     getCarrerasByInstituto(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { idInstituto } = req.params;
-            const resp = yield database_1.default.query(`SELECT nombreCarrera FROM Carreras WHERE idInstituto= ${idInstituto}`);
+            const resp = yield database_1.default.query(`SELECT nombreCarrera,idCarrera FROM Carreras WHERE idInstituto= ${idInstituto}`);
             res.json(resp);
         });
     }

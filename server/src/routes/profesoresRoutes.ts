@@ -17,7 +17,8 @@ class ProfesoresRoutes
         this.router.get('/listAutorByArticulo/:idArticulo', profesoresController.listAutorByArticulo);
         this.router.post('/existe/:correoProfesor', profesoresController.existe);
         this.router.post('/cambiarContrasena/:idProfesor',profesoresController.cambiarContrasena);
-        
+        this.router.get('/listProfesoresByCarrera/:idCarrera', profesoresController.listProfesoresByCarrera);
+        this.router.get('/listProfesoresByInstituto/:idInstituto', profesoresController.listProfesoresByInstituto);
     }
 }
 const profesoresRoutes= new ProfesoresRoutes();

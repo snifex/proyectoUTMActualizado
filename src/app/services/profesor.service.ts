@@ -25,4 +25,12 @@ export class ProfesorService {
 	cambiarContrasena(profesor: Profesor, idProfesor: number) {
 		return this.http.post(`${environment.API_URI}/profesores/cambiarContrasena/${idProfesor}`,profesor);
 	}
+
+	listProfesoresByCarrera(idCarrera: number) {
+		return this.http.get(`${environment.API_URI}/profesores/listProfesoresByCarrera/${idCarrera}`);
+	}
+
+	listProfesoresByInstituto(idInstituto: number) {
+		return this.http.get(`${environment.API_URI}/profesores/listProfesoresByInstituto/${idInstituto}`);
+	}
 }

@@ -40,7 +40,7 @@ class CarrerasController
 	}
 	public async getCarrerasByInstituto(req: Request, res: Response): Promise<void> {
 		const { idInstituto } = req.params;
-		const resp = await pool.query(`SELECT nombreCarrera FROM Carreras WHERE idInstituto= ${idInstituto}`);
+		const resp = await pool.query(`SELECT nombreCarrera,idCarrera FROM Carreras WHERE idInstituto= ${idInstituto}`);
 		res.json(resp);
 	}
 }

@@ -13,7 +13,7 @@ class CarrerasRoutes {
         this.router.post('/create', carrerasController_1.carrerasController.create);
         this.router.put('/actualizar/:codigo', carrerasController_1.carrerasController.actualizar);
         this.router.delete('/eliminar/:codigo', carrerasController_1.carrerasController.eliminar);
-        this.router.get('/:getCarrerasByInstituto/:idInstituto', carrerasController_1.carrerasController.getCarrerasByInstituto);
+        this.router.get('/getCarrerasByInstituto/:idInstituto', carrerasController_1.carrerasController.getCarrerasByInstituto);
     }
 }
 const carrerasRoutes = new CarrerasRoutes();
