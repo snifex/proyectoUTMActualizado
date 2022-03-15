@@ -1,6 +1,51 @@
 <app-navigation></app-navigation>
 <router-outlet></router-outlet>
 
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating black" (click)="agregarArticulo()"><i class="material-icons">article</i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+</div>
+
+<div class="container">
+    <div id = "agregarArticulo" class="modal">
+        <div class="modal-content">
+            <div class="col s12 m12 l8 offset-12 loginDiv">
+                <div class="row loginContainer">
+                    <div class="row" style="margin-bottom: 0px !important;"> 
+                        <div class="col s12">
+                            <h5 class="center">
+                                Ingresa Articulo
+                            </h5>
+                        </div>
+                    </div>
+                    <div style="border: .5px solid #78909c; padding: 10px">
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Nombre Articulo</label>
+                                <input [ngModel]="articulito.titulo" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Tipo CLR</label>
+                                <select class="browser-default" [(ngModel)]="articulito.nombreCLR">
+                                    <option *ngFor="let opcion of tipoCLR" value="{{opcion}}">{{opcion}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--item es un json asi que item.[campo a ver]
     Ctrl + k + c = comenta las lineas que seleccionaste
  

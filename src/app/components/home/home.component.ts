@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Articulo } from 'src/app/models/articulo.model';
 import { ArticuloService } from 'src/app/services/articulo.service';
-
+declare var $:any;
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
@@ -12,12 +13,20 @@ export class HomeComponent implements OnInit {
     institutoActual: any;
     carreras: any;
     numCarrerasByInstituto: any;
-
+    articulito: Articulo;
     constructor(private articuloService: ArticuloService) {
-
+        this.articulito = new Articulo();
     }
 
     ngOnInit(): void {
+        $(document).ready(function(){
+            $('.fixed-action-btn').floatingActionButton({
+                direction: "left",
+                hoverEnabled: false
+            });
+            
+        });
+
         /*this.articuloService.listarInstitutos().subscribe((resInstitutos: any) => {
             console.log(resInstitutos);
             this.institutos = resInstitutos;
@@ -50,6 +59,12 @@ export class HomeComponent implements OnInit {
           this.carreras = resCarreras;
         }, err => console.error(err));
         */
+    }
+
+    agregarArticulo(): void {
+        console.log("agregar articulo");
+        $('#agregarArticulo').modal();
+        $('#agregarArticulo').modal("open");
     }
 
 }
