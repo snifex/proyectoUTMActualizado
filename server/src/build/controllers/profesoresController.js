@@ -113,7 +113,7 @@ class ProfesoresController {
     listProfesoresByCarrera(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { idCarrera } = req.params;
-            let consulta = 'SELECT P.nombresP, P.idProfesor FROM Profesores P INNER JOIN Carrera C ON C.idProfesor = P.idProfesor WHERE idCarrera = ' + idCarrera;
+            let consulta = 'SELECT nombresP,idProfesor FROM Profesores WHERE idCarrera =' + idCarrera;
             const respuesta = yield database_1.default.query(consulta);
             res.json(respuesta);
         });
@@ -121,7 +121,7 @@ class ProfesoresController {
     listProfesoresByInstituto(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { idInstituto } = req.params;
-            let consulta = 'SELECT idInstituto FROM Profesores WHERE idInstituto = ' + idInstituto;
+            let consulta = 'SELECT nombresP,idProfesor FROM Profesores WHERE idInstituto = ' + idInstituto;
             const respuesta = yield database_1.default.query(consulta);
             res.json(respuesta);
         });

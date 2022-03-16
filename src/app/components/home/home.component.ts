@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Articulo } from 'src/app/models/articulo.model';
 import { ArticuloService } from 'src/app/services/articulo.service';
+import { ProfesorService } from 'src/app/services/profesor.service';
 declare var $:any;
 @Component({
     selector: 'app-home',
@@ -14,7 +15,9 @@ export class HomeComponent implements OnInit {
     carreras: any;
     numCarrerasByInstituto: any;
     articulito: Articulo;
-    constructor(private articuloService: ArticuloService) {
+    carreraActual: any;
+
+    constructor(private articuloService: ArticuloService,private profesorService: ProfesorService) {
         this.articulito = new Articulo();
     }
 
@@ -27,7 +30,8 @@ export class HomeComponent implements OnInit {
             
         });
 
-        /*this.articuloService.listarInstitutos().subscribe((resInstitutos: any) => {
+        /*
+        this.articuloService.listarInstitutos().subscribe((resInstitutos: any) => {
             console.log(resInstitutos);
             this.institutos = resInstitutos;
             this.institutoActual = this.institutos[1].idInstituto;
@@ -35,30 +39,46 @@ export class HomeComponent implements OnInit {
             this.articuloService.listarCarrerasPorInstituto(this.institutoActual).subscribe((resCarreras: any) => {
                 console.log(resCarreras);
                 this.numCarrerasByInstituto = resCarreras.length;
-                this.carreras = resCarreras;
-
-                this.profesorService.listProfesoresByInstituto(institutoActual).subscribe((resProfesores: any) =>{
-                    console.log(" resProfesores: " + resProfesores);
-                    this.profesores = resProfesores;
-
-                }, err => console.error(err));
+                if(numCarrerasByInstituto == 0) {
+                    this.carreraActual = 0
+                }else{
+                    this.carreraActual = resCarreras[0].idCarrera
+                    this.carreras = resCarreras;
+                    let datoCarreraActual = {
+                        "value":this.carreraActual
+                    }
+                    this.cambioCarrera(datoCarreraActual)
+                }
+                
             }, err => console.error(err));
             
           }, err => console.error(err));
-        });*/
+        });
+        */
         //Hacer institutosServices para los servicios de los institutosS
     }
 
     cambioInstituto(op: any): void {
         console.log("Entro", op);
-        this.institutoActual = op.value;
+        this.institutoActual = op;
         /*
         this.articuloService.listarCarrerasPorInstituto(this.institutoActual).subscribe((resCarreras: any) => {
-          console.log(resCarreras);
-          this.numCarrerasByInstituto = resCarreras.length;
-          this.carreras = resCarreras;
-        }, err => console.error(err));
+            console.log(resCarreras);
+            this.carreraActual = resCarreras[0].idCarrera
+            this.numCarrerasByInstituto = resCarreras.length;
+            this.carreras = resCarreras;
+            this.cambioCarrera()
+            
+            }, err => console.error(err));
         */
+    }
+
+    cambioCarrera(op:any): void {
+        this.carreraActual = op.value;
+        this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resCarrera: any) =>{
+            console.log(" resCarrera: " + resCarrera);
+            this.profesores = resCarrera;
+        },err => console.error(err));
     }
 
     agregarArticulo(): void {

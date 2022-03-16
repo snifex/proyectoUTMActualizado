@@ -86,7 +86,7 @@ class ProfesoresController {
 
 	public async listProfesoresByCarrera(req: Request, res: Response): Promise<void> {
 		const {idCarrera} = req.params;
-		let consulta = 'SELECT P.nombresP, P.idProfesor FROM Profesores P INNER JOIN Carrera C ON C.idProfesor = P.idProfesor WHERE idCarrera = ' + idCarrera;
+		let consulta = 'SELECT nombresP,idProfesor FROM Profesores WHERE idCarrera =' + idCarrera;
 		const respuesta = await pool.query(consulta);
 
 		res.json(respuesta)
@@ -94,11 +94,12 @@ class ProfesoresController {
 
 	public async listProfesoresByInstituto(req: Request, res: Response): Promise<void> {
 		const {idInstituto} = req.params;
-		let consulta = 'SELECT idInstituto FROM Profesores WHERE idInstituto = ' + idInstituto;
+		let consulta = 'SELECT nombresP,idProfesor FROM Profesores WHERE idInstituto = ' + idInstituto;
 		const respuesta = await pool.query(consulta);
 
 		res.json(respuesta)
 	}
+	
 
 	constructor() {
 		dotenv.config();
