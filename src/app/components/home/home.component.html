@@ -7,6 +7,7 @@
     </a>
     <ul>
       <li><a class="btn-floating black" (click)="agregarArticulo()"><i class="material-icons">article</i></a></li>
+      <li><a class="btn-floating gray" (click)="agregarProfesor()"><i class="material-icons">badge</i></a></li>
       <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
       <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
       <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
@@ -45,6 +46,64 @@
                                 <label>Carreras</label>
                                 <select (change)="cambioCarrera($event.target)" class="browser-default">
                                     <option [value]="item.idCarrera" *ngFor="let item of carreras" >{{item.nombreCarrera}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="modal" id="agregarProfesor">
+        <div class ="modal-content">
+            <div class="col s12 m12 l8 offset-12 loginDiv">
+                <div class="row loginContainer">
+                    <div class="row" style="margin-bottom: 0px !important;">
+                        <div class="col s12">
+                            <h5 class="center">
+                                Ingresa Profesor
+                            </h5>
+                        </div>
+                    </div>
+                    <div style="border: .5px solid #78909c; padding: 10px">
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Nombres del Profesor</label>
+                                <input [ngModel]="profesor.nombresP" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Apellido Paterno</label>
+                                <input [ngModel]="profesor.apellidoP" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Apellido Materno</label>
+                                <input [ngModel]="profesor.apellidoM" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Correo del Profesor</label>
+                                <input [ngModel]="profesor.correoProfesor" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Contraseña</label>
+                                <input [ngModel]="profesor.password" type="password" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Carreras</label>
+                                <select class="browser-default" (change)="cambioCarrera($event.target)">
+                                    <option *ngFor="let carrera of carreras" [value]="carrera.idCarrera">{{carrera.nombreCarrera}}</option>
                                 </select>
                             </div>
                         </div>

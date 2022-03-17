@@ -18,7 +18,7 @@ export class Profesor{
         this.apellidoM = '';
         this.correoProfesor = '';
         this.password = '';
-        this.nivel = 0;
+        this.nivel = 4;
         this.idCarrera = 0;
         this.grado = '';
         this.idTipoProfesor = 0;

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Articulo } from 'src/app/models/articulo.model';
+import { Profesor } from 'src/app/models/profesor.model';
 import { ArticuloService } from 'src/app/services/articulo.service';
+import { CarrerasService } from 'src/app/services/carreras.service';
 import { ProfesorService } from 'src/app/services/profesor.service';
 declare var $:any;
 @Component({
@@ -16,9 +18,12 @@ export class HomeComponent implements OnInit {
     numCarrerasByInstituto: any;
     articulito: Articulo;
     carreraActual: any;
+    profesores: any[] = []
+    profesor: Profesor;
 
-    constructor(private articuloService: ArticuloService,private profesorService: ProfesorService) {
+    constructor(private articuloService: ArticuloService,private profesorService: ProfesorService, private carrerasService: CarrerasService) {
         this.articulito = new Articulo();
+        this.profesor = new Profesor();
     }
 
     ngOnInit(): void {
@@ -30,6 +35,11 @@ export class HomeComponent implements OnInit {
             
         });
 
+        this.carrerasService.listCarreras().subscribe((resCarreras:any) => {
+            console.log(resCarreras)
+            this.carreras = resCarreras;
+            this.carreraActual = this.carreraActual[0]
+        });
         /*
         this.articuloService.listarInstitutos().subscribe((resInstitutos: any) => {
             console.log(resInstitutos);
@@ -85,6 +95,17 @@ export class HomeComponent implements OnInit {
         console.log("agregar articulo");
         $('#agregarArticulo').modal();
         $('#agregarArticulo').modal("open");
+    }
+
+    agregarProfesor(): void {
+        console.log("agregar profesor");
+        $('#agregarProfesor').modal();
+        $('#agregarProfesor').modal("open");
+    }
+
+    altaProfesor(): void {
+        this.profesor.idInstituto = this.institutoActual;
+        this.profesor.idCarrera = this.carreraActual;
     }
 
 }
