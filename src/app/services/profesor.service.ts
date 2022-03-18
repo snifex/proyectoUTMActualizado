@@ -33,4 +33,8 @@ export class ProfesorService {
 	listProfesoresByInstituto(idInstituto: number) {
 		return this.http.get(`${environment.API_URI}/profesores/listProfesoresByInstituto/${idInstituto}`);
 	}
+
+	listProfesores(){
+		return this.http.get(`${environment.API_URI}/profesores/`);
+	}
 }

@@ -5,15 +5,11 @@ import { environment } from '../../environments/environment'; /*para conectar el
 @Injectable({
   providedIn: 'root'
 })
-export class CarrerasService {
+export class InstitutoService {
 
   constructor(private http: HttpClient) { }
 
-  listCarreras(){
-      return this.http.get(`${environment.API_URI}/carreras/`);
-  }
-
-  listCarrerasByInstituto(idInstituto: number){
-      return this.http.get(`${environment.API_URI}/carreras/getCarrerasByInstituto/${idInstituto}`);
+  listInstitutos(){
+      return this.http.get(`${environment.API_URI}/institutos/all`)
   }
 }
