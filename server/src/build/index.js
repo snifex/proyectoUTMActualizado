@@ -15,6 +15,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_json_1 = __importDefault(require("./swagger.json"));
+const tipoProfesorRoutes_1 = __importDefault(require("./routes/tipoProfesorRoutes"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -37,6 +38,7 @@ class Server {
         this.app.use('/api/materias', materiasRoutes_1.default);
         this.app.use('/api/articuloYprofesor', articuloyprofesorRoutes_1.default);
         this.app.use('/api/articulo', articuloRoutes_1.default);
+        this.app.use('/api/tipoprofesor', tipoProfesorRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

@@ -4,6 +4,8 @@ import { Profesor } from 'src/app/models/profesor.model';
 import { ArticuloService } from 'src/app/services/articulo.service';
 import { CarrerasService } from 'src/app/services/carreras.service';
 import { ProfesorService } from 'src/app/services/profesor.service';
+import { TipoProfesorService } from 'src/app/services/tipoprofesor.service';
+
 declare var $:any;
 @Component({
     selector: 'app-home',
@@ -20,8 +22,10 @@ export class HomeComponent implements OnInit {
     carreraActual: any;
     profesores: any[] = []
     profesor: Profesor;
+    tipoProfesorActual: any;
+    tipoProfesores: any;
 
-    constructor(private articuloService: ArticuloService,private profesorService: ProfesorService, private carrerasService: CarrerasService) {
+    constructor(private articuloService: ArticuloService,private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService) {
         this.articulito = new Articulo();
         this.profesor = new Profesor();
     }
@@ -32,14 +36,12 @@ export class HomeComponent implements OnInit {
                 direction: "left",
                 hoverEnabled: false
             });
-            
         });
 
-        this.carrerasService.listCarreras().subscribe((resCarreras:any) => {
-            console.log(resCarreras)
+        this.carrerasService.listCarreras().subscribe((resCarreras: any) =>{
+            console.log(resCarreras);
             this.carreras = resCarreras;
-            this.carreraActual = this.carreraActual[0]
-        });
+        })
         /*
         this.articuloService.listarInstitutos().subscribe((resInstitutos: any) => {
             console.log(resInstitutos);
@@ -86,8 +88,7 @@ export class HomeComponent implements OnInit {
     cambioCarrera(op:any): void {
         this.carreraActual = op.value;
         this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resCarrera: any) =>{
-            console.log(" resCarrera: " + resCarrera);
-            this.profesores = resCarrera;
+            this.carreras = resCarrera;
         },err => console.error(err));
     }
 
@@ -106,6 +107,14 @@ export class HomeComponent implements OnInit {
     altaProfesor(): void {
         this.profesor.idInstituto = this.institutoActual;
         this.profesor.idCarrera = this.carreraActual;
+    }
+
+    cambioTipoProfesor(op: any): void {
+        this.tipoProfesorActual = op.value;
+        this.tipoProfesorService.listarTipoProfesor().subscribe((resTipoProfesores: any) =>{
+            this.tipoProfesores = resTipoProfesores;
+        },err => console.error(err));
+        
     }
 
 }
