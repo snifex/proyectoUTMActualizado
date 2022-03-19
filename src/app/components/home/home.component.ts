@@ -3,8 +3,10 @@ import { Articulo } from 'src/app/models/articulo.model';
 import { Profesor } from 'src/app/models/profesor.model';
 import { ArticuloService } from 'src/app/services/articulo.service';
 import { CarrerasService } from 'src/app/services/carreras.service';
+import { InstitutoService } from 'src/app/services/instituto.service';
 import { ProfesorService } from 'src/app/services/profesor.service';
 import { TipoProfesorService } from 'src/app/services/tipoprofesor.service';
+
 
 declare var $:any;
 @Component({
@@ -17,6 +19,7 @@ export class HomeComponent implements OnInit {
     institutos: any;
     institutoActual: any;
     carreras: any;
+    carrerasProfesor: any;
     numCarrerasByInstituto: any;
     articulito: Articulo;
     carreraActual: any;
@@ -25,7 +28,7 @@ export class HomeComponent implements OnInit {
     tipoProfesorActual: any;
     tipoProfesores: any;
 
-    constructor(private articuloService: ArticuloService,private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService) {
+    constructor(private articuloService: ArticuloService,private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService, private institutoService : InstitutoService) {
         this.articulito = new Articulo();
         this.profesor = new Profesor();
     }
@@ -36,59 +39,64 @@ export class HomeComponent implements OnInit {
                 direction: "left",
                 hoverEnabled: false
             });
+            $('select').formSelect();
         });
+
+        this.tipoProfesorService.listarTipoProfesor().subscribe((resTipoProfesores: any) =>{
+            this.tipoProfesores = resTipoProfesores;
+        },err => console.error(err));
 
         this.carrerasService.listCarreras().subscribe((resCarreras: any) =>{
             console.log(resCarreras);
             this.carreras = resCarreras;
+            this.carrerasProfesor = resCarreras;
         })
-        /*
-        this.articuloService.listarInstitutos().subscribe((resInstitutos: any) => {
-            console.log(resInstitutos);
-            this.institutos = resInstitutos;
-            this.institutoActual = this.institutos[1].idInstituto;
-            
-            this.articuloService.listarCarrerasPorInstituto(this.institutoActual).subscribe((resCarreras: any) => {
-                console.log(resCarreras);
-                this.numCarrerasByInstituto = resCarreras.length;
-                if(numCarrerasByInstituto == 0) {
-                    this.carreraActual = 0
-                }else{
-                    this.carreraActual = resCarreras[0].idCarrera
-                    this.carreras = resCarreras;
-                    let datoCarreraActual = {
-                        "value":this.carreraActual
-                    }
-                    this.cambioCarrera(datoCarreraActual)
-                }
-                
-            }, err => console.error(err));
-            
-          }, err => console.error(err));
-        });
-        */
-        //Hacer institutosServices para los servicios de los institutosS
+        this.institutoService.listInstitutos().subscribe((resInstitutos: any) => {
+			console.log(resInstitutos);
+			this.institutos = resInstitutos;
+			this.institutoActual = this.institutos[1].idInstituto;
+			this.carrerasService.listCarrerasByInstituto(this.institutoActual).subscribe((resCarreras: any) => {
+				console.log(resCarreras);
+				this.carreraActual = resCarreras[0].idCarrera;
+				this.numCarrerasByInstituto = resCarreras.length;
+				this.carreras = resCarreras;
+				this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resProfesores: any) => {
+					console.log(resProfesores);
+					this.profesores = resProfesores;
+				},
+					err => console.error(err)
+				);
+			},
+				err => console.error(err)
+			);
+		},
+			err => console.error(err)
+		);
     }
 
-    cambioInstituto(op: any): void {
-        console.log("Entro", op);
-        this.institutoActual = op;
-        /*
-        this.articuloService.listarCarrerasPorInstituto(this.institutoActual).subscribe((resCarreras: any) => {
-            console.log(resCarreras);
-            this.carreraActual = resCarreras[0].idCarrera
-            this.numCarrerasByInstituto = resCarreras.length;
-            this.carreras = resCarreras;
-            this.cambioCarrera()
-            
-            }, err => console.error(err));
-        */
-    }
+    cambioInstituto(op: any) {
+		console.log('Entro ', op.value)
+		this.institutoActual = op.value;
+		this.carrerasService.listCarrerasByInstituto(this.institutoActual).subscribe((resCarreras: any) => {
+			console.log(resCarreras);
+			this.numCarrerasByInstituto = resCarreras.length;
+			if (this.numCarrerasByInstituto == 0)
+				this.carreraActual = 0
+			else {
+				this.carreraActual = resCarreras[0].idCarrera;
+				this.carreras = resCarreras;
+				let dato = {
+					'value': this.carreraActual
+				}
+				this.cambioCarrera(dato);
+			}
 
+		},err => console.error(err));
+	}
     cambioCarrera(op:any): void {
         this.carreraActual = op.value;
-        this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resCarrera: any) =>{
-            this.carreras = resCarrera;
+        this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resProfesores: any) =>{
+            this.profesores = resProfesores;
         },err => console.error(err));
     }
 
@@ -97,7 +105,7 @@ export class HomeComponent implements OnInit {
         $('#agregarArticulo').modal();
         $('#agregarArticulo').modal("open");
     }
-
+    
     agregarProfesor(): void {
         console.log("agregar profesor");
         $('#agregarProfesor').modal();
@@ -107,14 +115,11 @@ export class HomeComponent implements OnInit {
     altaProfesor(): void {
         this.profesor.idInstituto = this.institutoActual;
         this.profesor.idCarrera = this.carreraActual;
-    }
-
-    cambioTipoProfesor(op: any): void {
-        this.tipoProfesorActual = op.value;
-        this.tipoProfesorService.listarTipoProfesor().subscribe((resTipoProfesores: any) =>{
-            this.tipoProfesores = resTipoProfesores;
-        },err => console.error(err));
-        
+        this.profesorService.guardarProfesor(this.profesor).subscribe(
+            res => {
+                console.log(res);
+            },err => console.error(err) 
+        );
     }
 
 }

@@ -7,7 +7,7 @@
     </a>
     <ul>
       <li><a class="btn-floating black" (click)="agregarArticulo()"><i class="material-icons">article</i></a></li>
-      <li><a class="btn-floating gray" (click)="agregarProfesor()"><i class="material-icons">badge</i></a></li>
+      <li><a class="btn-floating grey" (click)="agregarProfesor()"><i class="material-icons">account_circle</i></a></li>
       <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
       <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
       <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
@@ -72,53 +72,76 @@
                         <div class="row">
                             <div class="col s12">
                                 <label>Nombres del Profesor</label>
-                                <input [ngModel]="profesor.nombresP" type="text" autocomplete="off">
+                                <input [(ngModel)]="profesor.nombresP" type="text" autocomplete="off">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12">
                                 <label>Apellido Paterno</label>
-                                <input [ngModel]="profesor.apellidoP" type="text" autocomplete="off">
+                                <input [(ngModel)]="profesor.apellidoP" type="text" autocomplete="off">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12">
                                 <label>Apellido Materno</label>
-                                <input [ngModel]="profesor.apellidoM" type="text" autocomplete="off">
+                                <input [(ngModel)]="profesor.apellidoM" type="text" autocomplete="off">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12">
                                 <label>Correo del Profesor</label>
-                                <input [ngModel]="profesor.correoProfesor" type="text" autocomplete="off">
+                                <input [(ngModel)]="profesor.correoProfesor" type="email" autocomplete="off">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12">
                                 <label>Contraseña</label>
-                                <input [ngModel]="profesor.password" type="password" autocomplete="off">
+                                <input [(ngModel)]="profesor.password" type="password" autocomplete="off">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12">
                                 <label>Carreras</label>
                                 <select class="browser-default" (change)="cambioCarrera($event.target)">
-                                    <option *ngFor="let carrera of carreras" [value]="carrera.idCarrera">{{carrera.nombreCarrera}}</option>
+                                    <option *ngFor="let carrera of carrerasProfesor" [value]="carrera.idCarrera">{{carrera.nombreCarrera}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12">
                                 <label>Grado</label>
-                                <input [ngModel]="profesor.grado" type="text" autocomplete="off">
+                                <input [(ngModel)]="profesor.grado" type="text" autocomplete="off">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12">
                                 <label>Tipo Profesor</label>
-                                <select class="browser-default" (change)="cambioTipoProfesor($event.target)">
-                                    <option [value]="item.idTipoProfesor" *ngFor="let item of tipoProfesores">{{item.nombreTipo}}</option>
+                                <select class="browser-default" [(ngModel)]="profesor.idTipoProfesor">
+                                    <option *ngFor="let tipo of tipoProfesores" [value]="tipo.idTipoProfesor">{{tipo.nombreTipo}}</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Nombre en APA</label>
+                                <input [(ngModel)]="profesor.nombreApa" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Instituto</label>
+                                <select (change)="cambioInstituto($event.target)" class="browser-default">
+                                    <ng-container *ngFor='let item of institutos'>
+                                        <option [value]="item.idInstituto" *ngIf="item.idInstituto!=0">{{item.nombreInstituto}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 center">
+                                <button class="btn waves-effect waves-light deep-orange darken-3" (click)="altaProfesor()" type="submit" name="action">Dar de alta
+                                    <i class="material-icons right">send</i>
+                                </button>                                
                             </div>
                         </div>
                     </div>
