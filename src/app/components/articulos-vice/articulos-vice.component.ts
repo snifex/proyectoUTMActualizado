@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticuloService } from 'src/app/services/articulo.service';
 import { ProfesorService } from 'src/app/services/profesor.service';
+
 declare var $:any;
 @Component({
 	selector: 'app-articulos-vice',
@@ -12,6 +13,9 @@ export class ArticulosViceComponent implements OnInit {
 	autores:any =[];
 	ini:any;
 	fin:any;
+	profesores: any;
+	profesorActual: any;
+	
 	constructor(private articuloService: ArticuloService, private profesorService:ProfesorService) { 
 		let hoy=new Date();
 		console.log(hoy);
@@ -27,6 +31,12 @@ export class ArticulosViceComponent implements OnInit {
 				hoverEnabled: false
 			});
 		  });
+
+		//Inicializamos los profesores
+		this.profesorService.listProfesores().subscribe((resProfesores:any) => {
+			this.profesores = resProfesores;
+		},err => console.error(err))
+		
 		console.log("Iniciado componente")
 		this.articuloService.listByPeriodo(this.ini,this.fin).subscribe((resArticulos: any) => 
 		{
@@ -89,6 +99,13 @@ export class ArticulosViceComponent implements OnInit {
 			err => console.error(err)
 			
 		);
+	}
+
+	modificarProfesor(index: any): void {
+		$('#modificarProfesor').modal({dismissible: false});
+		$('#modificarProfesor').modal("open")
+		console.log(this.profesores[index])
+		this.profesorActual = this.profesores[index];
 	}
 
 }

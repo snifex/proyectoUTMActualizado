@@ -10,7 +10,6 @@ export class TipoProfesorService {
   constructor(private http: HttpClient) { }
 
   listarTipoProfesor(){
-      console.log('listarTipoProfesor')
       return this.http.get(`${environment.API_URI}/tipoprofesor/`);
   }
 
