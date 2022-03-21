@@ -12,6 +12,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ArticulosComponent } from './components/articulos/articulos.component';
 import { ArticulosViceComponent } from './components/articulos-vice/articulos-vice.component';
 import { RecuperarComponent } from './components/recuperar/recuperar.component';
+import { ProfesoresViceComponent } from './components/profesores-vice/profesores-vice.component';
 
 @NgModule({ /* para hacer la relacion entre formulario con el modelo */
   declarations: [
@@ -23,7 +24,8 @@ import { RecuperarComponent } from './components/recuperar/recuperar.component';
     HomeComponent,
     ArticulosComponent,
     ArticulosViceComponent,
-    RecuperarComponent
+    RecuperarComponent,
+    ProfesoresViceComponent
   ],
   imports: [
     BrowserModule,

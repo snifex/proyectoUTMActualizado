@@ -1,0 +1,127 @@
+<div class="contenedor-principal">
+    <div class="row">
+        <div class="col s12">
+            <label>Instituto</label>
+            <select class="browser-default" (change)="cambioInstituto($event.target)">
+                <ng-container *ngFor="let instituto of institutos">
+                    <option [value]="instituto.idInstituto" *ngIf="instituto.idInstituto != 0">{{instituto.nombreInstituto}}</option>
+                </ng-container>   
+            </select>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="numCarrerasByInstituto != 0 ">
+        <div class="col s12">
+            <label>Carrera</label>
+            <select (change)="cambioCarrera($event.target)" class="browser-default">
+                <option [value]="carrera.idCarrera" *ngFor="let carrera of carreras">{{carrera.nombreCarrera}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="lista-contenedor">
+        <ul class="collection" *ngFor="let profesor of profesores; let i = index">
+            <li class="collection-item avatar">
+                <i class="material-icons circle">person</i>
+                <b><span class="title">{{profesor.grado}}</span></b>
+                <p>
+                    {{profesor.nombresP}} <br>
+                    {{profesor.apellidoP}}
+                    {{profesor.apellidoM}}
+                </p>
+                <a class="secondary-content" (click)="modificarProfesorModal(i)"><i class="small material-icons">edit</i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Modal de editar profesor -->
+
+<div class="container">
+    <div class="modal" id="modificarProfesorModal">
+        <div class="modal-content">
+            <div class="col s12 m12 l8 offset-12 loginDiv">
+                <div class="row loginContainer">
+                    <div class="row" style="margin-bottom: 0px !important;"> 
+                        <div class="col s12">
+                            <h5 class="center">
+                                Modificar Profesor
+                            </h5>
+                        </div>
+                    </div>
+                    <div style="border: .5px solid #78909c; padding: 10px">
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Nombres del Profesor</label>
+                                <input [(ngModel)]="profesor.nombresP" type="text" autocomplete="off" placeholder="Nombres(s)">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Apellido Paterno</label>
+                                <input [(ngModel)]="profesor.apellidoP" type="text" autocomplete="off" placeholder="Apellido Paterno">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Apellido Materno</label>
+                                <input [(ngModel)]="profesor.apellidoM" type="text" autocomplete="off" placeholder="Apellido Materno">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Correo del Profesor</label>
+                                <input [(ngModel)]="profesorActual.correoProfesor" type="text" autocomplete="off" placeholder="Correo del Profesor" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Carreras</label>
+                                <select class="browser-default">
+                                    <option *ngFor="let carrera of carrerasModal" [value]="profesorActual.idCarrera" [(ngModel)]="profesorActual.idCarrera">{{carrera.nombreCarrera}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Grado</label>
+                                <input [(ngModel)]="profesor.grado" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Tipo Profesor</label>
+                                <select class="browser-default" [(ngModel)]="profesorActual.idTipoProfesor">
+                                    <option *ngFor="let tipo of tipoProfesores" [value]="tipo.idTipoProfesor" >{{tipo.nombreTipo}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Nombre en APA</label>
+                                <input [(ngModel)]="profesorActual.nombreApa" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Instituto</label>
+                                <select class="browser-default" (change)="cambioInstitutoModal($event.target)">
+                                    <ng-container *ngFor='let item of institutos'>
+                                        <option [value]="item.idInstituto" *ngIf="item.idInstituto!=0" [(ngModel)]="profesorActual.idInstituto">{{item.nombreInstituto}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 center">
+                                <button class="btn waves-effect waves-light deep-orange darken-3" (click)="altaProfesor()" type="submit" name="action">Modificar Profesor
+                                    <i class="material-icons right">send</i>
+                                </button>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -37,4 +37,8 @@ export class ProfesorService {
 	listProfesores(){
 		return this.http.get(`${environment.API_URI}/profesores/`);
 	}
+
+	modificarProfesor(idProfesorACambiar: number, profesorACambiar:Profesor){
+		return this.http.put(`${environment.API_URI}/profesores/actualizar/${idProfesorACambiar}`,profesorACambiar);
+	}
 }

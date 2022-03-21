@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ArticulosComponent } from './components/articulos/articulos.component';
 import { ArticulosViceComponent } from './components/articulos-vice/articulos-vice.component';
 import { RecuperarComponent } from './components/recuperar/recuperar.component';
+import { ProfesoresViceComponent } from './components/profesores-vice/profesores-vice.component';
 
 const routes: Routes = [
 	{
@@ -39,6 +40,10 @@ const routes: Routes = [
 				path: 'articulosVice/:idProfesor',
 				component: ArticulosViceComponent,
 			},
+			{
+				path: 'profesores-vice/:idProfesor',
+				component: ProfesoresViceComponent
+			}
 		]
 	},
 	{
