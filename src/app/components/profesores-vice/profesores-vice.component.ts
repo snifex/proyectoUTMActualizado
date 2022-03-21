@@ -103,6 +103,7 @@ export class ProfesoresViceComponent implements OnInit {
     }
 
     modificarProfesorModal(index:any): void {
+        console.log(this.profesorActual)
         $('#modificarProfesorModal').modal();
         $('#modificarProfesorModal').modal("open");
         this.profesorActual = this.profesores[index];

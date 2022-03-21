@@ -4,6 +4,7 @@ nav
 {
 	position: fixed;
 	top: 0;
+	background-color: #562605 !important;
 }
 .contenedor-principal
 {

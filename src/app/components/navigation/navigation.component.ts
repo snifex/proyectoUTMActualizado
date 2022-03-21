@@ -10,10 +10,13 @@ declare var $: any;
 })
 export class NavigationComponent implements OnInit {
 	idProfesor: number = 0;
+	nivelProfesor: number = 0;
 	constructor(private router: Router) { }
 
 	ngOnInit(): void {
 		this.idProfesor=Number(localStorage.getItem('idProfesor'));
+		this.nivelProfesor = Number(localStorage.getItem('nivel'));
+		console.log("nivel ",this.nivelProfesor)
 		console.log(this.idProfesor);
 		$(document).ready(function () {
 			$('.sidenav').sidenav();
@@ -28,5 +31,18 @@ export class NavigationComponent implements OnInit {
 		this.router.navigateByUrl('/');
 
 	}
+	
+	agregarProfesor(): void {
+        console.log("agregar profesor");
+        $('#agregarProfesor').modal();
+        $('#agregarProfesor').modal("open");
+    }
 
+	datosGenerales():void{
+		this.router.navigateByUrl('/home/generales-vice/'+ this.idProfesor);
+	}
+
+	redirArticulos(): void {
+		this.router.navigateByUrl('/home/articulosVice/'+ this.idProfesor);
+	}
 }

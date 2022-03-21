@@ -20,9 +20,9 @@
             <div class="col s12 m12 l8 offset-12 loginDiv">
                 <div class="row loginContainer">
                     <div class="row" style="margin-bottom: 0px !important;"> 
-                        <div class="col s12">
-                            <h5 class="center">
-                                Ingresa Articulo
+                        <div class="col s12 " class="center" >
+                            <h5 >
+                                Registra Articulo
                             </h5>
                         </div>
                     </div>
@@ -30,9 +30,58 @@
                         <div class="row">
                             <div class="col s12">
                                 <label>Nombre Articulo</label>
-                                <input [ngModel]="articulito.titulo" type="text" autocomplete="off">
+                                <input [ngModel]="articulito.titulo" required type="text" autocomplete="off" placeholder="Titulo del articulo">
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Nombre del Congreso/Revista/Libro/Institución </label>
+                                <input [ngModel]="articulito.titulo" required type="text" autocomplete="off" placeholder="Nombre del Tipo CLR">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Indexada</label>
+                                <select class="browser-default" [(ngModel)]="articulito.indexa">
+                                    <option *ngFor="let opcionIn of indexa" value="{{opcionIn}}">{{opcionIn}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Indexada</label>
+                                <select class="browser-default" [(ngModel)]="articulito.indexa"  placeholder="Indexada">
+                                    <option *ngFor="let estados of estado" value="{{estados}}">{{estados}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Fecha</label>
+                                <input type="text" class="datepicker" placeholder="Fecha" [(ngModel)]="articulito.fechaEdicion">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Tipo NI</label>
+                                <select class="browser-default" [(ngModel)]="articulito.tipoNI"  placeholder="Tipo NI">
+                                    <option *ngFor="let tipo of tipoNI" value="{{tipo}}}">{{tipo}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <label>ISSN/ISBN</label>
+                                <input type="text" [(ngModel)]="articulito.issnisbn" autocomplete="off" placeholder="ISSN/ISBN">
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col s12">
                                 <label>Tipo CLR</label>
@@ -41,12 +90,64 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row" *ngIf="institutoActual != 0">
+
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Volumen</label>
+                                <input type="text" [(ngModel)]="articulito.volumen" autocomplete="off" placeholder="Volumen">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Paginas</label>
+                                <input type="text" [(ngModel)]="articulito.paginas" autocomplete="off" placeholder="Paginas">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Fecha</label>
+                                <input type="text" placeholder="Año" [(ngModel)]="articulito.anyo" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <label>DOI</label>
+                                <input type="text" placeholder="Doi" [(ngModel)]="articulito.doi" autocomplete="off">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Institutos</label>
+                                <select (change)="cambioInstituto($event.target)" class="browser-default">
+                                    <ng-container *ngFor='let item of institutos'>
+                                        <option [value]="item.idInstituto" *ngIf="item.idInstituto!=0">{{item.nombreInstituto}}
+                                        </option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="numCarrerasByInstituto != 0">
                             <div class="col s12">
                                 <label>Carreras</label>
                                 <select (change)="cambioCarrera($event.target)" class="browser-default">
                                     <option [value]="item.idCarrera" *ngFor="let item of carreras" >{{item.nombreCarrera}}</option>
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s6 center">
+                                <a (click)="darAltaArticulo()" class=" modal-action 
+                waves-effect waves-green btn-flat">Enviar</a>
+                            </div>
+                            <div class="col s6 center">
+                                <a class=" modal-action modal-close waves-effect waves-green
+                btn-flat">Cancelar</a>
                             </div>
                         </div>
                     </div>
@@ -139,7 +240,7 @@
                         </div>
                         <div class="row">
                             <div class="col s12 center">
-                                <button class="btn waves-effect waves-light deep-orange darken-3" (click)="altaProfesor()" type="submit" name="action">Dar de alta
+                                <button class="btn waves-effect waves-light" (click)="altaProfesor()" type="submit" name="action">Dar de alta profesor
                                     <i class="material-icons right">send</i>
                                 </button>                                
                             </div>
@@ -150,34 +251,3 @@
         </div>
     </div>
 </div>
-<!--item es un json asi que item.[campo a ver]
-    Ctrl + k + c = comenta las lineas que seleccionaste
- 
- <ng-container *ngFor="let item of instituto">
-    <option *ngIf= item.idInstituto == 0 "item.>{{item.nombreInstituto}}</option>
-</ng-container> 
-
-    select (change) = "cambioInstituto($event.target.value)"    on el event target manda lo que seleccionamos en la lista 
-        ng container *ngFor="let item of institutos"
-            option [value]="item.idInstituto" *ngIf="item.idInstituto != 0" = {{item.nombreInstituto}}(carreras)
-        /ng container
-    select
-
-    div class="row" *ng-if="numCarrerasByInstituto != 0"
-        div class="col s12"
-            laberl carreras label
-            select class="browser-default"
-                option *ngFor="let item of carreras" = {{item.nombreCarrera}}
-            select
-        div
-    div
-
-    div class="row""
-        div class="col s12"
-            laberl Profesores label
-            select class="browser-default"
-                option *ngFor="let item of profesores" = {{item.nombreProfesor}}
-            select
-        div
-    div
--->

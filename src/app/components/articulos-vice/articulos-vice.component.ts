@@ -15,6 +15,7 @@ export class ArticulosViceComponent implements OnInit {
 	fin:any;
 	profesores: any;
 	profesorActual: any;
+	idProfesor: number= 0;
 	
 	constructor(private articuloService: ArticuloService, private profesorService:ProfesorService) { 
 		let hoy=new Date();
@@ -22,6 +23,7 @@ export class ArticulosViceComponent implements OnInit {
 		this.ini=(hoy.getFullYear()-3)+'-01-01';
 		this.fin=hoy.getFullYear()+'-'+(((hoy.getMonth()+1)<10)?'0'+(hoy.getMonth()+1):(hoy.getMonth()+1))+'-'+(((hoy.getDate())<10)?'0'+(hoy.getDate()):(hoy.getDate()));
 		console.log(this.ini);
+		this.idProfesor = Number(localStorage.getItem('idProfesor'));
 	}
 
 	ngOnInit(): void {
@@ -37,24 +39,16 @@ export class ArticulosViceComponent implements OnInit {
 			this.profesores = resProfesores;
 		},err => console.error(err))
 		
-		console.log("Iniciado componente")
-		this.articuloService.listByPeriodo(this.ini,this.fin).subscribe((resArticulos: any) => 
-		{
-			console.log("Saliendo a servicio");
-			
+		
+		this.articuloService.listByProfesor(this.idProfesor).subscribe((resArticulos: any) =>{
 			this.articulos = resArticulos;
-			this.articulos.forEach((element:any) => {
-				this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) => 
-				{
+			this.articulos.forEach((element:any)=>{
+				this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) =>{
 					this.autores.push(resAutores);
-				},
-				err => console.error(err));
-			});
-			
-		},
-			err => console.error(err)
-			
-		);console.log("Probando tiempo")
+				},err => console.error(err));
+			})
+		},err => console.error(err));
+		
 	}
 	CambioFechaIni(){
 		console.log("Probando cambio ini")

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Profesor } from 'src/app/models/profesor.model';
+import { Router } from '@angular/router';
 import { ProfesorService } from 'src/app/services/profesor.service';
 declare var $:any;
 @Component({
@@ -14,7 +15,7 @@ export class GeneralesComponent implements OnInit {
 	profesor: Profesor;
 
 	constructor(private route:ActivatedRoute,
-		private profesorService:ProfesorService) { 
+		private profesorService:ProfesorService, private router: Router) { 
 			this.profesor=new Profesor();
 		}
 
@@ -23,8 +24,11 @@ export class GeneralesComponent implements OnInit {
 		this.route.paramMap.subscribe(params =>
 			{
 				this.idProfesor = Number(params.get('idProfesor'));
-				this.profesorService.listOne(this.idProfesor).subscribe((resProfesor: any) =>
-				{
+				this.profesorService.listOne(this.idProfesor).subscribe((resProfesor: any) =>{
+					if(resProfesor.nivel === 1){
+						//Significa que el profesor que entro es un vicerector y lo mueve a vicerector general
+						this.router.navigateByUrl('/home/generales-vice/'+this.idProfesor);
+					}
 					console.log(resProfesor);
 					this.profesor=resProfesor;
 				},
