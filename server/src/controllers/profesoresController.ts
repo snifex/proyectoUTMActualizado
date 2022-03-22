@@ -69,7 +69,7 @@ class ProfesoresController {
 	public async listAutorByArticulo(req: Request, res: Response): Promise<void> {
 		//console.log("listAutorByArticulo")
 		const { idArticulo } = req.params;
-		let consulta = 'SELECT P.nombresP, P.idProfesor FROM Profesores P INNER JOIN ArticuloYProfesor AYP ON AYP.idProfesor=P.idProfesor WHERE idArticulo = ' + idArticulo;
+		let consulta = 'SELECT P.nombresP, P.idProfesor, P.apellidoP, P.apellidoM FROM Profesores P INNER JOIN ArticuloYProfesor AYP ON AYP.idProfesor=P.idProfesor WHERE idArticulo = ' + idArticulo;
 		const respuesta = await pool.query(consulta);
 
 		res.json(respuesta);

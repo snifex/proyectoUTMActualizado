@@ -9,7 +9,7 @@ class ArticuloRoutes {
 		this.router.get('/', articuloController.list);
 		this.router.get('/:idArticulo', articuloController.listOne);
 		this.router.get('/listByProfesor/:idProfesor', articuloController.listByProfesor);
-		this.router.post('/create', articuloController.create);
+		this.router.post('/create/:idProfesor', articuloController.create);
 		this.router.put('/actualizar/:idArticulo', articuloController.actualizar);
 		this.router.delete('/eliminar/:idArticulo', articuloController.eliminar);
 		this.router.get('/listByPeriodo/:ini/:fin', articuloController.listByPeriodo);

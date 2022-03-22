@@ -20,11 +20,12 @@ class ArticuloYProfesorController
 		}
 		res.status(404).json({'mensaje': 'Articulo no encontrado'});
 	}	
-	public async create(req: Request, res: Response): Promise<void> 
-	{
+
+	public async create(req: Request, res: Response): Promise<void> {
 		const resp = pool.query("INSERT INTO ArticuloYProfesor set ?",[req.body]);
 		res.json(resp);
 	}
+	
 	public async actualizar(req: Request, res: Response): Promise<void> 
 	{
 		const { idAyP } = req.params;

@@ -22,11 +22,20 @@ class ArticuloController
 		}
 		res.status(404).json({'mensaje': 'Articulo no encontrado'});
 	}	
-	public async create(req: Request, res: Response): Promise<void> 
-	{
-		const resp = pool.query("INSERT INTO Articulo set ?",[req.body]);
-		res.json(resp);
+	public async create(req: Request, res: Response): Promise<void> {
+		const {idProfesor} = req.params;
+		const resp = await pool.query("INSERT INTO Articulo set ?",[req.body]);
+		//Sacamos el id del articulo creado con el await
+		let dato = {
+			'idProfesor': idProfesor,
+			'idArticulo': resp.insertId,
+			'pos':1,
+			'valido':'Si'
+		};
+		const respArticulo = await pool.query("INSERT INTO ArticuloYProfesor set ?",[dato]);
+		res.json(respArticulo);
 	}
+
 	public async actualizar(req: Request, res: Response): Promise<void> 
 	{
 		console.log("actualizar")
