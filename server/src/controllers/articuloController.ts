@@ -49,13 +49,14 @@ class ArticuloController
 		const resp = await pool.query("SELECT nombre FROM Articulo WHERE idCarrera=?",[req.body,idCarrera]);
 		res.json(resp);
 	}
-	public async listByProfesor(req: Request, res: Response): Promise <void>
-	{
+
+	public async listByProfesor(req: Request, res: Response): Promise <void>{
 		console.log("listByProfesor")
 		const { idProfesor } = req.params;
 		const respuesta = await pool.query('SELECT * FROM Articulo A INNER JOIN ArticuloYProfesor AYP ON AYP.idArticulo=A.idArticulo WHERE idProfesor = ?', [idProfesor]);
 			res.json(respuesta);
-	}	
+	}
+		
 	public async listByPeriodo(req: Request, res: Response ): Promise<void>
 	{
 		const { ini,fin } = req.params;
