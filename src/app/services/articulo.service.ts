@@ -17,4 +17,8 @@ export class ArticuloService {
 		console.log(ini,fin)
 		return this.http.get(`${environment.API_URI}/articulo/listByPeriodo/${ini}/${fin}`);
 	}
+
+	crearArticulo(idProfesor: number) {
+		return this.http.get(`${environment.API_URI}/articulo/create/${idProfesor}`);
+	}
 }

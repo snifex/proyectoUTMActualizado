@@ -93,7 +93,7 @@ class ProfesoresController {
         return __awaiter(this, void 0, void 0, function* () {
             //console.log("listAutorByArticulo")
             const { idArticulo } = req.params;
-            let consulta = 'SELECT P.nombresP, P.idProfesor FROM Profesores P INNER JOIN ArticuloYProfesor AYP ON AYP.idProfesor=P.idProfesor WHERE idArticulo = ' + idArticulo;
+            let consulta = 'SELECT P.nombresP, P.idProfesor, P.apellidoP, P.apellidoM FROM Profesores P INNER JOIN ArticuloYProfesor AYP ON AYP.idProfesor=P.idProfesor WHERE idArticulo = ' + idArticulo;
             const respuesta = yield database_1.default.query(consulta);
             res.json(respuesta);
         });

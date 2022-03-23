@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
     profesor: Profesor;
     tipoProfesorActual: any;
     tipoProfesores: any;
+    idProfesor: number;
     indexa: any[] = ["Si","No"]
     estado: any[] = ["Publicado","Pendiente"];
     tipoNI: any[] = ["Nacional","Internacional"];
@@ -35,6 +36,7 @@ export class HomeComponent implements OnInit {
     constructor(private articuloService: ArticuloService,private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService, private institutoService : InstitutoService) {
         this.articulito = new Articulo();
         this.profesor = new Profesor();
+        this.idProfesor = Number(localStorage.getItem('idProfesor'));
     }
 
     ngOnInit(): void {
@@ -121,7 +123,7 @@ export class HomeComponent implements OnInit {
     }
 
     darAltaArticulo():void{
-
+        //dar de alta el articulo
     }
 
     altaProfesor(): void {

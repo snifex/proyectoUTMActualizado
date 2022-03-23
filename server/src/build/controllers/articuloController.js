@@ -36,8 +36,17 @@ class ArticuloController {
     }
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const resp = database_1.default.query("INSERT INTO Articulo set ?", [req.body]);
-            res.json(resp);
+            const { idProfesor } = req.params;
+            const resp = yield database_1.default.query("INSERT INTO Articulo set ?", [req.body]);
+            //Sacamos el id del articulo creado con el await
+            let dato = {
+                'idProfesor': idProfesor,
+                'idArticulo': resp.insertId,
+                'pos': 1,
+                'valido': 'Si'
+            };
+            const respArticulo = yield database_1.default.query("INSERT INTO ArticuloYProfesor set ?", [dato]);
+            res.json(respArticulo);
         });
     }
     actualizar(req, res) {
