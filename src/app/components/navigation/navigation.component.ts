@@ -33,11 +33,14 @@ export class NavigationComponent implements OnInit {
 	}
 	
 	agregarProfesor(): void {
-        console.log("agregar profesor");
         $('#agregarProfesor').modal();
         $('#agregarProfesor').modal("open");
     }
 
+	agregarArticulo(): void {
+        $('#agregarArticulo').modal();
+        $('#agregarArticulo').modal("open");
+    }
 	datosGenerales():void{
 		this.router.navigateByUrl('/home/generales-vice/'+ this.idProfesor);
 	}

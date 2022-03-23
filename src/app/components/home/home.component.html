@@ -52,8 +52,8 @@
 
                         <div class="row">
                             <div class="col s12">
-                                <label>Indexada</label>
-                                <select class="browser-default" [(ngModel)]="articulito.indexa"  placeholder="Indexada">
+                                <label>Estado</label>
+                                <select class="browser-default" [(ngModel)]="articulito.estado"  placeholder="Indexada">
                                     <option *ngFor="let estados of estado" value="{{estados}}">{{estados}}</option>
                                 </select>
                             </div>
@@ -62,7 +62,7 @@
                         <div class="row">
                             <div class="col s12">
                                 <label>Fecha</label>
-                                <input type="text" class="datepicker" placeholder="Fecha" [(ngModel)]="articulito.fechaEdicion">
+                                <input [(ngModel)]="articulito.fechaEdicion"type="text" class="datepicker" placeholder="Fecha" id="fecha">
                             </div>
                         </div>
 
@@ -107,15 +107,29 @@
 
                         <div class="row">
                             <div class="col s12">
-                                <label>Fecha</label>
-                                <input type="text" placeholder="Año" [(ngModel)]="articulito.anyo" autocomplete="off">
+                                <label>DOI</label>
+                                <input type="text" placeholder="Doi" [(ngModel)]="articulito.doi" autocomplete="off">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col s12">
-                                <label>DOI</label>
-                                <input type="text" placeholder="Doi" [(ngModel)]="articulito.doi" autocomplete="off">
+                                <label>Ciudad</label>
+                                <input type="text" placeholder="Ciudad" [(ngModel)]="articulito.cuidad" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Pais</label>
+                                <input type="text" placeholder="Pais" [(ngModel)]="articulito.pais" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Editorial</label>
+                                <input type="text" placeholder="Editorial" [(ngModel)]="articulito.editorial" autocomplete="off">
                             </div>
                         </div>
                         

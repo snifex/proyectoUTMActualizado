@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
     carreraActual: any;
     profesores: any[] = []
     profesor: Profesor;
+    profesorActual: any;
     tipoProfesorActual: any;
     tipoProfesores: any;
     idProfesor: number;
@@ -48,9 +49,13 @@ export class HomeComponent implements OnInit {
             $('select').formSelect();
             $('.datepicker').datepicker({
                 format:"yyyy-mm-dd",
-                autoClose:true
+                autoClose:true,
             });
         });
+        
+        this.profesorService.listOne(this.idProfesor).subscribe((resProfesor: any) =>{
+            this.profesorActual = resProfesor;
+        })
 
         this.tipoProfesorService.listarTipoProfesor().subscribe((resTipoProfesores: any) =>{
             this.tipoProfesores = resTipoProfesores;
@@ -124,6 +129,19 @@ export class HomeComponent implements OnInit {
 
     darAltaArticulo():void{
         //dar de alta el articulo
+        this.articulito.editores = this.profesorActual.nombresP + " " + this.profesorActual.apellidoP + " " + this.profesorActual.apellidoM;
+        //Obtenemos la fecha de Jquery
+        this.articulito.fechaEdicion = $('#fecha').val();
+        //Obtenemos el año de la fecha
+        this.articulito.anyo = this.articulito.fechaEdicion.substring(0,4);
+        console.log(this.articulito);
+        this.articuloService.crearArticulo(this.idProfesor,this.articulito).subscribe((resArticulo: any) =>{
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Se ha dado de alta correctamente el articulo'
+            })
+        })
     }
 
     altaProfesor(): void {
@@ -134,7 +152,7 @@ export class HomeComponent implements OnInit {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Se ha dado de alta correctamente'
+                title: 'Se ha dado de alta correctamente al profesor'
             })
         },err => console.error(err) );
     }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; /* para hacer las peticiones*/
 import { environment } from '../../environments/environment'; /*para conectar el server con la ruta que tiene*/
+import { Articulo } from '../models/articulo.model';
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class ArticuloService {
 		return this.http.get(`${environment.API_URI}/articulo/listByPeriodo/${ini}/${fin}`);
 	}
 
-	crearArticulo(idProfesor: number) {
-		return this.http.get(`${environment.API_URI}/articulo/create/${idProfesor}`);
+	crearArticulo(idProfesor: number, articulito: Articulo) {
+		return this.http.post(`${environment.API_URI}/articulo/create/${idProfesor}`,articulito);
 	}
 }

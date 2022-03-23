@@ -1,5 +1,4 @@
 export class Articulo {
-    idArticulo:   number;
     tipCLR:       string;
     titulo:       string;
     nombreCLR:    string;
@@ -20,24 +19,23 @@ export class Articulo {
     editorial:    string;
 
     constructor(){
-        this.idArticulo = 0;
         this.tipCLR= '';
-        this.titulo= '';
-        this.nombreCLR= '';
+        this.titulo= 'Prueba';
+        this.nombreCLR= 'Revista';
         this.estado= '';
         this.fechaEdicion ='';
         this.tipoNI= '';
-        this.issnisbn= '';
-        this.volumen= '';
-        this.paginas= '';
+        this.issnisbn= 'algo211';
+        this.volumen= '1';
+        this.paginas= '12-23';
         this.anyo= '';
-        this.doi= '';
-        this.comprobante= '';
+        this.doi= 'algo.com';
+        this.comprobante= 'a';
         this.indexa= '';
-        this.issue= '';
+        this.issue= 'no';
         this.editores= '';
-        this.cuidad= '';
-        this.pais= '';
+        this.cuidad= 'Huajuapunk';
+        this.pais= 'Mexico';
         this.editorial='';
     }
 }
