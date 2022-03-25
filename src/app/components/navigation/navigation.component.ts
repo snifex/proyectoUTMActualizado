@@ -28,6 +28,7 @@ export class NavigationComponent implements OnInit {
 		localStorage.removeItem('token');
 		localStorage.removeItem('correo');
 		localStorage.removeItem('idProfesor');
+		localStorage.removeItem('nivel')
 		this.router.navigateByUrl('/');
 
 	}

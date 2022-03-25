@@ -29,6 +29,7 @@ export class GeneralesComponent implements OnInit {
 						//Significa que el profesor que entro es un vicerector y lo mueve a vicerector general
 						this.router.navigateByUrl('/home/generales-vice/'+this.idProfesor);
 					}
+					localStorage.setItem('nivel', resProfesor.nivel);
 					console.log(resProfesor);
 					this.profesor=resProfesor;
 				},

@@ -108,6 +108,7 @@ export class HomeComponent implements OnInit {
 
 		},err => console.error(err));
 	}
+    
     cambioCarrera(op:any): void {
         this.carreraActual = op.value;
         this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resProfesores: any) =>{
