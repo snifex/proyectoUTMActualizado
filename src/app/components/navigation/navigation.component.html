@@ -20,7 +20,7 @@
             </ul>
 
             <!-- Si el nivelProfesor es  -->
-            <ul class="left hide-on-med-and-down" *ngIf="nivelProfesor === 1">
+            <ul class="left hide-on-med-and-down" *ngIf="nivelProfesor !== undefined && nivelProfesor === 1 ">
                 <li>
                     <a class="dropdown-trigger" data-target="menuVer" href="mobile.html">
                         <!--no te ridecciona, solo se va al menu -->
@@ -36,7 +36,7 @@
             </ul>
             <!-- Opciones lado izquierdo -->
             <ul id="menuAgregar" class="dropdown-content" >
-                <li (click)="agregarProfesor()"><a >Profesores</a></li>
+                <li (click)="agregarProfesor()"><a >Profesores </a></li>
                 <li (click)="agregarArticulo()"><a>Articulos</a></li>
             </ul>
 

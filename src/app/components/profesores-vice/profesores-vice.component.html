@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <div class="row" *ngIf="numCarrerasByInstituto != 0 ">
+    <div class="row" *ngIf="numCarrerasByInstituto!==undefined && numCarrerasByInstituto != 0 ">
         <div class="col s12">
             <label>Carrera</label>
             <select (change)="cambioCarrera($event.target)" class="browser-default">
