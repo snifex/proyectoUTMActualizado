@@ -16,6 +16,7 @@ export class NavigationComponent implements OnInit {
 	ngOnInit(): void {
 		this.idProfesor=Number(localStorage.getItem('idProfesor'));
 		this.nivelProfesor = Number(localStorage.getItem('nivel'));
+		console.log(this.nivelProfesor);
 		console.log("nivel ",this.nivelProfesor)
 		console.log(this.idProfesor);
 		$(document).ready(function () {

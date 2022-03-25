@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { institutosController } from '../controllers/institutosController';
+import { validarToken } from '../middleware/auth';
 class InstitutosRoutes
 {
 	public router: Router=Router();

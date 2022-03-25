@@ -8,7 +8,6 @@ import { ProfesorService } from 'src/app/services/profesor.service';
 import { TipoProfesorService } from 'src/app/services/tipoprofesor.service';
 import Swal from 'sweetalert2';
 
-
 declare var $:any;
 @Component({
     selector: 'app-home',
@@ -33,6 +32,7 @@ export class HomeComponent implements OnInit {
     indexa: any[] = ["Si","No"]
     estado: any[] = ["Publicado","Pendiente"];
     tipoNI: any[] = ["Nacional","Internacional"];
+    location: any;
 
     constructor(private articuloService: ArticuloService,private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService, private institutoService : InstitutoService) {
         this.articulito = new Articulo();
@@ -41,6 +41,8 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.location = location.href;
+        console.log(this.location);
         $(document).ready(function(){
             $('.fixed-action-btn').floatingActionButton({
                 direction: "left",
@@ -142,7 +144,11 @@ export class HomeComponent implements OnInit {
                 icon: 'success',
                 title: 'Se ha dado de alta correctamente el articulo'
             })
-        })
+        }, err => console.error(err));
+        //Redirecciona a articulos despues de agregar el articulo
+        if(this.location == "http://localhost:4200/home/articulosVice/"+this.idProfesor){
+            document.location.reload();
+        }
     }
 
     altaProfesor(): void {

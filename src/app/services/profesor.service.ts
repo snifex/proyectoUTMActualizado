@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; /* para hacer las peticiones*/
 import { environment } from '../../environments/environment'; /*para conectar el server con la ruta que tiene*/
 import { Profesor } from '../models/profesor.model';
+import { Headers } from '../models/header.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -35,7 +36,7 @@ export class ProfesorService {
 	}
 
 	listProfesores(){
-		return this.http.get(`${environment.API_URI}/profesores/`);
+		return this.http.get(`${environment.API_URI}/profesores/`,{headers:Headers});
 	}
 
 	modificarProfesor(idProfesorACambiar: number, profesorACambiar:Profesor){
