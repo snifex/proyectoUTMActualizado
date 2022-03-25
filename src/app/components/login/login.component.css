@@ -74,3 +74,26 @@ div img
 {
 	text-align: center;
 }
+
+
+@media print {
+	@page{
+		/*Con esto quitamos el marco que sale al momento de imprimir*/
+		size:auto ;
+		margin: 0;
+	}
+
+	/*Quitamos la imagen de la impresión ya que se encima*/
+	.responsive-img{
+		display:none;
+	}
+
+	/*Hacemos que los colores de los iconos se vean*/
+	.material-icons{
+		color: rgb(82,39,0) !important;
+	}
+
+	h5{
+		font-size:1.2rem;
+	}
+}
