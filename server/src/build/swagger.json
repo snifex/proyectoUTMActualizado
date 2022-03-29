@@ -412,7 +412,14 @@
                     "403": {
                         "description": "Prohibido"
                     }
-                }
+                },
+                "parameters": [{
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "Bearer eyJhbGciOiJIUzI1NiJ9.bm9ibHNlaXM4OEBnbWFpbC5jb20.5-oCs8iGorHyTkIx1bGTeUDEwPehASLVDlaLtaHOwBs"
+                    }]
             }
         },
         "/api/profesores/{idProfesor}": {

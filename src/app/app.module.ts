@@ -14,6 +14,7 @@ import { ArticulosViceComponent } from './components/articulos-vice/articulos-vi
 import { RecuperarComponent } from './components/recuperar/recuperar.component';
 import { ProfesoresViceComponent } from './components/profesores-vice/profesores-vice.component';
 import { GeneralesViceComponent } from './components/generales-vice/generales-vice.component';
+import { CambioInfoService } from './services/cambio-info.service';
 
 @NgModule({ /* para hacer la relacion entre formulario con el modelo */
   declarations: [
@@ -35,7 +36,7 @@ import { GeneralesViceComponent } from './components/generales-vice/generales-vi
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [CambioInfoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

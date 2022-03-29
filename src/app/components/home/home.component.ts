@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Articulo } from 'src/app/models/articulo.model';
 import { Profesor } from 'src/app/models/profesor.model';
 import { ArticuloService } from 'src/app/services/articulo.service';
+import { CambioInfoService } from 'src/app/services/cambio-info.service';
 import { CarrerasService } from 'src/app/services/carreras.service';
 import { InstitutoService } from 'src/app/services/instituto.service';
 import { ProfesorService } from 'src/app/services/profesor.service';
@@ -34,7 +35,7 @@ export class HomeComponent implements OnInit {
     tipoNI: any[] = ["Nacional","Internacional"];
     location: any;
 
-    constructor(private articuloService: ArticuloService,private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService, private institutoService : InstitutoService) {
+    constructor(private articuloService: ArticuloService,private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService, private institutoService : InstitutoService, private cambioInfoService: CambioInfoService) {
         this.articulito = new Articulo();
         this.profesor = new Profesor();
         this.idProfesor = Number(localStorage.getItem('idProfesor'));
@@ -110,6 +111,10 @@ export class HomeComponent implements OnInit {
 
 		},err => console.error(err));
 	}
+
+    enviarMensajeArticulo(): void {
+        this.cambioInfoService.enviar();
+    }
     
     cambioCarrera(op:any): void {
         this.carreraActual = op.value;
@@ -143,7 +148,8 @@ export class HomeComponent implements OnInit {
                 position: 'center',
                 icon: 'success',
                 title: 'Se ha dado de alta correctamente el articulo'
-            })
+            });
+            this.enviarMensajeArticulo();
         }, err => console.error(err));
         //Redirecciona a articulos despues de agregar el articulo
         if(this.location == "http://localhost:4200/home/articulosVice/"+this.idProfesor){
