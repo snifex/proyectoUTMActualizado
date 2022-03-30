@@ -1,3 +1,29 @@
 button{
     background-color: #562605 !important;
 }
+
+@media print{
+    @page{
+		/*Con esto quitamos el marco que sale al momento de imprimir*/
+		size:auto ;
+		margin: 0;
+	}
+
+    /*Quitamos el boton de la impresión*/
+    .fixed-action-btn {
+        display: none!important;
+        color: white;
+    }
+
+    /*Quitamos la navbar de la impresión*/
+    :host  app-navigation{
+        display:none;
+    }
+
+
+    body{
+        background-color: #af4c0abe;
+    }
+
+
+}

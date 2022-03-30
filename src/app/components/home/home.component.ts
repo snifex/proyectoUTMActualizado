@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Articulo } from 'src/app/models/articulo.model';
 import { Profesor } from 'src/app/models/profesor.model';
 import { ArticuloService } from 'src/app/services/articulo.service';
+import { CambioInfoService } from 'src/app/services/cambio-info.service';
 import { CarrerasService } from 'src/app/services/carreras.service';
 import { InstitutoService } from 'src/app/services/instituto.service';
 import { ProfesorService } from 'src/app/services/profesor.service';
@@ -18,6 +19,7 @@ export class HomeComponent implements OnInit {
     tipoCLR: any[] = ["Revista", "Libro", "Congreso", "Cap. Libro", "Libro"];
     institutos: any;
     institutoActual: any;
+    profesoresApa: any;
     carreras: any;
     carrerasProfesor: any;
     numCarrerasByInstituto: any;
@@ -34,7 +36,7 @@ export class HomeComponent implements OnInit {
     tipoNI: any[] = ["Nacional","Internacional"];
     location: any;
 
-    constructor(private articuloService: ArticuloService,private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService, private institutoService : InstitutoService) {
+    constructor(private articuloService: ArticuloService,private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService, private institutoService : InstitutoService, private cambioInfoService: CambioInfoService) {
         this.articulito = new Articulo();
         this.profesor = new Profesor();
         this.idProfesor = Number(localStorage.getItem('idProfesor'));
@@ -54,10 +56,28 @@ export class HomeComponent implements OnInit {
                 autoClose:true,
             });
         });
+
+        // //Vamos a arreglar el apa de los profesores
+        // this.profesorService.listProfesores().subscribe((resProfesoresTodos:any) => {
+        //     this.profesoresApa = resProfesoresTodos;
+        //     for (let index = 0; index < this.profesoresApa.length; index++) {
+        //         const element = this.profesoresApa[index];
+        //         element.nombreApa = element.apellidoP + ", ";
+        //         if(element.nombresP.indexOf(" ") != -1){
+        //             element.nombreApa += element.nombresP.charAt(0) + "." + element.nombresP.charAt(element.nombresP.indexOf(" ")+1) + ".";
+        //         }else{
+        //             element.nombreApa += element.nombresP.charAt(0) + ".";
+        //         }
+        //         //Mandamos a guardar en la base de datos
+        //         this.profesorService.modificarProfesor(element.idProfesor,element).subscribe((resProfesores: any) => {
+        //         },err => console.error(err));
+        //     }
+            
+        // })
         
         this.profesorService.listOne(this.idProfesor).subscribe((resProfesor: any) =>{
             this.profesorActual = resProfesor;
-        })
+        },err => console.error(err));
 
         this.tipoProfesorService.listarTipoProfesor().subscribe((resTipoProfesores: any) =>{
             this.tipoProfesores = resTipoProfesores;
@@ -110,6 +130,10 @@ export class HomeComponent implements OnInit {
 
 		},err => console.error(err));
 	}
+
+    enviarMensajeArticulo(): void {
+        this.cambioInfoService.enviar();
+    }
     
     cambioCarrera(op:any): void {
         this.carreraActual = op.value;
@@ -143,7 +167,8 @@ export class HomeComponent implements OnInit {
                 position: 'center',
                 icon: 'success',
                 title: 'Se ha dado de alta correctamente el articulo'
-            })
+            });
+            this.enviarMensajeArticulo();
         }, err => console.error(err));
         //Redirecciona a articulos despues de agregar el articulo
         if(this.location == "http://localhost:4200/home/articulosVice/"+this.idProfesor){
