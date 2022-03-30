@@ -32,7 +32,8 @@ export class ArticulosViceComponent implements OnInit {
 				direction: 'left',
 				hoverEnabled: false
 			});
-		  });
+		});
+
 
 		//Inicializamos los profesores
 		this.profesorService.listProfesores().subscribe((resProfesores:any) => {
@@ -48,6 +49,8 @@ export class ArticulosViceComponent implements OnInit {
 				},err => console.error(err));
 			})
 		},err => console.error(err));
+
+		console.log(this.autores)
 		
 	}
 	CambioFechaIni(){
