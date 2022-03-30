@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
     tipoCLR: any[] = ["Revista", "Libro", "Congreso", "Cap. Libro", "Libro"];
     institutos: any;
     institutoActual: any;
+    profesoresApa: any;
     carreras: any;
     carrerasProfesor: any;
     numCarrerasByInstituto: any;
@@ -55,10 +56,28 @@ export class HomeComponent implements OnInit {
                 autoClose:true,
             });
         });
+
+        // //Vamos a arreglar el apa de los profesores
+        // this.profesorService.listProfesores().subscribe((resProfesoresTodos:any) => {
+        //     this.profesoresApa = resProfesoresTodos;
+        //     for (let index = 0; index < this.profesoresApa.length; index++) {
+        //         const element = this.profesoresApa[index];
+        //         element.nombreApa = element.apellidoP + ", ";
+        //         if(element.nombresP.indexOf(" ") != -1){
+        //             element.nombreApa += element.nombresP.charAt(0) + "." + element.nombresP.charAt(element.nombresP.indexOf(" ")+1) + ".";
+        //         }else{
+        //             element.nombreApa += element.nombresP.charAt(0) + ".";
+        //         }
+        //         //Mandamos a guardar en la base de datos
+        //         this.profesorService.modificarProfesor(element.idProfesor,element).subscribe((resProfesores: any) => {
+        //         },err => console.error(err));
+        //     }
+            
+        // })
         
         this.profesorService.listOne(this.idProfesor).subscribe((resProfesor: any) =>{
             this.profesorActual = resProfesor;
-        })
+        },err => console.error(err));
 
         this.tipoProfesorService.listarTipoProfesor().subscribe((resTipoProfesores: any) =>{
             this.tipoProfesores = resTipoProfesores;
