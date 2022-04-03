@@ -38,8 +38,10 @@
                     <p>
                         {{profesor.nombresP}} {{profesor.apellidoP}} {{profesor.apellidoM}}
                     </p>
-                    <a (click)="eliminarProfesor(i)"><i class="small material-icons">person_remove</i></a>
-                    <a class="secondary-content "(click)="modificarProfesorModal(i)"><i class="small material-icons">edit</i></a>
+                    <div class="secondary-content">
+                        <a (click)="eliminarProfesor(i)"><i class="small material-icons">person_remove</i></a>
+                        <a (click)="modificarProfesorModal(i)"><i class="small material-icons">edit</i></a>
+                    </div>
                 </li>
             </ul>
         </div>
