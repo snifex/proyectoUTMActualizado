@@ -27,20 +27,21 @@ class CarrerasController
 	}
 	public async actualizar(req: Request, res: Response): Promise<void> 
 	{
-		const { codigoCarrera } = req.params;
+		const { idCarrera } = req.params;
 		console.log(req.params);
-		const resp = await pool.query("UPDATE Carreras set ? WHERE codigoCarrera= ?", [req.body, codigoCarrera]);
+		const resp = await pool.query("UPDATE Carreras set ? WHERE idCarrera= ?", [req.body, idCarrera]);
 		res.json(resp);
 	}
 	public async eliminar(req: Request, res: Response): Promise<void> 
 	{
-		const { codigoCarrera } = req.params;
-		const resp = await pool.query(`DELETE FROM Carreras WHERE codigoCarrera= ${codigoCarrera}`);
+		const { idCarrera } = req.params;
+		const resp = await pool.query(`DELETE FROM Carreras WHERE idCarrera= ${idCarrera}`);
 		res.json(resp);
 	}
+	
 	public async getCarrerasByInstituto(req: Request, res: Response): Promise<void> {
 		const { idInstituto } = req.params;
-		const resp = await pool.query(`SELECT nombreCarrera,idCarrera FROM Carreras WHERE idInstituto= ${idInstituto}`);
+		const resp = await pool.query(`SELECT * FROM Carreras WHERE idInstituto= ${idInstituto}`);
 		res.json(resp);
 	}
 }

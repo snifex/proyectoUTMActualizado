@@ -1,37 +1,48 @@
 <div class="contenedor-principal">
+    <div class="col s12 m12 l8 offset-12 loginDiv">
+        <div class="row" style="margin-bottom: 0px !important;">
+            <div class="col s12">
+                <h5 class="center">
+                    Listar Profesores
+                </h5>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col s12">
-            <label>Instituto</label>
-            <select class="browser-default" (change)="cambioInstituto($event.target)">
-                <ng-container *ngFor="let instituto of institutos">
-                    <option [value]="instituto.idInstituto" *ngIf="instituto.idInstituto != 0">{{instituto.nombreInstituto}}</option>
-                </ng-container>   
+            <label>Selecciona un Instituto</label>
+            <select (change)="cambioInstituto($event.target)" class="browser-default">
+                <ng-container *ngFor='let item of institutos'>
+                    <option [value]="item.idInstituto" *ngIf="item.idInstituto!=0">{{item.nombreInstituto}}</option>
+                </ng-container>
             </select>
         </div>
     </div>
-
-    <div class="row" *ngIf="numCarrerasByInstituto!==undefined && numCarrerasByInstituto != 0 ">
+    <div class="row" *ngIf=" numCarrerasByInstituto!==undefined && numCarrerasByInstituto != 0">
         <div class="col s12">
-            <label>Carrera</label>
+            <label>Carreras</label>
             <select (change)="cambioCarrera($event.target)" class="browser-default">
-                <option [value]="carrera.idCarrera" *ngFor="let carrera of carreras">{{carrera.nombreCarrera}}</option>
+                <option [value]="item.idCarrera" *ngFor="let item of carreras" >{{item.nombreCarrera}}</option>
             </select>
         </div>
     </div>
 
-    <div class="lista-contenedor">
-        <ul class="collection" *ngFor="let profesor of profesores; let i = index">
-            <li class="collection-item avatar">
-                <i class="material-icons circle">person</i>
-                <b><span class="title">{{profesor.grado}}</span></b>
-                <p>
-                    {{profesor.nombresP}} <br>
-                    {{profesor.apellidoP}}
-                    {{profesor.apellidoM}}
-                </p>
-                <a class="secondary-content" (click)="modificarProfesorModal(i)"><i class="small material-icons">edit</i></a>
-            </li>
-        </ul>
+    <!-- Si hay carreras asociadas a un instituto vamos a mostrar profesores de esa carrera si no solo del instituto -->
+    <div class="row">
+        <div class="col s12">
+            <label> Profesores Adscritos</label>
+            <ul class="collection" *ngFor="let profesor of profesoresListar; let i=index">
+                <li class="collection-item avatar">
+                    <img src="http://localhost:3000/avataaars.png" class="circle center">
+                    <b><span class="title">{{profesor.grado}}</span></b>
+                    <p>
+                        {{profesor.nombresP}} {{profesor.apellidoP}} {{profesor.apellidoM}}
+                    </p>
+                    <a (click)="eliminarProfesor(i)"><i class="small material-icons">person_remove</i></a>
+                    <a class="secondary-content "(click)="modificarProfesorModal(i)"><i class="small material-icons">edit</i></a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -114,7 +125,7 @@
                         </div>
                         <div class="row">
                             <div class="col s12 center">
-                                <button class="btn waves-effect waves-light deep-orange darken-3" (click)="altaProfesor()" type="submit" name="action" href="#!">Modificar Profesor
+                                <button class="btn waves-effect waves-light deep-orange darken-3" (click)="altaModificarProfesor()" type="submit" name="action" href="#!">Modificar Profesor
                                     <i class="material-icons right">send</i>
                                 </button>                                
                             </div>

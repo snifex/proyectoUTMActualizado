@@ -92,5 +92,17 @@ class ArticuloController {
             res.json(respuesta);
         });
     }
+    getArticulosByInstituto(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { idInstituto } = req.params;
+            let respuesta = yield database_1.default.query('SELECT * FROM Articulo as A INNER JOIN ArticuloYProfesor AP ON AP.idArticulo=A.idArticulo INNER JOIN Profesores P ON P.idProfesor=AP.idProfesor WHERE P.idInstituto=?', idInstituto);
+            // Obtener los profesores participantes
+            for (let i = 0; i < respuesta.length; i++) {
+                const respuesta2 = yield database_1.default.query('SELECT * FROM Profesores as P INNER JOIN ArticuloYProfesor AP ON AP.idProfesor=P.idProfesor WHERE AP.idArticulo=?', respuesta[i].idArticulo);
+                respuesta[i].profesores = respuesta2;
+            }
+            res.json(respuesta);
+        });
+    }
 }
 exports.articuloController = new ArticuloController();

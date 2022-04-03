@@ -15,6 +15,7 @@ class ArticuloRoutes {
         this.router.put('/actualizar/:idArticulo', articuloController_1.articuloController.actualizar);
         this.router.delete('/eliminar/:idArticulo', articuloController_1.articuloController.eliminar);
         this.router.get('/listByPeriodo/:ini/:fin', articuloController_1.articuloController.listByPeriodo);
+        this.router.get('/listByInstituto/:idInstituto', articuloController_1.articuloController.getArticulosByInstituto);
     }
 }
 const articuloyprofesorRoutes = new ArticuloRoutes();

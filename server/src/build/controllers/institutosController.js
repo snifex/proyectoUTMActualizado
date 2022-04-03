@@ -40,9 +40,9 @@ class InstitutosController {
     }
     actualizar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { codigo } = req.params;
+            const { idInstituto } = req.params;
             console.log(req.params);
-            const resp = yield database_1.default.query("UPDATE Institutos set ? WHERE codigo= ?", [req.body, codigo]);
+            const resp = yield database_1.default.query("UPDATE Institutos set ? WHERE idInstituto= ?", [req.body, idInstituto]);
             res.json(resp);
         });
     }

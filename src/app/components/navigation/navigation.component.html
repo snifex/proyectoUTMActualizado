@@ -33,11 +33,27 @@
                         <i class="material-icons right">arrow_drop_down</i>
                     </a>
                 </li>
+
+                <li>
+                    <a data-target="menuListar" class="left dropdown-trigger">Listar
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
             </ul>
+
             <!-- Opciones lado izquierdo -->
             <ul id="menuAgregar" class="dropdown-content" >
                 <li (click)="agregarProfesor()"><a >Profesores </a></li>
-                <li (click)="agregarArticulo()"><a>Articulos</a></li>
+                <li (click)="agregarCarrera()"><a>Carrera</a></li>
+                <li (click)="agregarInstituto()"><a>Instituto</a></li>
+
+            </ul>
+
+            <ul id="menuListar" class="dropdown-content">
+                <li (click)="listarProfesores()"><a>Profesores</a></li>
+                <li (click)="listarCarreras()"><a>Carreras</a></li>
+                <li (click)="listarInstitutos()"><a>Institutos</a></li>
+                <li (click)="listarArticulos()"><a>Articulos</a></li>
             </ul>
 
             <ul id="menu_modificar" class="dropdown-content">

@@ -24,6 +24,9 @@ export class ProfesoresViceComponent implements OnInit {
     profesor : Profesor;
     tipoProfesores: any;
     tipoProfesoresActual: any;
+    profesoresListar: any;
+    profesorEliminar: any;
+    profesorModificar: Profesor;
 
     //Variables modal
     institutoActualModal:any;
@@ -33,6 +36,7 @@ export class ProfesoresViceComponent implements OnInit {
     constructor(private institutoService: InstitutoService, private carrerasService: CarrerasService, private profesorService: ProfesorService, private tipoProfesorService:TipoProfesorService){
         this.numCarrerasByInstituto = 0;
         this.profesor = new Profesor();
+        this.profesorModificar = new Profesor();
     }
     
     ngOnInit(): void {
@@ -46,6 +50,17 @@ export class ProfesoresViceComponent implements OnInit {
                 this.carreraActualModal = resCarreras[0].idCarrera;
                 this.carreraActual = resCarreras[0].idCarrera;
                 this.numCarrerasByInstituto = resCarreras.length;
+                //Listamos profesores para el modal de listar
+                if(this.numCarrerasByInstituto != 0){
+                    this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resProfesores: any) =>{
+                        this.profesoresListar = resProfesores;
+                    })
+                }else{
+                    this.profesorService.listProfesoresByInstituto(this.institutoActual).subscribe((resProfesores: any) =>{
+                        this.profesoresListar = resProfesores;
+                    })
+                }
+                
 				this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resProfesores: any) => {
 					this.profesores = resProfesores;
                     this.profesorActual = this.profesores[0].idProfesor;
@@ -62,6 +77,19 @@ export class ProfesoresViceComponent implements OnInit {
             this.tipoProfesores = resTipoProfesores;
         },err => console.error(err));
     }
+
+    cambioProfesores(carrera:Number): void {
+        if(carrera != 0){
+            this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resProfesores: any) =>{
+                this.profesoresListar = resProfesores;
+            },err => console.error(err));
+        }else{
+            this.profesorService.listProfesoresByInstituto(this.institutoActual).subscribe((resProfesores: any) =>{
+                this.profesoresListar = resProfesores;
+            },err => console.error(err));
+        }
+    }
+
 
     cambioInstituto(op:any): void {
         this.institutoActual = op.value;
@@ -94,43 +122,61 @@ export class ProfesoresViceComponent implements OnInit {
         }, err => console.error(err));
     }
 
-    cambioCarrera(op:any):void{
+    cambioCarrera(op:any): void {
         this.carreraActual = op.value;
+        this.cambioProfesores(this.carreraActual);
         this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resProfesores: any) =>{
             this.profesores = resProfesores;
-        },err => console.error(err))
-
+        },err => console.error(err));
     }
 
-    modificarProfesorModal(index:any): void {
-        console.log(this.profesorActual)
+    modificarProfesorModal(index:any):void{
         $('#modificarProfesorModal').modal();
         $('#modificarProfesorModal').modal("open");
         this.profesorActual = this.profesores[index];
-        this.profesor.nombresP = this.profesorActual.nombresP;
-        this.profesor.apellidoP = this.profesorActual.apellidoP;
-        this.profesor.apellidoM = this.profesorActual.apellidoM;
-        this.profesor.grado = this.profesorActual.grado;
+        this.profesorModificar = this.profesorActual;
     }
 
-    altaProfesor(): void {
-        this.profesorActual.password = this.profesor.password;
-        this.profesorActual.nombresP = this.profesor.nombresP;
-        this.profesorActual.apellidoP = this.profesor.apellidoP;
-        this.profesorActual.apellidoM = this.profesor.apellidoM;
-        this.profesorActual.grado = this.profesor.grado;
-        this.profesorActual.idInstituto = this.institutoActualModal;
-        this.profesorActual.idCarrera = this.carreraActualModal;
-
+    altaModificarProfesor(): void {
         //mandamos a actualizar al server
-        console.log("Profesor a enviar"+this.profesorActual);
-        this.profesorService.modificarProfesor(this.profesorActual.idProfesor,this.profesorActual).subscribe((resProfesorModificar: any) =>{
+        this.profesorModificar.idCarrera = this.carreraActualModal;
+        this.profesorModificar.idInstituto = this.institutoActualModal;
+        this.profesorService.modificarProfesor(this.profesorActual.idProfesor,this.profesorModificar).subscribe((resProfesorModificar: any) =>{
             console.log(resProfesorModificar);
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Se han hecho los cambios correctamente'
+                title: 'Se han hecho los cambios correctamente'    
             })
+            .then(respuesta =>{
+                //Volvemos a obtener los profesores para que los muestre modificados
+                if(respuesta.isConfirmed){
+                    this.cambioProfesores(this.carreraActual);
+                }
+            })
+
         },err => console.error(err));
+        $('#modificarProfesorModal').modal("close");
+    }
+
+    eliminarProfesor(index:any):void{
+        this.profesorEliminar = this.profesores[index];
+        Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: '¿Estas seguro de eliminar a este profesor?',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#dc3741',
+            confirmButtonText: 'Eliminar'
+        }).then((respuesta) =>{
+            if(respuesta.isConfirmed){
+                this.profesorService.eliminarProfesor(this.profesorEliminar.idProfesor).subscribe((resElimina : any) =>{
+                    Swal.fire('Profesor eliminado','','error')
+                },err => console.error(err)) 
+                //Listamos a los profesores para que nos salgan con los cambios hechos
+                this.cambioProfesores(this.carreraActual);
+            }
+        })
     }
 }

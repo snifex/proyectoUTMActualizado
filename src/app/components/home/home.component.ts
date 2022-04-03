@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Articulo } from 'src/app/models/articulo.model';
+import { Carrera } from 'src/app/models/carrera.model';
+import { Instituto } from 'src/app/models/instituto.model';
 import { Profesor } from 'src/app/models/profesor.model';
 import { ArticuloService } from 'src/app/services/articulo.service';
 import { CambioInfoService } from 'src/app/services/cambio-info.service';
@@ -35,11 +37,24 @@ export class HomeComponent implements OnInit {
     estado: any[] = ["Publicado","Pendiente"];
     tipoNI: any[] = ["Nacional","Internacional"];
     location: any;
+    institutoModel : Instituto;
+    carreraModel : Carrera;
+    
+    carreraEliminar: any;
+    carreraModificar : Carrera;
+
+    /* Modal variables*/
+    institutoActualModal:any;
+    carreraActualModal:any;
+    carrerasModal:any;
 
     constructor(private articuloService: ArticuloService,private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService, private institutoService : InstitutoService, private cambioInfoService: CambioInfoService) {
         this.articulito = new Articulo();
         this.profesor = new Profesor();
         this.idProfesor = Number(localStorage.getItem('idProfesor'));
+        this.institutoModel = new Instituto();
+        this.carreraModel = new Carrera();
+        this.carreraModificar = new Carrera();
     }
 
     ngOnInit(): void {
@@ -64,9 +79,9 @@ export class HomeComponent implements OnInit {
         //         const element = this.profesoresApa[index];
         //         element.nombreApa = element.apellidoP + ", ";
         //         if(element.nombresP.indexOf(" ") != -1){
-        //             element.nombreApa += element.nombresP.charAt(0) + "." + element.nombresP.charAt(element.nombresP.indexOf(" ")+1) + ".";
+        //              element.nombreApa += element.nombresP.charAt(0) + "." + element.nombresP.charAt(element.nombresP.indexOf(" ")+1) + ".";
         //         }else{
-        //             element.nombreApa += element.nombresP.charAt(0) + ".";
+        //              element.nombreApa += element.nombresP.charAt(0) + ".";
         //         }
         //         //Mandamos a guardar en la base de datos
         //         this.profesorService.modificarProfesor(element.idProfesor,element).subscribe((resProfesores: any) => {
@@ -74,7 +89,7 @@ export class HomeComponent implements OnInit {
         //     }
             
         // })
-        
+
         this.profesorService.listOne(this.idProfesor).subscribe((resProfesor: any) =>{
             this.profesorActual = resProfesor;
         },err => console.error(err));
@@ -88,6 +103,7 @@ export class HomeComponent implements OnInit {
             this.carreras = resCarreras;
             this.carrerasProfesor = resCarreras;
         })
+
         this.institutoService.listInstitutos().subscribe((resInstitutos: any) => {
 			console.log(resInstitutos);
 			this.institutos = resInstitutos;
@@ -112,22 +128,20 @@ export class HomeComponent implements OnInit {
     }
 
     cambioInstituto(op: any) {
-		console.log('Entro ', op.value)
 		this.institutoActual = op.value;
 		this.carrerasService.listCarrerasByInstituto(this.institutoActual).subscribe((resCarreras: any) => {
 			console.log(resCarreras);
 			this.numCarrerasByInstituto = resCarreras.length;
-			if (this.numCarrerasByInstituto == 0)
+			if (this.numCarrerasByInstituto == 0){
 				this.carreraActual = 0
-			else {
+			} else {
 				this.carreraActual = resCarreras[0].idCarrera;
 				this.carreras = resCarreras;
-				let dato = {
-					'value': this.carreraActual
-				}
-				this.cambioCarrera(dato);
 			}
-
+            let dato = {
+                'value': this.carreraActual
+            }
+            this.cambioCarrera(dato);
 		},err => console.error(err));
 	}
 
@@ -142,6 +156,30 @@ export class HomeComponent implements OnInit {
         },err => console.error(err));
     }
 
+    /*Carrera Metodos */
+    eliminarCarrera(index:any):void{
+        this.carreraEliminar = this.carreras[index];
+        Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: '¿Estas seguro de eliminar esta Carrera?',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#dc3741',
+            confirmButtonText: 'Eliminar'
+        }).then((respuesta) =>{
+            if(respuesta.isConfirmed){
+                this.carrerasService.eliminarCarrera(this.carreraEliminar.idCarrera).subscribe((resElimina : any) =>{
+                    Swal.fire('Carrera eliminado','','error');
+                },err => console.error(err))
+                
+                //Listamos a los institutos para que nos salgan con los cambios hechos
+                this.cambioCarrera(this.carreraActual);
+            }
+        })
+    }
+
+    /* MODALES */
     agregarArticulo(): void {
         console.log("agregar articulo");
         $('#agregarArticulo').modal();
@@ -159,7 +197,7 @@ export class HomeComponent implements OnInit {
         this.articulito.editores = this.profesorActual.nombresP + " " + this.profesorActual.apellidoP + " " + this.profesorActual.apellidoM;
         //Obtenemos la fecha de Jquery
         this.articulito.fechaEdicion = $('#fecha').val();
-        //Obtenemos el año de la fecha
+        //Obtenemos el año de la fecha 
         this.articulito.anyo = this.articulito.fechaEdicion.substring(0,4);
         console.log(this.articulito);
         this.articuloService.crearArticulo(this.idProfesor,this.articulito).subscribe((resArticulo: any) =>{
@@ -171,22 +209,33 @@ export class HomeComponent implements OnInit {
             this.enviarMensajeArticulo();
         }, err => console.error(err));
         //Redirecciona a articulos despues de agregar el articulo
-        if(this.location == "http://localhost:4200/home/articulosVice/"+this.idProfesor){
-            document.location.reload();
-        }
+        // if(this.location == "http://localhost:4200/home/articulosVice/"+this.idProfesor){
+        //     document.location.reload();
+        // }
     }
 
-    altaProfesor(): void {
-        this.profesor.idInstituto = this.institutoActual;
-        this.profesor.idCarrera = this.carreraActual;
-        this.profesorService.guardarProfesor(this.profesor).subscribe(res => {
+    altaInstituto(): void {
+        this.institutoService.crearInstituto(this.institutoModel).subscribe(res =>{
             console.log(res);
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Se ha dado de alta correctamente al profesor'
-            })
-        },err => console.error(err) );
+                title: 'Se ha dado de alta correctamente el nuevo Instituto'
+            });
+            this.enviarMensajeArticulo();
+        },err => console.error(err));
     }
 
+    altaCarrera(): void {
+        this.carreraModel.idInstituto = this.institutoActual
+        this.carrerasService.crearCarrera(this.carreraModel).subscribe(res => {
+            console.log(res);
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Se ha dado de alta correctamente la nueva Carrera'
+            });
+            this.enviarMensajeArticulo()
+        },err => console.error(err))
+    }
 }

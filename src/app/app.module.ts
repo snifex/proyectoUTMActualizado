@@ -15,6 +15,8 @@ import { RecuperarComponent } from './components/recuperar/recuperar.component';
 import { ProfesoresViceComponent } from './components/profesores-vice/profesores-vice.component';
 import { GeneralesViceComponent } from './components/generales-vice/generales-vice.component';
 import { CambioInfoService } from './services/cambio-info.service';
+import { CarrerasViceComponent } from './components/carreras-vice/carreras-vice.component';
+import { InstitutosViceComponent } from './components/institutos-vice/institutos-vice.component';
 
 @NgModule({ /* para hacer la relacion entre formulario con el modelo */
   declarations: [
@@ -28,7 +30,9 @@ import { CambioInfoService } from './services/cambio-info.service';
     ArticulosViceComponent,
     RecuperarComponent,
     ProfesoresViceComponent,
-    GeneralesViceComponent
+    GeneralesViceComponent,
+    CarrerasViceComponent,
+    InstitutosViceComponent
   ],
   imports: [
     BrowserModule,

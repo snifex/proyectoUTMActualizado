@@ -1,5 +1,4 @@
 export class Profesor{
-    idProfesor:number;
     nombresP: string;
     apellidoP: string;
     apellidoM: string;
@@ -12,7 +11,6 @@ export class Profesor{
     nombreApa:string;
     idInstituto:number;
     constructor() {
-        this.idProfesor= 0;
         this.nombresP = '';
         this.apellidoP = '';
         this.apellidoM = '';

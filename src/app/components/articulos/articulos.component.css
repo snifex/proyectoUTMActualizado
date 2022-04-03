@@ -1,1 +1,8 @@
 @import '~material-icons/iconfont/material-icons.css';
+.container{
+    margin-top: 2rem;
+}
+input{
+    width: 100%!important;
+}
+

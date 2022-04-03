@@ -42,4 +42,8 @@ export class ProfesorService {
 	modificarProfesor(idProfesorACambiar: number, profesorACambiar:Profesor){
 		return this.http.put(`${environment.API_URI}/profesores/actualizar/${idProfesorACambiar}`,profesorACambiar);
 	}
+
+	eliminarProfesor(idProfesor: number){
+		return this.http.delete(`${environment.API_URI}/profesores/eliminar/${idProfesor}`)
+	}
 }

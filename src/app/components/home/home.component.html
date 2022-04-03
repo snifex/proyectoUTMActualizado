@@ -152,6 +152,108 @@
     </div>
 </div>
 
+
+
+<!-- Nueva Carrera -->
+<div class="container">
+    <div class="modal" id="agregarCarrera">
+        <div class="modal-content">
+            <div class="col s12 m12 l8 offset-12 loginDiv">
+                <div class="row loginContainer">
+                    <div class="row" style="margin-bottom: 0px !important">
+                        <div class="col s12">
+                            <h5 class="center">
+                                Nueva Carrera
+                            </h5>
+                        </div>
+                    </div>
+                    <div style="border: .5px solid #78909c; padding: 10px">
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Nombre de la Carerra</label>
+                                <input [(ngModel)]="carreraModel.nombreCarrera" type="text" autocomplete="off" placeholder="Nombre de la nueva Carrera">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Codigo de Carrera</label>
+                                <input [(ngModel)]="carreraModel.codigoCarrera" type="text" autocomplete="off" placeholder="Codigo de la nueva Carrera">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Instituto al cual estara adscrito</label>
+                                <select (change)="cambioInstituto($event.target)" class="browser-default">
+                                    <ng-container *ngFor='let item of institutos'>
+                                        <option [value]="item.idInstituto" *ngIf="item.idInstituto!=0">{{item.nombreInstituto}}
+                                        </option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Siglas del nuevo Instituto</label>
+                                <input [(ngModel)]="carreraModel.siglas" type="text" autocomplete="off" placeholder="Siglas de la nueva Carrera">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 center">
+                                <button class="btn waves-effect waves-light" (click)="altaCarrera()" type="submit" name="action">Dar de alta Carrera
+                                    <i class="material-icons right">send</i>
+                                </button>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Nuevo instituto -->
+<div class="container">
+    <div class="modal" id="agregarInstituto">
+        <div class="modal-content">
+            <div class="col s12 m12 l8 offset-12 loginDiv">
+                <div class="row loginContainer">
+                    <div class="row" style="margin-bottom: 0px !important">
+                        <div class="col s12">
+                            <h5 class="center">
+                                Nuevo Instituto
+                            </h5>
+                        </div>
+                    </div>
+                    <div style="border: .5px solid #78909c; padding: 10px">
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Nombre del Instituto</label>
+                                <input [(ngModel)]="institutoModel.nombreInstituto" type="text" autocomplete="off" placeholder="Nombre del nuevo Instituto">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Codigo del Instituto</label>
+                                <input [(ngModel)]="institutoModel.codigoInstituto" type="text" placeholder="Codigo del nuevo Instituto">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 center">
+                                <button class="btn waves-effect waves-light" (click)="altaInstituto()" type="submit" name="action">Dar de alta Instituto
+                                    <i class="material-icons right">send</i>
+                                </button>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Nuevo Profesor -->
 <div class="container">
     <div class="modal" id="agregarProfesor">
         <div class ="modal-content">
@@ -238,7 +340,7 @@
 
                         <div class="row">
                             <div class="col s12 center">
-                                <button class="btn waves-effect waves-light" (click)="altaProfesor()" type="submit" name="action">Dar de alta profesor
+                                <button class="btn waves-effect waves-light" type="submit" name="action">Dar de alta profesor
                                     <i class="material-icons right">send</i>
                                 </button>                                
                             </div>

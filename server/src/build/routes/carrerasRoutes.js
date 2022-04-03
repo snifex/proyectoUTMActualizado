@@ -11,8 +11,8 @@ class CarrerasRoutes {
         this.router.get('/', carrerasController_1.carrerasController.list);
         this.router.get('/:codigoCarrera', carrerasController_1.carrerasController.listOne);
         this.router.post('/create', carrerasController_1.carrerasController.create);
-        this.router.put('/actualizar/:codigo', carrerasController_1.carrerasController.actualizar);
-        this.router.delete('/eliminar/:codigo', carrerasController_1.carrerasController.eliminar);
+        this.router.post('/actualizar/:idCarrera', carrerasController_1.carrerasController.actualizar);
+        this.router.delete('/eliminar/:idCarrera', carrerasController_1.carrerasController.eliminar);
         this.router.get('/getCarrerasByInstituto/:idInstituto', carrerasController_1.carrerasController.getCarrerasByInstituto);
     }
 }

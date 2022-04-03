@@ -2,6 +2,18 @@ button{
     background-color: #562605 !important;
 }
 
+.material-icons{
+    color: black;
+}
+
+i{
+    cursor: pointer;
+}
+
+.secondary-content{
+    gap: 1rem;
+}
+
 @media print{
     @page{
 		/*Con esto quitamos el marco que sale al momento de imprimir*/

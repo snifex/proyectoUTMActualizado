@@ -10,6 +10,8 @@ import { ArticulosViceComponent } from './components/articulos-vice/articulos-vi
 import { RecuperarComponent } from './components/recuperar/recuperar.component';
 import { ProfesoresViceComponent } from './components/profesores-vice/profesores-vice.component';
 import { GeneralesViceComponent } from './components/generales-vice/generales-vice.component';
+import { CarrerasViceComponent } from './components/carreras-vice/carreras-vice.component';
+import { InstitutosViceComponent } from './components/institutos-vice/institutos-vice.component';
 
 const routes: Routes = [
 	{
@@ -48,6 +50,14 @@ const routes: Routes = [
 			{
 				path: 'generales-vice/:idProfesor',
 				component: GeneralesViceComponent
+			},
+			{
+				path: 'carreras-vice/:idProfesor',
+				component: CarrerasViceComponent
+			},
+			{
+				path: 'institutos-vice/:idProfesor',
+				component: InstitutosViceComponent
 			}
 		]
 	},

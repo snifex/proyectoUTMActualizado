@@ -1,40 +1,22 @@
 <div class="container">
-	<li class="header">
-		<div class="row">
-			<div class="col s6">
-				<input type="date" value="{{ini}}" (change)="CambioFechaIni()" id="fechaIni" class="col s6">
-			</div>
-			<div class="col s6">
-				<input type="date" value="{{fin}}" (change)="CambioFechaFin()" id="fechaFin" class="col s6">
-			</div>
+	<div class="row">
+		<div class="col s12">
+			<label>Selecciona un Instituto</label>
+			<select (change)="cambioInstitutoProfesores($event.target)" class="browser-default">
+				<ng-container *ngFor='let item of institutos'>
+					<option [value]="item.idInstituto" *ngIf="item.idInstituto!=0">{{item.nombreInstituto}}</option>
+				</ng-container>
+			</select>
 		</div>
-	</li>
+	</div>
 
 	<ul class="collection" *ngFor="let articulo of articulos; let i=index">
 		<li class="collection-item avatar">
-			<i class="material-icons circle">
-				article
-			</i>
+			<i class="material-icons circle">article</i>
 			<b><span class="title">{{articulo.titulo}}</span></b>
-			<p *ngFor="let autor of autores[i];">
+			<p *ngFor="let autor of articulo.profesores">
 				{{autor.nombreApa}}
 			</p>
 		</li>
 	</ul>
 </div>
-
-<div class="fixed-action-btn">
-	<a class="btn-floating btn-large red">
-	  <i class="large material-icons">mode_edit</i>
-	</a>
-	<ul>
-	  <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-	  <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-	  <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-	  <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-	</ul>
-</div>
-
-<!-- <div class="modalProfesor">
-	value=profesorActual.campoDelModal
-</div> -->

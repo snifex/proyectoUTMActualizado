@@ -12,7 +12,7 @@ class InstitutosRoutes
 	{
 		this.router.get('/',(req,res) => res.send('probando institutos'));
 		this.router.post('/create', institutosController.create);
-		this.router.put('/actualizar/:codigo',institutosController.actualizar);
+		this.router.post('/actualizar/:idInstituto',institutosController.actualizar);
 		this.router.delete('/eliminar/:codigo',institutosController.eliminar);
 		this.router.get('/all', institutosController.list );
 		this.router.get('/:codigo', institutosController.listOne );

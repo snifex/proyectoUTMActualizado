@@ -24,11 +24,10 @@ class InstitutosController
 		[req.body]);
 		res.json(resp);
 	}
-	public async actualizar(req: Request, res: Response): Promise<void> 
-	{
-		const { codigo } = req.params;
+	public async actualizar(req: Request, res: Response): Promise<void> {
+		const { idInstituto } = req.params;
 		console.log(req.params);
-		const resp = await pool.query("UPDATE Institutos set ? WHERE codigo= ?", [req.body, codigo]);
+		const resp = await pool.query("UPDATE Institutos set ? WHERE idInstituto= ?", [req.body, idInstituto]);
 		res.json(resp);
 	}
 	public async eliminar(req: Request, res: Response): Promise<void> 

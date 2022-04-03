@@ -33,21 +33,45 @@ export class NavigationComponent implements OnInit {
 		this.router.navigateByUrl('/');
 
 	}
+
+	/* MODALES*/
 	
 	agregarProfesor(): void {
         $('#agregarProfesor').modal();
         $('#agregarProfesor').modal("open");
     }
 
-	agregarArticulo(): void {
-        $('#agregarArticulo').modal();
-        $('#agregarArticulo').modal("open");
+	agregarCarrera(): void {
+        $('#agregarCarrera').modal();
+        $('#agregarCarrera').modal("open");
     }
+
+	agregarInstituto(): void {
+		$('#agregarInstituto').modal();
+		$('#agregarInstituto').modal("open");
+	}
+
+	listarProfesores(): void {
+		this.router.navigateByUrl('/home/profesores-vice/'+ this.idProfesor);          
+    }
+
+    listarCarreras(): void {
+		this.router.navigateByUrl('/home/carreras-vice/'+ this.idProfesor);       
+    }
+
+    listarInstitutos(): void {
+        this.router.navigateByUrl('/home/institutos-vice/'+ this.idProfesor);       
+    }
+
+    listarArticulos(): void { 
+		this.router.navigateByUrl('/home/articulosVice/'+ this.idProfesor);
+    }
+
 	datosGenerales():void{
 		this.router.navigateByUrl('/home/generales-vice/'+ this.idProfesor);
 	}
 
 	redirArticulos(): void {
-		this.router.navigateByUrl('/home/articulosVice/'+ this.idProfesor);
+		this.router.navigateByUrl('/home/articulos/'+ this.idProfesor);
 	}
 }

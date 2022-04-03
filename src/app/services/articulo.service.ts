@@ -22,4 +22,8 @@ export class ArticuloService {
 	crearArticulo(idProfesor: number, articulito: Articulo) {
 		return this.http.post(`${environment.API_URI}/articulo/create/${idProfesor}`,articulito);
 	}
+
+	listByInstituto(idInstituto: number) {
+		return this.http.get(`${environment.API_URI}/articulo/listByInstituto/${idInstituto}`);
+	}
 }

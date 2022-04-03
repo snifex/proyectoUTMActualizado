@@ -75,5 +75,18 @@ class ArticuloController
 		const respuesta = await pool.query('SELECT * FROM Articulo WHERE fechaEdicion>=? AND fechaEdicion<=?',[ini,fin]);
 		res.json( respuesta );
 	}
+
+	public async getArticulosByInstituto(req: Request, res: Response): Promise<void> {
+		const { idInstituto } = req.params
+		let respuesta = await pool.query('SELECT * FROM Articulo as A INNER JOIN ArticuloYProfesor AP ON AP.idArticulo=A.idArticulo INNER JOIN Profesores P ON P.idProfesor=AP.idProfesor WHERE P.idInstituto=?', idInstituto)
+		
+		// Obtener los profesores participantes
+		for (let i = 0; i < respuesta.length; i++) {
+			const respuesta2 = await pool.query('SELECT * FROM Profesores as P INNER JOIN ArticuloYProfesor AP ON AP.idProfesor=P.idProfesor WHERE AP.idArticulo=?', respuesta[i].idArticulo)
+			respuesta[i].profesores = respuesta2
+		}
+
+		res.json(respuesta)
+	}
 }
 export const articuloController = new ArticuloController();
