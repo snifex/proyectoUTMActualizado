@@ -21,7 +21,7 @@ export class NavigationComponent implements OnInit {
 		console.log(this.idProfesor);
 		$(document).ready(function () {
 			$('.sidenav').sidenav();
-			$(".dropdown-trigger").dropdown({ coverTrigger: false });
+			$(".dropdown-trigger").dropdown({ coverTrigger: false, constrainWidth:false });
 		});
 	}
 	logout(){
