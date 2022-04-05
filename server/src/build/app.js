@@ -59,7 +59,7 @@ class Server {
             const name = req.body.idArticulo;
             const binaryData = Buffer.from(file.replace(/^data:.*,/, ""), 'base64');
             fs_1.default.writeFile(`${__dirname}/img/pdf/${name}.pdf`, binaryData, "base64", (err) => {
-                console.log(err);
+                console.log("Respuesta: " + err);
             });
             res.json({ fileName: name + '.pdf' });
         });
