@@ -6,3 +6,8 @@ input{
     width: 100%!important;
 }
 
+.material-icons{
+    color: black;
+    display: flex;
+    align-items: center;
+}

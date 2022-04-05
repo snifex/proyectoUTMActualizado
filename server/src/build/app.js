@@ -18,6 +18,7 @@ const cors_1 = __importDefault(require("cors"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const database_1 = __importDefault(require("./database"));
+const fs_1 = __importDefault(require("fs"));
 const correoAcceso = require('./correoAcceso');
 class Server {
     constructor() {
@@ -51,6 +52,16 @@ class Server {
         this.app.post('/enviarCorreoRecuperarContrasenya', (req, res) => {
             console.log('xx', req.body);
             correoAcceso(req.body);
+        });
+        this.app.post('/guardarArchivo', (req, res) => {
+            console.log(__dirname);
+            const file = req.body.src;
+            const name = req.body.idArticulo;
+            const binaryData = Buffer.from(file.replace(/^data:.*,/, ""), 'base64');
+            fs_1.default.writeFile(`${__dirname}/img/pdf/${name}.pdf`, binaryData, "base64", (err) => {
+                console.log(err);
+            });
+            res.json({ fileName: name + '.pdf' });
         });
         this.app.post('/decodificarMail', (req, res) => __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);

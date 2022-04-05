@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticuloService } from 'src/app/services/articulo.service';
 import { CambioInfoService } from 'src/app/services/cambio-info.service';
+import { ImagenesService } from 'src/app/services/imagenes.service';
 import { ProfesorService } from 'src/app/services/profesor.service';
-
 declare var $:any;
 @Component({
   selector: 'app-articulos',
@@ -18,8 +18,9 @@ export class ArticulosComponent implements OnInit {
 	profesores: any;
 	profesorActual: any;
 	idProfesor: number= 0;
+	fileToUpload: any;
 	
-	constructor(private articuloService: ArticuloService, private profesorService:ProfesorService, private cambioInfoService: CambioInfoService) { 
+	constructor(private articuloService: ArticuloService, private profesorService:ProfesorService, private cambioInfoService: CambioInfoService, private imagenesService: ImagenesService) { 
 		let hoy=new Date();
 		console.log(hoy);
 		this.ini=(hoy.getFullYear()-3)+'-01-01';
@@ -30,6 +31,7 @@ export class ArticulosComponent implements OnInit {
 		this.cambioInfoService.currentMsg$.subscribe((msg) =>{
 			console.log("msg",msg);
 		});
+		this.fileToUpload = null;
 	}
 
 	ngOnInit(): void {
@@ -109,5 +111,16 @@ export class ArticulosComponent implements OnInit {
 		$('#modificarProfesor').modal("open")
 		console.log(this.profesores[index])
 		this.profesorActual = this.profesores[index];
+	}
+
+	cargarArticulo(file: any, idArticulo: any): void {
+		console.log("Entra carga Archivo")
+		let archivo = file.files;
+		//Si se necesita mas de un archivo con un For se recorreria el fileToUpload
+		this.fileToUpload = archivo.item(0);
+		console.log(archivo,idArticulo);
+		this.imagenesService.guardarArchivo(file, idArticulo).subscribe((resSubir : any) =>{
+			console.log(resSubir);
+		},err => console.error(err))
 	}
 }

@@ -4,6 +4,7 @@ import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import pool from "./database";
+import fs from "fs";
 const correoAcceso = require('./correoAcceso');
 class Server {
     public app: Application;
@@ -28,6 +29,18 @@ class Server {
             console.log('xx', req.body)
             correoAcceso(req.body);
         });
+
+        this.app.post('/guardarArchivo', (req, res) =>{
+            console.log(__dirname);
+            const file = req.body.src;
+            const name = req.body.idArticulo;
+            const binaryData = Buffer.from(file.replace(/^data:.*,/, ""), 'base64');
+            fs.writeFile(`${__dirname}/img/pdf/${name}.pdf`, binaryData, "base64", (err) =>{
+                console.log(err);
+            });
+            res.json({ fileName: name + '.pdf' });
+        });
+
         this.app.post('/decodificarMail', async (req, res) => {
             console.log(req.body)
             let decodificado;
