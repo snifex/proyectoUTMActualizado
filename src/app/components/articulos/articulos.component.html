@@ -2,11 +2,11 @@
 	<div class="container seccionMenu col s12 l3">
 		<div class="row">
 			<label>Articulos disponibles</label>
-			<form action="#" *ngFor="let articulo of articulos; let i=index" class="boton">
+			<form action="#" *ngFor="let articuloMenu of articulos; let i=index" class="boton">
 				<p>
 					<label>
-						<input type="checkbox" id="checkbox" (click)="seleccionarCheckbox($event,articulo)"/>
-						<span>{{articulo.titulo}}</span>
+						<input type="checkbox" id="checkbox" (click)="seleccionarCheckbox($event,articuloMenu,i)"/>
+						<span>{{articuloMenu.titulo}}</span>
 					</label>
 				</p>
 			</form>
@@ -25,7 +25,7 @@
 			</div>
 		</li>
 	
-		<ul class="collection" *ngFor="let articulo of articulos; let i=index">
+		<ul class="collection" *ngFor="let articulo of articulos; let i=index" >
 			<li class="collection-item avatar">
 				<i class="material-icons circle">
 					article
@@ -37,9 +37,11 @@
 				<div class="secondary-content">
 					<a><i class="small material-icons">person_remove</i></a>
 					<a><i class="small material-icons">edit</i></a>
-					<a><i class="small material-icons">document_scanner</i><input (change)="cargarArticulo($event.target,articulo.idArticulo)" type="file" [ngClass]="(articulo.checked) ? 'page-break-before':'always' "></a>
+					<a><i class="small material-icons">document_scanner</i><input (change)="cargarArticulo($event.target,articulo.idArticulo)" type="file"></a>
 				</div>
 			</li>
+
+			<div class="saltoPagina" *ngIf="arregloNumeros[i] == true"></div>
 		</ul>
 	</div>
 

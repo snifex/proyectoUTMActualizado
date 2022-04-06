@@ -34,6 +34,10 @@ input{
     ul{     /*Con esto evitamos que cuando se imprima se corte*/
         page-break-inside: avoid;
     }
+
+    .saltoPagina{
+        page-break-after: always;
+    }
 }
 
 div .container{     /*Le damos estilo a la barra del menu lateral*/

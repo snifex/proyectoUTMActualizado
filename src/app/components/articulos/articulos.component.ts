@@ -20,6 +20,8 @@ export class ArticulosComponent implements OnInit {
 	profesorActual: any;
 	idProfesor: number = 0;
 	fileToUpload: any;
+	arregloNumeros: boolean[] = [];
+
 
 	constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private cambioInfoService: CambioInfoService, private imagenesService: ImagenesService) {
 		let hoy = new Date();
@@ -51,7 +53,13 @@ export class ArticulosComponent implements OnInit {
 
 
 		this.articuloService.listByProfesor(this.idProfesor).subscribe((resArticulos: any) => {
+			let resultado: boolean[] = [];
 			this.articulos = resArticulos;
+			//Creamos un arreglo donde nos ayudar a saber si se modifico en el menu y cortar
+			for (let index = 0; index < resArticulos.length; index++) {
+				resultado[index] = false;
+			}
+			this.arregloNumeros = resultado;
 			this.articulos.forEach((element: any) => {
 				this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) => {
 					this.autores.push(resAutores);
@@ -59,7 +67,7 @@ export class ArticulosComponent implements OnInit {
 			})
 		}, err => console.error(err));
 
-		console.log(this.autores)
+		
 
 	}
 	CambioFechaIni() {
@@ -136,7 +144,13 @@ export class ArticulosComponent implements OnInit {
 		});
 	}
 
-	seleccionarCheckbox(check:any, articulo:any) {
+	seleccionarCheckbox(check:any, articulo:any, index:any) {
+		/*Verificamos si se marca o se desmarca para despues checar en nuestro if */
     	articulo.checked = check.currentTarget.checked; 
+		if(articulo.checked){
+			this.arregloNumeros[index] = true;
+		}else{
+			this.arregloNumeros[index] = false;
+		}
   	}
 }
