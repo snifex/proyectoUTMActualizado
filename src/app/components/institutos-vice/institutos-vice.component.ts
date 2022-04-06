@@ -32,23 +32,8 @@ export class InstitutosViceComponent implements OnInit {
 			console.log(resInstitutos);
 			this.institutos = resInstitutos;
 			this.institutoActual = this.institutos[1].idInstituto;
-			this.carrerasService.listCarrerasByInstituto(this.institutoActual).subscribe((resCarreras: any) => {
-				console.log(resCarreras);
-				this.carreraActual = resCarreras[0].idCarrera;
-				this.numCarrerasByInstituto = resCarreras.length;
-				this.carreras = resCarreras;
-				this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resProfesores: any) => {
-					console.log(resProfesores);
-					this.profesores = resProfesores;
-				},
-					err => console.error(err)
-				);
-			},
-				err => console.error(err)
-			);
-		},
-			err => console.error(err)
-		);
+			
+        },err => console.error(err));
     }
 
 
@@ -70,21 +55,12 @@ export class InstitutosViceComponent implements OnInit {
                 },err => console.error(err)) 
                 
                 //Listamos a los institutos para que nos salgan con los cambios hechos
-                this.cambioProfesores(this.carreraActual);
+                let dato = {
+                    'value': this.institutoActual
+                }
+                this.cambioInstituto(dato);
             }
         })
-    }
-
-    cambioProfesores(carrera:Number): void {
-        if(carrera != 0){
-            this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resProfesores: any) =>{
-                this.profesoresListar = resProfesores;
-            },err => console.error(err));
-        }else{
-            this.profesorService.listProfesoresByInstituto(this.institutoActual).subscribe((resProfesores: any) =>{
-                this.profesoresListar = resProfesores;
-            },err => console.error(err));
-        }
     }
 
     modificarInstitutoModal(index:any):void{
@@ -122,25 +98,7 @@ export class InstitutosViceComponent implements OnInit {
 		this.institutoActual = op.value;
 		this.carrerasService.listCarrerasByInstituto(this.institutoActual.idInstituto).subscribe((resCarreras: any) => {
 			console.log(resCarreras);
-			this.numCarrerasByInstituto = resCarreras.length;
-			if (this.numCarrerasByInstituto == 0){
-				this.carreraActual = 0
-			} else {
-				this.carreraActual = resCarreras[0].idCarrera;
-				this.carreras = resCarreras;
-			}
-            let dato = {
-                'value': this.carreraActual
-            }
-            this.cambioCarrera(dato);
 		},err => console.error(err));
 	}
 
-    cambioCarrera(op:any): void {
-        this.carreraActual = op.value;
-        this.cambioProfesores(this.carreraActual);
-        this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resProfesores: any) =>{
-            this.profesores = resProfesores;
-        },err => console.error(err));
-    }
 }

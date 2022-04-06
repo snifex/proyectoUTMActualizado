@@ -11,3 +11,38 @@ input{
     display: flex;
     align-items: center;
 }
+
+
+
+@media print{
+    .seccionMenu{
+        display: none;
+    }
+
+    .fixed-action-btn{      /*Se tiene que ocultar el boton como una clase ya que esta declarada como tal */
+        display: none;
+    }
+
+    @page{      /*Ponemos el tamaño de la hoja en tamaño carta*/
+        size: letter;
+    }
+
+    .secondary-content {
+        display:none;
+    }
+
+    ul{     /*Con esto evitamos que cuando se imprima se corte*/
+        page-break-inside: avoid;
+    }
+}
+
+div .container{     /*Le damos estilo a la barra del menu lateral*/
+    background-color: #f8f8f8;
+    left: 1rem;
+    max-height: 100%;
+    box-shadow: 2px 0px 4px #ccc;
+}
+
+.header{        /*Quitamos el punto que tenia el articulos*/
+    list-style-type: none;
+}

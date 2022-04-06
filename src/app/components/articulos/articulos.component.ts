@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ArticuloService } from 'src/app/services/articulo.service';
 import { CambioInfoService } from 'src/app/services/cambio-info.service';
@@ -134,4 +135,8 @@ export class ArticulosComponent implements OnInit {
 			reader.readAsDataURL(file);
 		});
 	}
+
+	seleccionarCheckbox(check:any, articulo:any) {
+    	articulo.checked = check.currentTarget.checked; 
+  	}
 }
