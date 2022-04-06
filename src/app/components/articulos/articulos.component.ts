@@ -121,15 +121,20 @@ export class ArticulosComponent implements OnInit {
 	cargarArticulo(file: any, idArticulo: any): void {
 		console.log("Entra carga Archivo")
 		let archivo = file.files;
-		//Si se necesita mas de un archivo con un For se recorreria el fileToUpload
-		this.fileToUpload = archivo.item(0);
-		console.log(archivo, idArticulo);
-		let imgPromise = this.getFileBlob(this.fileToUpload);
-		imgPromise.then(blob => {
-			this.imagenesService.guardarArchivo(blob, idArticulo).subscribe((resSubir: any) => {
-				console.log(resSubir);
-			}, err => console.error(err))
-		});
+		for (let index = 0; index < archivo.length; index++) {
+			console.log(archivo.item(index));
+			//Mandamos los archivos 1 x 1 de los n archivos
+			this.fileToUpload = archivo.item(index);
+
+			//Si se necesita mas de un archivo con un For se recorreria el fileToUpload
+			let imgPromise = this.getFileBlob(this.fileToUpload);
+			imgPromise.then(blob => {
+				this.imagenesService.guardarArchivo(blob, idArticulo, index).subscribe((resSubir: any) => {
+					console.log(resSubir);
+				}, err => console.error(err));
+			});
+		}
+		
 	}
 
 	getFileBlob(file: any) {

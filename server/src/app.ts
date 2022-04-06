@@ -34,8 +34,10 @@ class Server {
             console.log(__dirname);
             const file = req.body.src;
             const name = req.body.idArticulo;
+            const index = req.body.indice;
+            const letras = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"];
             const binaryData = Buffer.from(file.replace(/^data:.*,/, ""), 'base64');
-            fs.writeFile(`${__dirname}/img/pdf/${name}.pdf`, binaryData, "base64", (err) =>{
+            fs.writeFile(`${__dirname}/img/pdf/${name}_${letras[index]}.pdf`, binaryData, "base64", (err) =>{
                 console.log("Respuesta: "+ err);
             });
             res.json({ fileName: name + '.pdf' });
