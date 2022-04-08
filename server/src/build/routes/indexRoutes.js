@@ -15,6 +15,7 @@ class IndexRoutes {
         this.router.get('/articuloYprofesor', (req, res) => res.send('probando materia'));
         this.router.get('/articulo', (req, res) => res.send('probando articulo'));
         this.router.get('/tipoprofesor', (req, res) => res.send('probando tipo profesor'));
+        this.router.get('/archivoYArticulo', (req, res) => res.send('probando archivo y articulo'));
     }
 }
 const indexRoutes = new IndexRoutes();

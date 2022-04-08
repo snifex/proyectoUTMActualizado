@@ -12,7 +12,7 @@ declare var $: any;
 })
 export class ArticulosComponent implements OnInit {
 
-	articulos: any;
+	articulos: any = [];
 	autores: any = [];
 	ini: any;
 	fin: any;
@@ -21,9 +21,10 @@ export class ArticulosComponent implements OnInit {
 	idProfesor: number = 0;
 	fileToUpload: any;
 	arregloNumeros: boolean[] = [];
+	comprobado: any = true;
+	numeroDiv: any = [];
 	articulosImpresion: any[] = [];
-	arreglosImpresion: any[] = [];
-
+	articulosPrueba: any[] = [];
 
 	constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private cambioInfoService: CambioInfoService, private imagenesService: ImagenesService) {
 		let hoy = new Date();
@@ -47,7 +48,6 @@ export class ArticulosComponent implements OnInit {
 			});
 		});
 
-
 		//Inicializamos los profesores
 		this.profesorService.listProfesores().subscribe((resProfesores: any) => {
 			this.profesores = resProfesores;
@@ -58,10 +58,13 @@ export class ArticulosComponent implements OnInit {
 			let resultado: boolean[] = [];
 			this.articulos = resArticulos;
 			this.articulosImpresion = resArticulos;
+			this.articulosPrueba.push(resArticulos);
+			console.log(this.articulosPrueba);
 			//Creamos un arreglo donde nos ayudar a saber si se modifico en el menu y cortar
 			for (let index = 0; index < resArticulos.length; index++) {
 				resultado[index] = false;
 			}
+			console.log(this.articulos)
 			this.arregloNumeros = resultado;
 			this.articulos.forEach((element: any) => {
 				this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) => {
@@ -156,16 +159,60 @@ export class ArticulosComponent implements OnInit {
 		/*Verificamos si se marca o se desmarca para despues checar en nuestro if */
     	articulo.checked = check.currentTarget.checked; 
 		var i = 0;
+		var aux = [];
 		if(articulo.checked){
 			this.arregloNumeros[index] = true;
-			this.arreglosImpresion[i] = this.articulosImpresion.slice(index,this.articulosImpresion.length);
-			i++;
+			aux = this.articulos.slice(0,index+1);
+			this.articulosImpresion.push(aux)
+			console.log(this.articulosImpresion)
+			// //aumentamos contador
+			// i++;
+			// if(i != 0){
+			// 	//Si se marco se popea lo que tiene y se divide
+			// 	this.articulosPrueba.pop()
+			// }
+			// //Declaramos un arreglo bidimensional en la primera posicion es en cuanto se esta dividiendo en la segunda los articulos
+			// for (let j = i-1 ; j < i ; j++) {
+			// 	aux[j] = [];
+				
+			// 	if(i == 1){
+			// 		//Si es la primera vez se hace desde el inicio del arreglo hasta indice y de indice hasta el final del arreglo
+			// 		aux[j][i-1] = this.articulos.slice(0,index+1);
+			// 		aux[j][i] = this.articulos.slice(index+1 , this.articulos.length);
+			// 	}else{
+			// 		//Si no hace del ultimo que se saco en este caso la longitud que fue el ultimo donde acabo hasta la longitud del arreglo
+			// 		aux[j][i] = this.articulos.slice(aux[j][i-1].length, this.articulos.length);
+			// 	}
+			// 	this.articulosPrueba.push(aux[j])
+			// 	aux[j][i].forEach((element: any) => {
+			// 		this.articulosImpresion.push(element)
+			// 	})
+			// }
 		}else{
 			this.arregloNumeros[index] = false;
-			this.articulosImpresion.concat(this.arreglosImpresion[i]);
-			i--;
+			// console.log("I = "+ i)
+			// if(i == 0){
+			// 	//Si solo se marco uno se popea todo lo que esta en el arreglo
+			// 	this.articulosPrueba.pop()
+			// }else{
+			// 	//Si no se popea el ultimo arreglo que se metio
+			// 	this.articulosPrueba[i].pop();
+			// }
+
+			// if(i != 0){
+			// 	i--;
+			// }
 		}
-		
+		console.log(this.articulosPrueba)
 		
   	}
+
+	comprobarImprimirArticulos(index: any){
+		console.log("index = " + index + "Comprobado = " + this.comprobado);
+		if(index === 0 || index % 4 ==0){
+			this.comprobado = true;
+		}
+		this.comprobado = false;
+		
+	}
 }

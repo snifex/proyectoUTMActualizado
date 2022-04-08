@@ -16,8 +16,8 @@ input{
     margin: 0px 0px 30px;
     min-height: 1000px;
     max-height: 1000px;
-    overflow: hidden;
     box-shadow: 0px 0px 5px grey;
+    box-sizing:content-box;
 }
 
 .contenedor{
