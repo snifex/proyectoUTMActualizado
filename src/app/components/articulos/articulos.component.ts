@@ -21,6 +21,8 @@ export class ArticulosComponent implements OnInit {
 	idProfesor: number = 0;
 	fileToUpload: any;
 	arregloNumeros: boolean[] = [];
+	articulosImpresion: any[] = [];
+	arreglosImpresion: any[] = [];
 
 
 	constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private cambioInfoService: CambioInfoService, private imagenesService: ImagenesService) {
@@ -55,6 +57,7 @@ export class ArticulosComponent implements OnInit {
 		this.articuloService.listByProfesor(this.idProfesor).subscribe((resArticulos: any) => {
 			let resultado: boolean[] = [];
 			this.articulos = resArticulos;
+			this.articulosImpresion = resArticulos;
 			//Creamos un arreglo donde nos ayudar a saber si se modifico en el menu y cortar
 			for (let index = 0; index < resArticulos.length; index++) {
 				resultado[index] = false;
@@ -152,10 +155,17 @@ export class ArticulosComponent implements OnInit {
 	seleccionarCheckbox(check:any, articulo:any, index:any) {
 		/*Verificamos si se marca o se desmarca para despues checar en nuestro if */
     	articulo.checked = check.currentTarget.checked; 
+		var i = 0;
 		if(articulo.checked){
 			this.arregloNumeros[index] = true;
+			this.arreglosImpresion[i] = this.articulosImpresion.slice(index,this.articulosImpresion.length);
+			i++;
 		}else{
 			this.arregloNumeros[index] = false;
+			this.articulosImpresion.concat(this.arreglosImpresion[i]);
+			i--;
 		}
+		
+		
   	}
 }
