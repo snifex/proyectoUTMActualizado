@@ -12,7 +12,7 @@ declare var $: any;
 })
 export class ArticulosComponent implements OnInit {
 
-	articulos: any;
+	articulos: any = [];
 	autores: any = [];
 	ini: any;
 	fin: any;
@@ -21,7 +21,8 @@ export class ArticulosComponent implements OnInit {
 	idProfesor: number = 0;
 	fileToUpload: any;
 	arregloNumeros: boolean[] = [];
-
+	comprobado: any = true;
+	numeroDiv: any = [];
 
 	constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private cambioInfoService: CambioInfoService, private imagenesService: ImagenesService) {
 		let hoy = new Date();
@@ -45,7 +46,6 @@ export class ArticulosComponent implements OnInit {
 			});
 		});
 
-
 		//Inicializamos los profesores
 		this.profesorService.listProfesores().subscribe((resProfesores: any) => {
 			this.profesores = resProfesores;
@@ -55,10 +55,20 @@ export class ArticulosComponent implements OnInit {
 		this.articuloService.listByProfesor(this.idProfesor).subscribe((resArticulos: any) => {
 			let resultado: boolean[] = [];
 			this.articulos = resArticulos;
+			console.log(this.articulos);
 			//Creamos un arreglo donde nos ayudar a saber si se modifico en el menu y cortar
 			for (let index = 0; index < resArticulos.length; index++) {
 				resultado[index] = false;
 			}
+			//Obtenemos el numero de seccion a imprimir en el div
+			var numDiv = Math.floor(resArticulos.length / 4);
+			for(var i = 0; i < numDiv; i++) {
+				this.numeroDiv.push(i);
+			}
+
+			
+			
+			console.log(this.articulos)
 			this.arregloNumeros = resultado;
 			this.articulos.forEach((element: any) => {
 				this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) => {
@@ -158,4 +168,13 @@ export class ArticulosComponent implements OnInit {
 			this.arregloNumeros[index] = false;
 		}
   	}
+
+	comprobarImprimirArticulos(index: any){
+		console.log("index = " + index + "Comprobado = " + this.comprobado);
+		if(index === 0 || index % 4 ==0){
+			this.comprobado = true;
+		}
+		this.comprobado = false;
+		
+	}
 }

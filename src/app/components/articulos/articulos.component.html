@@ -5,7 +5,7 @@
 			<form action="#" *ngFor="let articuloMenu of articulos; let i=index" class="boton">
 				<p>
 					<label>
-						<input type="checkbox" id="checkbox" (click)="seleccionarCheckbox($event,articuloMenu,i)"/>
+						<input type="checkbox" id="checkbox" (click)="seleccionarCheckbox($event,articuloMenu,i)" />
 						<span>{{articuloMenu.titulo}}</span>
 					</label>
 				</p>
@@ -24,27 +24,33 @@
 				</div>
 			</div>
 		</li>
+
+
+		<div class="seccion" *ngFor="let i of numeroDiv">
+			<ng-container *ngFor="let articulo of articulos; let j=index;">
+				<ul class="collection">
+					<li class="collection-item avatar">
+						<i class="material-icons circle">
+							article
+						</i>
+						<b><span class="title">{{articulo.titulo}}</span></b>
+						<p *ngFor="let autor of autores[j];">
+							{{autor.nombreApa}}
+						</p>
+						<div class="secondary-content">
+							<a><i class="small material-icons">person_remove</i></a>
+							<a><i class="small material-icons">edit</i></a>
+							<a><i class="small material-icons">document_scanner</i><input (change)="cargarArticulo($event.target,articulo.idArticulo)" type="file" multiple></a>
+						</div>
+					</li>
 	
-		<div class="seccion contenedor">
-			<ul class="collection"*ngFor="let articulo of articulos; let i=index" >
-				<li class="collection-item avatar">
-					<i class="material-icons circle">
-						article
-					</i>
-					<b><span class="title">{{articulo.titulo}}</span></b>
-					<p *ngFor="let autor of autores[i];">
-						{{autor.nombreApa}}
-					</p>
-					<div class="secondary-content">
-						<a><i class="small material-icons">person_remove</i></a>
-						<a><i class="small material-icons">edit</i></a>
-						<a><i class="small material-icons">document_scanner</i><input (change)="cargarArticulo($event.target,articulo.idArticulo)" type="file" multiple></a>
-					</div>
-				</li>	
-				
-				<div class="saltoPagina saltoPaginaHTML" *ngIf="arregloNumeros[i] == true" ><div class="seccion"></div></div>
-			</ul>
+					<div class="saltoPagina saltoPaginaHTML" *ngIf="arregloNumeros[j] == true"><div class="seccion">
+						
+					</div></div>
+				</ul>
+			</ng-container>
 		</div>
+
 	</div>
 
 </div>

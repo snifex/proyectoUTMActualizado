@@ -13,4 +13,8 @@ export class ImagenesService {
         return this.http.post(`${environment.API_URL_IMAGENES}/guardarArchivo/`,{"src" : src, "idArticulo" : idArticulo, "indice" : indice});
     }
 
+    listByArticulo(idArticulo: Number){
+        return this.http.get(`${environment.API_URI}/archivoyarticulo/listByArticulo/${idArticulo}`);
+    }
+
 }

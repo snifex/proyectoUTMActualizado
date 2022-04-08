@@ -5,9 +5,13 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import pool from "./database";
 import fs from "fs";
+import { Router } from 'express';
+import {Request,Response} from 'express';
 const correoAcceso = require('./correoAcceso');
 class Server {
     public app: Application;
+    public router: Router=Router();
+
     constructor() {
         dotenv.config();
         this.app = express();
@@ -77,6 +81,8 @@ class Server {
             console.log(`Listening on port ${this.app.get('port')}`);
         });
     }
+
+    
 }
 const server = new Server();
 server.start();

@@ -19,9 +19,11 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const database_1 = __importDefault(require("./database"));
 const fs_1 = __importDefault(require("fs"));
+const express_2 = require("express");
 const correoAcceso = require('./correoAcceso');
 class Server {
     constructor() {
+        this.router = (0, express_2.Router)();
         this.queryProfesor = (decodificado) => {
             return new Promise((resolve, reject) => {
                 let consulta = 'SELECT * FROM Profesores WHERE correoProfesor="' + decodificado + '"';
