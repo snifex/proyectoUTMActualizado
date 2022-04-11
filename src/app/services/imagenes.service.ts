@@ -9,8 +9,8 @@ export class ImagenesService {
 
     constructor(private http: HttpClient) { }
 
-    guardarArchivo(src: any, idArticulo: Number, indice: Number){
-        return this.http.post(`${environment.API_URL_IMAGENES}/guardarArchivo/`,{"src" : src, "idArticulo" : idArticulo, "indice" : indice});
+    guardarArchivo(src: any, idArticulo: Number, indice: Number, tipoArchivo: any){
+        return this.http.post(`${environment.API_URL_IMAGENES}/guardarArchivo/`,{"src" : src, "idArticulo" : idArticulo, "indice" : indice, "tipoArchivo" : tipoArchivo});
     }
 
     listByArticulo(idArticulo: Number){

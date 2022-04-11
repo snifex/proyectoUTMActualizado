@@ -34,14 +34,30 @@ class Server {
             correoAcceso(req.body);
         });
 
-        this.app.post('/guardarArchivo', (req, res) =>{
+        this.app.post('/guardarArchivo', async (req, res) =>{
             console.log(__dirname);
             const file = req.body.src;
             const name = req.body.idArticulo;
             const index = req.body.indice;
-            const letras = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"];
+            const tipo = req.body.tipoArchivo;
+            //En la primera posición esta lo que esta antes de la diagonal, en la segunda lo que esta despues de la diagonal
+            var extension = tipo.split("/",3)[1];
+            let icono = "";
+            if(extension == "pdf"){
+                icono = "las la-file-pdf";
+            }else if(extension == "docx"){
+                icono = "las la-file-word"
+            }else{
+                icono = "las la-file-img";
+            }
+            let dato = {
+                'idArticulo' : req.body.idArticulo,
+                'extension' : extension,
+                'icono': icono
+            }
+            await pool.query("INSERT INTO ArchivoYArticulo SET ?", dato);
             const binaryData = Buffer.from(file.replace(/^data:.*,/, ""), 'base64');
-            fs.writeFile(`${__dirname}/img/pdf/${name}_${letras[index]}.pdf`, binaryData, "base64", (err) =>{
+            fs.writeFile(`${__dirname}/img/pdf/${name}_${[index]}.${extension}`, binaryData, "base64", (err) =>{
                 console.log("Respuesta: "+ err);
             });
             res.json({ fileName: name + '.pdf' });
