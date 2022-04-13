@@ -22,9 +22,13 @@ export class ArticulosComponent implements OnInit {
 	fileToUpload: any;
 	arregloNumeros: boolean[] = [];
 	comprobado: any = true;
-	numeroDiv: any = [];
 	articulosImpresion: any[] = [];
 	articulosPrueba: any[] = [];
+	articulosFinal: any[] = [];
+	numeroHojas: any;
+	contadorHojas: number = 1;
+	contador: number = 0;
+	aux:any = [];
 
 	constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private cambioInfoService: CambioInfoService, private imagenesService: ImagenesService) {
 		let hoy = new Date();
@@ -38,6 +42,8 @@ export class ArticulosComponent implements OnInit {
 			console.log("msg", msg);
 		});
 		this.fileToUpload = null;
+		this.numeroHojas = Array.from(Array(this.contadorHojas).keys());
+		console.log(this.numeroHojas);
 	}
 
 	ngOnInit(): void {
@@ -158,53 +164,69 @@ export class ArticulosComponent implements OnInit {
 	seleccionarCheckbox(check:any, articulo:any, index:any) {
 		/*Verificamos si se marca o se desmarca para despues checar en nuestro if */
     	articulo.checked = check.currentTarget.checked; 
-		var i = 0;
-		var aux = [];
+		console.log(this.contador);
 		if(articulo.checked){
 			this.arregloNumeros[index] = true;
-			aux = this.articulos.slice(0,index+1);
-			this.articulosImpresion.push(aux)
-			console.log(this.articulosImpresion)
-			// //aumentamos contador
-			// i++;
-			// if(i != 0){
-			// 	//Si se marco se popea lo que tiene y se divide
-			// 	this.articulosPrueba.pop()
-			// }
-			// //Declaramos un arreglo bidimensional en la primera posicion es en cuanto se esta dividiendo en la segunda los articulos
-			// for (let j = i-1 ; j < i ; j++) {
-			// 	aux[j] = [];
+			this.contadorHojas++;
+			this.aux = this.articulos.slice(0,index+1);
+			//this.articulosImpresion.push(this.aux)
+			console.log(this.articulosImpresion) 
+			//aumentamos contador
+			this.contador++;
+
+			if(this.contador == 1){
+				//Si se marco se popea lo que tiene y se divide
+				this.articulosPrueba.pop()
+			}
+			//Declaramos un arreglo bidimensional en la primera posicion es en cuanto se esta dividiendo en la segunda los articulos
+			for (let j = this.contador-1 ; j < this.contador ; j++) {
+				this.aux[j] = [];
 				
-			// 	if(i == 1){
-			// 		//Si es la primera vez se hace desde el inicio del arreglo hasta indice y de indice hasta el final del arreglo
-			// 		aux[j][i-1] = this.articulos.slice(0,index+1);
-			// 		aux[j][i] = this.articulos.slice(index+1 , this.articulos.length);
-			// 	}else{
-			// 		//Si no hace del ultimo que se saco en este caso la longitud que fue el ultimo donde acabo hasta la longitud del arreglo
-			// 		aux[j][i] = this.articulos.slice(aux[j][i-1].length, this.articulos.length);
-			// 	}
-			// 	this.articulosPrueba.push(aux[j])
-			// 	aux[j][i].forEach((element: any) => {
-			// 		this.articulosImpresion.push(element)
-			// 	})
-			// }
+				if(this.contador == 1){
+					//Si es la primera vez se hace desde el inicio del arreglo hasta indice y de indice hasta el final del arreglo
+			 		this.aux[j][this.contador-1] = this.articulos.slice(0,index+1);
+			 		this.aux[j][this.contador] = this.articulos.slice(index+1 , this.articulos.length);
+			 	}else{
+			 		//Si no hace del ultimo que se saco en este caso la longitud que fue el ultimo donde acabo hasta la longitud del arreglo
+			 		this.aux[j][this.contador] = this.articulos.slice(this.articulosFinal[j].length-1, this.articulos.length);
+			 	}
+				console.log(this.aux[0])
+			 	this.articulosPrueba.push(this.aux[j])
+			 	// aux[j][i].forEach((element: any) => {
+			 	// 	this.articulosImpresion.push(element)
+			 	// })				
+			}
+			
 		}else{
 			this.arregloNumeros[index] = false;
-			// console.log("I = "+ i)
-			// if(i == 0){
-			// 	//Si solo se marco uno se popea todo lo que esta en el arreglo
-			// 	this.articulosPrueba.pop()
-			// }else{
-			// 	//Si no se popea el ultimo arreglo que se metio
-			// 	this.articulosPrueba[i].pop();
-			// }
+			this.contadorHojas--;
+			if(this.contador != 0){
+				this.contador--;
+			}
 
-			// if(i != 0){
-			// 	i--;
-			// }
+			if(this.contador == 0){
+			 	//Si solo se marco uno se popea todo lo que esta en el arreglo
+				this.articulosPrueba.pop()
+			}else{
+			 	//Si no se popea el ultimo arreglo que se metio
+				this.articulosPrueba[this.contador].pop();
+			}
+
+			
 		}
 		console.log(this.articulosPrueba)
-		
+
+		for (let index = 0; index < this.articulosPrueba.length; index++) {
+			const element = this.articulosPrueba[index];
+			if(this.contador > 1 && index == this.articulosPrueba.length-1){
+				//Si el contador es mayor a 1 osease que ya hay elementos buscamos el ultimo elemento de element y lo pusheamos
+				this.articulosFinal.push(element[index+1])
+			}else{
+				this.articulosFinal = element
+			}
+		}
+
+		this.numeroHojas = Array.from(Array(this.contadorHojas).keys());
   	}
 
 	comprobarImprimirArticulos(index: any){

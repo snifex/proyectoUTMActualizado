@@ -5,7 +5,7 @@
             <form action="#" *ngFor="let articuloMenu of articulos; let i=index" class="boton">
                 <p>
                     <label>
-                        <input type="checkbox" id="checkbox" (click)="seleccionarCheckbox($event,articuloMenu,i)" />
+                        <input type="checkbox"  (click)="seleccionarCheckbox($event,articuloMenu,i)" />
                         <span>{{articuloMenu.titulo}}</span>
                     </label>
                 </p>
@@ -26,8 +26,8 @@
         </li>
 
 
-        <div class="seccion" *ngFor="let artImp of articulosPrueba; let i =index">
-            <ul class="collection" *ngFor="let articulo of articulosImpresion; let j=index">
+        <div class="seccionPrincipal" *ngFor="let hojas of numeroHojas; let i=index">
+            <ul class="collection" *ngFor="let articulo of articulosFinal[i]; let j=index">
                 <li class="collection-item avatar">
                     <i class="material-icons circle">
                         article
@@ -42,13 +42,11 @@
                         <a><i class="small material-icons">document_scanner</i><input
                                 (change)="cargarArticulo($event.target,articulo.idArticulo)" type="file" multiple></a>
                     </div>
-                </li>
 
-                <div class="saltoPagina saltoPaginaHTML" *ngIf="arregloNumeros[j] == true">
-                    <div class="seccion">
-
+                    <div class="saltoPagina saltoPaginaHTML" *ngIf="arregloNumeros[j] == true">
+                        <div class="seccion"></div>
                     </div>
-                </div>
+                </li>
             </ul>
         </div>
 
