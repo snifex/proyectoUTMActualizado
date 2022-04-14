@@ -64,7 +64,7 @@ export class ArticulosComponent implements OnInit {
 			let resultado: boolean[] = [];
 			this.articulos = resArticulos;
 			this.articulosImpresion = resArticulos;
-			this.articulosPrueba.push(resArticulos);
+			this.articulosFinal.push(resArticulos);
 			console.log(this.articulosPrueba);
 			//Creamos un arreglo donde nos ayudar a saber si se modifico en el menu y cortar
 			for (let index = 0; index < resArticulos.length; index++) {
@@ -164,65 +164,41 @@ export class ArticulosComponent implements OnInit {
 	seleccionarCheckbox(check:any, articulo:any, index:any) {
 		/*Verificamos si se marca o se desmarca para despues checar en nuestro if */
     	articulo.checked = check.currentTarget.checked; 
-		console.log(this.contador);
+
 		if(articulo.checked){
 			this.arregloNumeros[index] = true;
+			//Aumentamos el contador de hojas que es el que lleva el control de los div
 			this.contadorHojas++;
-			this.aux = this.articulos.slice(0,index+1);
-			//this.articulosImpresion.push(this.aux)
-			console.log(this.articulosImpresion) 
-			//aumentamos contador
 			this.contador++;
-
 			if(this.contador == 1){
-				//Si se marco se popea lo que tiene y se divide
-				this.articulosPrueba.pop()
-			}
-			//Declaramos un arreglo bidimensional en la primera posicion es en cuanto se esta dividiendo en la segunda los articulos
-			for (let j = this.contador-1 ; j < this.contador ; j++) {
-				this.aux[j] = [];
+				//Popeamos lo que teniamos en articulosFinal y dividimos para poder imprimir en 2 hojas
+				this.articulosFinal.pop();
 				
-				if(this.contador == 1){
-					//Si es la primera vez se hace desde el inicio del arreglo hasta indice y de indice hasta el final del arreglo
-			 		this.aux[j][this.contador-1] = this.articulos.slice(0,index+1);
-			 		this.aux[j][this.contador] = this.articulos.slice(index+1 , this.articulos.length);
-			 	}else{
-			 		//Si no hace del ultimo que se saco en este caso la longitud que fue el ultimo donde acabo hasta la longitud del arreglo
-			 		this.aux[j][this.contador] = this.articulos.slice(this.articulosFinal[j].length-1, this.articulos.length);
-			 	}
-				console.log(this.aux[0])
-			 	this.articulosPrueba.push(this.aux[j])
-			 	// aux[j][i].forEach((element: any) => {
-			 	// 	this.articulosImpresion.push(element)
-			 	// })				
+				//Ahora partimos el arreglo (1era parte desde el inicio hasta el index)
+				this.articulosFinal.push(this.articulos.slice(0,index+1));
+
+				//Segunda parte desde el index hasta el final
+				this.articulosFinal.push(this.articulos.slice(index+1,this.articulos.length));
+			}else{
+				//Si el contador es mayor entonces partimos desde el index hasta el final 
+				this.articulosFinal.push(this.articulos.slice(index+1,this.articulos.length))
+
 			}
-			
+			console.log(this.articulosFinal)
 		}else{
 			this.arregloNumeros[index] = false;
 			this.contadorHojas--;
-			if(this.contador != 0){
-				this.contador--;
-			}
-
+			this.contador--;
 			if(this.contador == 0){
-			 	//Si solo se marco uno se popea todo lo que esta en el arreglo
-				this.articulosPrueba.pop()
+				//Popeamos dos veces ya que como es la primera partición se encuentran 2 
+				this.articulosFinal.pop()
+				this.articulosFinal.pop()
+				
+				//rellenamos articulos final con los articulos totales
+				this.articulosFinal.push(this.articulos)
 			}else{
-			 	//Si no se popea el ultimo arreglo que se metio
-				this.articulosPrueba[this.contador].pop();
-			}
-
-			
-		}
-		console.log(this.articulosPrueba)
-
-		for (let index = 0; index < this.articulosPrueba.length; index++) {
-			const element = this.articulosPrueba[index];
-			if(this.contador > 1 && index == this.articulosPrueba.length-1){
-				//Si el contador es mayor a 1 osease que ya hay elementos buscamos el ultimo elemento de element y lo pusheamos
-				this.articulosFinal.push(element[index+1])
-			}else{
-				this.articulosFinal = element
+				//Si no solo popeamos el ultimo que tenia
+				this.articulosFinal.pop()
 			}
 		}
 
