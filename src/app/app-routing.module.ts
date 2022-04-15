@@ -12,6 +12,7 @@ import { ProfesoresViceComponent } from './components/profesores-vice/profesores
 import { GeneralesViceComponent } from './components/generales-vice/generales-vice.component';
 import { CarrerasViceComponent } from './components/carreras-vice/carreras-vice.component';
 import { InstitutosViceComponent } from './components/institutos-vice/institutos-vice.component';
+import { ArticulosImprimirComponent } from './components/articulos-imprimir/articulos-imprimir.component';
 
 const routes: Routes = [
 	{
@@ -58,6 +59,10 @@ const routes: Routes = [
 			{
 				path: 'institutos-vice/:idProfesor',
 				component: InstitutosViceComponent
+			},
+			{
+				path: 'articulos-imprimir/:idProfesor',
+				component: ArticulosImprimirComponent
 			}
 		]
 	},

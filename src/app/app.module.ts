@@ -17,6 +17,7 @@ import { GeneralesViceComponent } from './components/generales-vice/generales-vi
 import { CambioInfoService } from './services/cambio-info.service';
 import { CarrerasViceComponent } from './components/carreras-vice/carreras-vice.component';
 import { InstitutosViceComponent } from './components/institutos-vice/institutos-vice.component';
+import { ArticulosImprimirComponent } from './components/articulos-imprimir/articulos-imprimir.component';
 
 @NgModule({ /* para hacer la relacion entre formulario con el modelo */
   declarations: [
@@ -32,7 +33,8 @@ import { InstitutosViceComponent } from './components/institutos-vice/institutos
     ProfesoresViceComponent,
     GeneralesViceComponent,
     CarrerasViceComponent,
-    InstitutosViceComponent
+    InstitutosViceComponent,
+    ArticulosImprimirComponent
   ],
   imports: [
     BrowserModule,

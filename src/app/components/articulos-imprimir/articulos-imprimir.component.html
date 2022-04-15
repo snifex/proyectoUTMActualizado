@@ -14,18 +14,6 @@
     </div>
 
     <div class="seccionArticulos col s12 l9">
-        <li class="header">
-            <div class="row">
-                <div class="col s6">
-                    <input type="date" value="{{ini}}" (change)="CambioFechaIni()" id="fechaIni" class="col s6">
-                </div>
-                <div class="col s6">
-                    <input type="date" value="{{fin}}" (change)="CambioFechaFin()" id="fechaFin" class="col s6">
-                </div>
-            </div>
-        </li>
-
-
         <div class="seccionPrincipal" *ngFor="let hojas of numeroHojas; let i=index">
             <ul class="collection" *ngFor="let articulo of articulosFinal[i]; let j=index">
                 <li class="collection-item avatar">
@@ -36,12 +24,6 @@
                     <p *ngFor="let autor of autores[j];">
                         {{autor.nombreApa}}
                     </p>
-                    <div class="secondary-content">
-                        <a><i class="small material-icons">person_remove</i></a>
-                        <a><i class="small material-icons">edit</i></a>
-                        <a><i class="small material-icons">document_scanner</i><input
-                                (change)="cargarArticulo($event.target,articulo.idArticulo)" type="file" multiple></a>
-                    </div>
 
                     <div class="saltoPagina saltoPaginaHTML" *ngIf="arregloNumeros[j] == true">
                         <div class="seccion"></div>
@@ -51,7 +33,3 @@
         </div>
     </div>
 </div>
-
-<!-- <div class="modalProfesor">
-	value=profesorActual.campoDelModal
-</div> -->

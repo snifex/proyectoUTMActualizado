@@ -22,13 +22,10 @@ export class ArticulosComponent implements OnInit {
 	fileToUpload: any;
 	arregloNumeros: boolean[] = [];
 	comprobado: any = true;
-	articulosImpresion: any[] = [];
-	articulosPrueba: any[] = [];
 	articulosFinal: any[] = [];
 	numeroHojas: any;
 	contadorHojas: number = 1;
 	contador: number = 0;
-	aux:any = [];
 
 	constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private cambioInfoService: CambioInfoService, private imagenesService: ImagenesService) {
 		let hoy = new Date();
@@ -47,12 +44,6 @@ export class ArticulosComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		$(document).ready(function () {
-			$('.fixed-action-btn').floatingActionButton({
-				direction: 'left',
-				hoverEnabled: false
-			});
-		});
 
 		//Inicializamos los profesores
 		this.profesorService.listProfesores().subscribe((resProfesores: any) => {
@@ -63,9 +54,7 @@ export class ArticulosComponent implements OnInit {
 		this.articuloService.listByProfesor(this.idProfesor).subscribe((resArticulos: any) => {
 			let resultado: boolean[] = [];
 			this.articulos = resArticulos;
-			this.articulosImpresion = resArticulos;
 			this.articulosFinal.push(resArticulos);
-			console.log(this.articulosPrueba);
 			//Creamos un arreglo donde nos ayudar a saber si se modifico en el menu y cortar
 			for (let index = 0; index < resArticulos.length; index++) {
 				resultado[index] = false;
@@ -184,7 +173,6 @@ export class ArticulosComponent implements OnInit {
 				this.articulosFinal.push(this.articulos.slice(index+1,this.articulos.length))
 
 			}
-			console.log(this.articulosFinal)
 		}else{
 			this.arregloNumeros[index] = false;
 			this.contadorHojas--;
@@ -201,16 +189,7 @@ export class ArticulosComponent implements OnInit {
 				this.articulosFinal.pop()
 			}
 		}
-
+		//Desde el contador hacemos un array para que pueda iterar en el HTML
 		this.numeroHojas = Array.from(Array(this.contadorHojas).keys());
   	}
-
-	comprobarImprimirArticulos(index: any){
-		console.log("index = " + index + "Comprobado = " + this.comprobado);
-		if(index === 0 || index % 4 ==0){
-			this.comprobado = true;
-		}
-		this.comprobado = false;
-		
-	}
 }

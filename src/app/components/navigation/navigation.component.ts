@@ -74,4 +74,8 @@ export class NavigationComponent implements OnInit {
 	redirArticulos(): void {
 		this.router.navigateByUrl('/home/articulos/'+ this.idProfesor);
 	}
+
+	redirArticulosImprimir(): void {
+		this.router.navigateByUrl('/home/articulos-imprimir/' + this.idProfesor);
+	}
 }
