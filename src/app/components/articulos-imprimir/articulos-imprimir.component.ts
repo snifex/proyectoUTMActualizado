@@ -27,7 +27,6 @@ export class ArticulosImprimirComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
         //Inicializamos los profesores
 		this.profesorService.listProfesores().subscribe((resProfesores: any) => {
 			this.profesores = resProfesores;
