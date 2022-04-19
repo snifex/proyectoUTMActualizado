@@ -25,6 +25,7 @@ export class ArticulosViceComponent implements OnInit {
 	carreraActual: any;
 	carreras: any;
 	institutoActualProfesores:any
+	pages: number = 1;
 
 	constructor(private articuloService: ArticuloService, private profesorService:ProfesorService, private cambioInfoService: CambioInfoService, private carrerasService: CarrerasService, private institutoService: InstitutoService) { 
 		//Ponemos a escuchar el cambio

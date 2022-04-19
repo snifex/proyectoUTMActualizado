@@ -18,31 +18,32 @@ import { CambioInfoService } from './services/cambio-info.service';
 import { CarrerasViceComponent } from './components/carreras-vice/carreras-vice.component';
 import { InstitutosViceComponent } from './components/institutos-vice/institutos-vice.component';
 import { ArticulosImprimirComponent } from './components/articulos-imprimir/articulos-imprimir.component';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({ /* para hacer la relacion entre formulario con el modelo */
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    ProfesorComponent,
-    NavigationComponent,
-    GeneralesComponent,
-    HomeComponent,
-    ArticulosComponent,
-    ArticulosViceComponent,
-    RecuperarComponent,
-    ProfesoresViceComponent,
-    GeneralesViceComponent,
-    CarrerasViceComponent,
-    InstitutosViceComponent,
-    ArticulosImprimirComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    FormsModule
-  ],
-  providers: [CambioInfoService],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		LoginComponent,
+		ProfesorComponent,
+		NavigationComponent,
+		GeneralesComponent,
+		HomeComponent,
+		ArticulosComponent,
+		ArticulosViceComponent,
+		RecuperarComponent,
+		ProfesoresViceComponent,
+		GeneralesViceComponent,
+		CarrerasViceComponent,
+		InstitutosViceComponent,
+		ArticulosImprimirComponent
+	],
+	imports: [
+		BrowserModule,
+		HttpClientModule,
+		AppRoutingModule,
+		FormsModule,
+		NgxPaginationModule
+	],
+	providers: [CambioInfoService],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -10,7 +10,7 @@
 		</div>
 	</div>
 
-	<ul class="collection" *ngFor="let articulo of articulos; let i=index">
+	<ul class="collection" *ngFor="let articulo of articulos| paginate: { itemsPerPage: 3, currentPage: pages }; let i=index ">
 		<li class="collection-item avatar">
 			<i class="material-icons circle">article</i>
 			<b><span class="title">{{articulo.titulo}}</span></b>
@@ -24,3 +24,10 @@
 		</li>
 	</ul>
 </div>
+
+<pagination-controls 
+	class="center"
+	(pageChange)="pages = ($event)"                
+    previousLabel="Anterior"
+    nextLabel="Siguiente">
+</pagination-controls>

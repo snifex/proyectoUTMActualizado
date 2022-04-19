@@ -22,6 +22,7 @@
     "material-design-icons": "^3.0.1",
     "material-icons": "^1.10.8",
     "materialize-css": "^1.0.0",
+    "ngx-pagination": "^5.1.1",
     "rxjs": "~7.4.0",
     "sweetalert2": "^11.4.4",
     "tslib": "^2.3.0",
