@@ -192,4 +192,5 @@ export class ArticulosComponent implements OnInit {
 		//Desde el contador hacemos un array para que pueda iterar en el HTML
 		this.numeroHojas = Array.from(Array(this.contadorHojas).keys());
   	}
+
 }

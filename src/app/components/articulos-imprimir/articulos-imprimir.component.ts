@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { ResizeEvent } from 'angular-resizable-element';
 import { ArticuloService } from 'src/app/services/articulo.service';
 import { ProfesorService } from 'src/app/services/profesor.service';
+
+
+declare var $: any;
 
 @Component({
   selector: 'app-articulos-imprimir',
@@ -8,6 +12,7 @@ import { ProfesorService } from 'src/app/services/profesor.service';
   styleUrls: ['./articulos-imprimir.component.css']
 })
 export class ArticulosImprimirComponent implements OnInit {
+
     articulos: any = [];
 	autores: any = [];
     profesores: any;
@@ -20,10 +25,13 @@ export class ArticulosImprimirComponent implements OnInit {
 	numeroHojas: any;
 	contadorHojas: number = 1;
 	contador: number = 0;
+	arregloCanvas: boolean[] = [];
+	public style: object = {};
 
     constructor(private articuloService: ArticuloService, private profesorService: ProfesorService) { 
         this.idProfesor = Number(localStorage.getItem('idProfesor'));
         this.numeroHojas = Array.from(Array(this.contadorHojas).keys());
+	
     }
 
     ngOnInit(): void {
@@ -31,19 +39,17 @@ export class ArticulosImprimirComponent implements OnInit {
 		this.profesorService.listProfesores().subscribe((resProfesores: any) => {
 			this.profesores = resProfesores;
 		}, err => console.error(err))
-
-
+	
 		this.articuloService.listByProfesor(this.idProfesor).subscribe((resArticulos: any) => {
-			let resultado: boolean[] = [];
 			this.articulos = resArticulos;
             console.log(this.articulos)
 			this.articulosFinal.push(resArticulos);
-			//Creamos un arreglo donde nos ayudar a saber si se modifico en el menu y cortar
+			//Inicializamos los arreglos de boolean con el tamaño total de resArticulos
 			for (let index = 0; index < resArticulos.length; index++) {
-				resultado[index] = false;
+				this.arregloNumeros[index] = false;
+				this.arregloCanvas[index] = false
 			}
 			console.log(this.articulos)
-			this.arregloNumeros = resultado;
 			this.articulos.forEach((element: any) => {
 				this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) => {
 					this.autores.push(resAutores);
@@ -94,4 +100,38 @@ export class ArticulosImprimirComponent implements OnInit {
 		//Desde el contador hacemos un array para que pueda iterar en el HTML
 		this.numeroHojas = Array.from(Array(this.contadorHojas).keys());
   	}
+	
+	agregarCanvas(check:any, checkboxCanvas:any, index:any) {
+		/*Verificamos si se marca o se desmarca para despues checar en nuestro if */
+    	checkboxCanvas.checked = check.currentTarget.checked; 
+		if(checkboxCanvas.checked){
+			//Si esta seleccionado en el arreglo de booleans marcaremos que esta seleccionado
+			this.arregloCanvas[index] = true;
+		}else{
+			this.arregloCanvas[index] = false;
+		}
+	}
+
+	onResizeEnd(event: ResizeEvent): void {
+		this.style = {
+		  position: 'fixed',
+		  left: `${event.rectangle.left}px`,
+		  top: `${event.rectangle.top}px`,
+		  width: `${event.rectangle.width}px`,
+		  height: `${event.rectangle.height}px`,
+		};
+	}
+
+	validate(event: ResizeEvent): boolean {
+		const MIN_DIMENSIONS_PX: number = 50;
+		if (
+		  event.rectangle.width &&
+		  event.rectangle.height &&
+		  (event.rectangle.width < MIN_DIMENSIONS_PX ||
+			event.rectangle.height < MIN_DIMENSIONS_PX)
+		) {
+		  return false;
+		}
+		return true;
+	}
 }
