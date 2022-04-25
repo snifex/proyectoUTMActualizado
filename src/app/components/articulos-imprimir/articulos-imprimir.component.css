@@ -1,71 +1,135 @@
-.container{
+.container {
     margin-top: 2rem;
 }
-input{
-    width: 100%!important;
+
+input {
+    width: 100% !important;
 }
 
-.material-icons{
-    color: black;
-    display: flex;
-    align-items: center;
-}
-
-.seccion{
-    /* margin: 0px 0px 30px; */
-    min-height: 720px;
-    max-height: 720px;
-    /* box-shadow: 0px 0px 5px grey; */
-    box-sizing:content-box;
-    margin-top: 5rem;
-}
-
-.seccionPrincipal{
-    margin: 0px 0px 30px;
-    min-height: 900px;
-    max-height: 900px;
-    box-shadow: 0px 0px 5px grey;
-    box-sizing:content-box;
-    overflow: hidden;
-}
-
-.contenedor{
-    width: 707px;
-    max-height: 1000px;
-    display: block;
-    margin: 0 auto;
-}
-
-input[type=checkbox]{
-    cursor: pointer;
-}
-
-div .container{     /*Le damos estilo a la barra del menu lateral*/
+/*menu lateral*/
+div .container {
+    /*Le damos estilo a la barra del menu lateral*/
     background-color: #f8f8f8;
     left: 1rem;
     max-height: 100%;
     box-shadow: 2px 0px 4px #ccc;
 }
 
+.material-icons {
+    color: black;
+    display: flex;
+    align-items: center;
+}
+
+.seccion {
+    /* margin: 0px 0px 30px; */
+    min-height: 720px;
+    max-height: 720px;
+    /* box-shadow: 0px 0px 5px grey; */
+    box-sizing: content-box;
+    margin-top: 5rem;
+}
+
+.seccionPrincipal {
+    margin: 0px 0px 30px;
+    min-height: 900px;
+    max-height: 900px;
+    box-shadow: 0px 0px 5px grey;
+    box-sizing: content-box;
+    overflow: hidden;
+}
+
+.contenedor {
+    width: 707px;
+    max-height: 1000px;
+    display: block;
+    margin: 0 auto;
+}
+
+input[type=checkbox] {
+    cursor: pointer;
+}
+
+/*Hacer reescalable*/
+
+mwlResizable {
+    box-sizing: border-box;
+}
+
+.wrapper{
+    position: relative;
+    width:  auto;
+    height: auto;
+    border: 2px solid black;
+}
+
+.rectangle{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    margin: auto;
+    background-color: green;
+}
+
+.resize-handle-top,
+.resize-handle-bottom {
+    position: absolute;
+    height: 8px;
+    width: 8px;
+    cursor: row-resize;
+    width: 100%;
+}
+
+.resize-handle-top {
+    top: 0;
+}
+
+.resize-handle-bottom {
+    bottom: 0;
+}
+
+.resize-handle-left,
+.resize-handle-right {
+    position: absolute;
+    height: 100%;
+    height: 8px;
+    background-color: red;
+    cursor: col-resize;
+    width: 5px;
+}
+
+.resize-handle-left {
+    left: 0;
+}
+
+.resize-handle-right {
+    right: 0;
+}
+
 /*Seccion de impresión*/
-@media print{
-    .seccionMenu{
+@media print {
+    .seccionMenu {
         display: none;
     }
 
-    .fixed-action-btn{      /*Se tiene que ocultar el boton como una clase ya que esta declarada como tal */
+    .fixed-action-btn {
+        /*Se tiene que ocultar el boton como una clase ya que esta declarada como tal */
         display: none;
     }
 
-    @page{      /*Ponemos el tamaño de la hoja en tamaño carta*/
+    @page {
+        /*Ponemos el tamaño de la hoja en tamaño carta*/
         size: letter;
     }
 
-    .secondary-content { 
-        display:none;
+    .secondary-content {
+        display: none;
     }
 
-    .saltoPagina{
+    .saltoPagina {
         page-break-after: always;
     }
 }

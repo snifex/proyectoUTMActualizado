@@ -19,6 +19,7 @@ import { CarrerasViceComponent } from './components/carreras-vice/carreras-vice.
 import { InstitutosViceComponent } from './components/institutos-vice/institutos-vice.component';
 import { ArticulosImprimirComponent } from './components/articulos-imprimir/articulos-imprimir.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ResizableModule } from 'angular-resizable-element';
 @NgModule({ /* para hacer la relacion entre formulario con el modelo */
 	declarations: [
 		AppComponent,
@@ -41,7 +42,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 		HttpClientModule,
 		AppRoutingModule,
 		FormsModule,
-		NgxPaginationModule
+		NgxPaginationModule,
+		ResizableModule
 	],
 	providers: [CambioInfoService],
 	bootstrap: [AppComponent]
