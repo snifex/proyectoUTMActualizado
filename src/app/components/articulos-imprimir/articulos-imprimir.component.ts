@@ -91,6 +91,7 @@ export class ArticulosImprimirComponent implements OnInit {
 				this.articulosFinal.pop()
 			}
 		}
+		console.log(this.articulosFinal)
 		//Desde el contador hacemos un array para que pueda iterar en el HTML
 		this.numeroHojas = Array.from(Array(this.contadorHojas).keys());
   	}
