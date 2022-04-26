@@ -45,5 +45,10 @@ class ArticuloYProfesorController
         const resp = await pool.query("SELECT nombresP FROM Profesores WHERE idArticulo=?",[req.body,idArticulo]);
         res.json(resp);
     }
+	public async listByFirstAutor(req: Request, res: Response): Promise<void> {
+        const {idInstituto} = req.params;
+        const respuesta = await pool.query("SELECT P.nombreApa, P.idInstituto, A.* FROM profesores P JOIN articuloyprofesor AyP ON P.idProfesor = AyP.idProfesor JOIN articulo A ON A.idArticulo = AyP.idArticulo WHERE AyP.pos = 1 AND ? = P.idInstituto",[idInstituto]);
+        res.json(respuesta);
+    }
 }
 export const articuloyprofesorController = new ArticuloYProfesorController();

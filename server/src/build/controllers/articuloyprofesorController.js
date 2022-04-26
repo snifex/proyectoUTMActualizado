@@ -61,5 +61,12 @@ class ArticuloYProfesorController {
             res.json(resp);
         });
     }
+    listByFirstAutor(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { idInstituto } = req.params;
+            const respuesta = yield database_1.default.query("SELECT P.nombreApa, P.idInstituto, A.* FROM profesores P JOIN articuloyprofesor AyP ON P.idProfesor = AyP.idProfesor JOIN articulo A ON A.idArticulo = AyP.idArticulo WHERE AyP.pos = 1 AND ? = P.idInstituto", [idInstituto]);
+            res.json(respuesta);
+        });
+    }
 }
 exports.articuloyprofesorController = new ArticuloYProfesorController();
