@@ -12,7 +12,7 @@ declare var $:any;
 	styleUrls: ['./articulos-vice.component.css']
 })
 export class ArticulosViceComponent implements OnInit {
-	articulos: any;
+	articulos: any = [];
 	autores:any =[];
 	ini:any;
 	fin:any;
@@ -40,33 +40,46 @@ export class ArticulosViceComponent implements OnInit {
 				direction: 'left',
 				hoverEnabled: false
 			});
+
+			$('.collapsible').collapsible();
 		});
+
+		//Prueba
 		
+
 
 		this.institutoService.listInstitutos().subscribe((resInstitutos: any) => {
 			console.log(resInstitutos);
 			this.institutos = resInstitutos;
-			this.institutoActual = this.institutos[1].idInstituto;
-			//Inicializamos los profesores
-			this.articuloService.listByInstituto(this.institutoActual).subscribe((resArticulos: any) =>{
-				this.articulos = resArticulos;
-				this.autores = resArticulos.profesores;
-			})
+			resInstitutos.forEach((element: any) => {
+				this.articuloService.listByInstitutoOfFirstAutor(element.idInstituto).subscribe((resArticulosSR: any) =>{
+					this.articulos.push(resArticulosSR);
+				},err => console.error(err))
+			});
+			console.log(this.articulos)
+			console.log(this.autores)
+
+			// this.institutoActual = this.institutos[1].idInstituto;
+			// //Inicializamos los profesores
+			// this.articuloService.listByInstituto(this.institutoActual).subscribe((resArticulos: any) =>{
+			// 	this.articulos = resArticulos;
+			// 	this.autores = resArticulos.profesores;
+			// })
 			
-			this.carrerasService.listCarrerasByInstituto(this.institutoActual).subscribe((resCarreras: any) => {
-				console.log(resCarreras);
-				this.carreraActual = resCarreras[0].idCarrera;
-				this.numCarrerasByInstituto = resCarreras.length;
-				this.carreras = resCarreras;
-				this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resProfesores: any) => {
-					console.log(resProfesores);
-					this.profesores = resProfesores;
-				},
-					err => console.error(err)
-				);
-			},
-				err => console.error(err)
-			);
+			// this.carrerasService.listCarrerasByInstituto(this.institutoActual).subscribe((resCarreras: any) => {
+			// 	console.log(resCarreras);
+			// 	this.carreraActual = resCarreras[0].idCarrera;
+			// 	this.numCarrerasByInstituto = resCarreras.length;
+			// 	this.carreras = resCarreras;
+			// 	this.profesorService.listProfesoresByCarrera(this.carreraActual).subscribe((resProfesores: any) => {
+			// 		console.log(resProfesores);
+			// 		this.profesores = resProfesores;
+			// 	},
+			// 		err => console.error(err)
+			// 	);
+			// },
+			// 	err => console.error(err)
+			// );
 		},
 			err => console.error(err)
 		);

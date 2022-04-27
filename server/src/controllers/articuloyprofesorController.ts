@@ -45,5 +45,17 @@ class ArticuloYProfesorController
         const resp = await pool.query("SELECT nombresP FROM Profesores WHERE idArticulo=?",[req.body,idArticulo]);
         res.json(resp);
     }
+	public async listByInstitutoOfFirstAutor(req: Request, res: Response): Promise<void> {
+        const {idInstituto} = req.params;
+        let respuesta = await pool.query("SELECT P.idInstituto, A.* FROM profesores P JOIN articuloyprofesor AyP ON P.idProfesor = AyP.idProfesor JOIN articulo A ON A.idArticulo = AyP.idArticulo WHERE AyP.pos = 1 AND ? = P.idInstituto",[idInstituto]);
+        
+		//Obtenemos los autores de los articulos
+		for (let index = 0; index < respuesta.length; index++) {
+			const respuesta2 = await pool.query("SELECT * FROM Profesores as P INNER JOIN ArticuloYProfesor AP ON AP.idProfesor=P.idProfesor WHERE AP.idArticulo = ?",respuesta[index].idArticulo);
+			respuesta[index].profesores = respuesta2;
+		}
+		
+		res.json(respuesta);
+    }
 }
 export const articuloyprofesorController = new ArticuloYProfesorController();

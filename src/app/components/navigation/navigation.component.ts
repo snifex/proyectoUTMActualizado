@@ -47,6 +47,11 @@ export class NavigationComponent implements OnInit {
         $('#agregarProfesor').modal("open");
     }
 
+	agregarProfesorJC(): void {
+        $('#agregarProfesorJC').modal();
+        $('#agregarProfesorJC').modal("open");
+    }
+
 	agregarCarrera(): void {
         $('#agregarCarrera').modal();
         $('#agregarCarrera').modal("open");
@@ -99,6 +104,10 @@ export class NavigationComponent implements OnInit {
 	}
 
 	listarProfesores(): void {
+		this.router.navigateByUrl('/home/profesores-vice/'+ this.idProfesor);          
+    }
+
+	listarProfesoresJC(): void {
 		this.router.navigateByUrl('/home/profesores-vice/'+ this.idProfesor);          
     }
 

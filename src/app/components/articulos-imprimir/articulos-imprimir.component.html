@@ -41,27 +41,6 @@
 
 
                 </li>
-                <!-- <div class="wrapper">
-                    <div class="rectangle" mwlResizable 
-                        [enableGhostResize]="true" [resizeSnapGrid]="{ left: 1, right: 1,top: 1, bottom: 1}"
-                        (resizeEnd)="onResizeEnd($event)">
-                        <img class="rectangle"
-                            mwlResizable 
-                            [enableGhostResize]="true" [resizeSnapGrid]="{ left: 1, right: 1 }"
-                            (resizeEnd)="onResizeEnd($event)">
-
-
-                        <img class="rectangle"
-                            mwlResizable 
-                            [enableGhostResize]="true" [resizeSnapGrid]="{ left: 1, right: 1 }"
-                            (resizeEnd)="onResizeEnd($event)">
-
-                        <div class="resize-handle-top" mwlResizeHandle [resizeEdges]="{ top: true }"></div>
-                        <div class="resize-handle-left" mwlResizeHandle [resizeEdges]="{ left: true }"></div>
-                        <div class="resize-handle-right" mwlResizeHandle [resizeEdges]="{ right: true }"></div>
-                        <div class="resize-handle-bottom" mwlResizeHandle [resizeEdges]="{ bottom: true }"></div>
-                    </div>
-                </div> -->
 
                 <div class="wrapper">
                     <div *ngIf="arregloCanvas[j] ===true" class="center rectangle" mwlResizable [validateResize]="validate" [ngStyle]="style"

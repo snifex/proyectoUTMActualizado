@@ -26,4 +26,8 @@ export class ArticuloService {
 	listByInstituto(idInstituto: number) {
 		return this.http.get(`${environment.API_URI}/articulo/listByInstituto/${idInstituto}`);
 	}
+
+	listByInstitutoOfFirstAutor(idInstituto: number){
+		return this.http.get(`${environment.API_URI}/articuloyprofesor/listbyinstitutooffirstautor/${idInstituto}`);
+	}
 }

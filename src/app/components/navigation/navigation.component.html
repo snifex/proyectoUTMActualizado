@@ -27,7 +27,7 @@
             </ul>
 
 
-            <!-- Si el nivelProfesor es  -->
+            <!-- Si el nivelProfesor es vice rector -->
             <ul class="left hide-on-med-and-down" *ngIf="nivelProfesor !== undefined && nivelProfesor === 1 ">
                 <li>
                     <a class="dropdown-trigger" data-target="menuVer" href="mobile.html">
@@ -53,7 +53,40 @@
                     </a>
                 </li>
             </ul>
+        
+            <!-- Si nivelProfesor es JefeCarrera -->
+            <ul class="left hide-on-med-and-down" *ngIf="nivelProfesor !== undefined && nivelProfesor === 3">
+                <li>
+                    <a data-target="menuAgregarJC" class="left dropdown-trigger">Agregar
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
 
+                <li>
+                    <a data-target="menuListarJC" class="left dropdown-trigger">Listar
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
+
+                <li>
+                    <a data-target="menuImportarJC" class="left dropdown-trigger">Importar
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Menus lado izquierdo(JC) -->
+            <ul id="menuAgregarJC" class="dropdown-content">
+                <li (click)="agregarProfesorJC()"><a>Profesores</a></li>
+            </ul>
+
+            <ul id="menuListarJC" class="dropdown-content">
+                <li (click)="listarProfesoresJC()"><a>Profesores</a></li>
+            </ul>
+
+            <ul id="menuImportarJC" class="dropdown-content">
+                <li (click)="migrarProfesor()"><a>Profesores</a></li>
+            </ul>
 
 
             <!-- Opciones lado izquierdo -->

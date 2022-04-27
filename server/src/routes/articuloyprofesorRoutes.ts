@@ -14,6 +14,7 @@ class ArticuloYProfesorRoutes
         this.router.post('/create', articuloyprofesorController.create);
 		this.router.put('/actualizar/:idAyP',articuloyprofesorController.actualizar);
 		this.router.delete('/eliminar/:idAyP',articuloyprofesorController.eliminar);
+        this.router.get('/listbyinstitutooffirstautor/:idInstituto', articuloyprofesorController.listByInstitutoOfFirstAutor)
     }
 }
 const articuloyprofesorRoutes= new ArticuloYProfesorRoutes();
