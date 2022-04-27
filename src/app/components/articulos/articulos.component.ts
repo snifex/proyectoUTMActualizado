@@ -67,7 +67,6 @@ export class ArticulosComponent implements OnInit {
 				}, err => console.error(err));
 			})
 		}, err => console.error(err));
-
 		
 
 	}
