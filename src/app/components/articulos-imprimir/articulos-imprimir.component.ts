@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ResizeEvent } from 'angular-resizable-element';
 import { ArticuloService } from 'src/app/services/articulo.service';
+import { InstitutoService } from 'src/app/services/instituto.service';
 import { ProfesorService } from 'src/app/services/profesor.service';
 
 
@@ -26,19 +27,29 @@ export class ArticulosImprimirComponent implements OnInit {
 	contadorHojas: number = 1;
 	contador: number = 0;
 	arregloCanvas: boolean[] = [];
+	institutoActual: any;
+	institutos: any;
 	public style: object = {};
 
-    constructor(private articuloService: ArticuloService, private profesorService: ProfesorService) { 
+    constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private institutoService: InstitutoService) { 
         this.idProfesor = Number(localStorage.getItem('idProfesor'));
         this.numeroHojas = Array.from(Array(this.contadorHojas).keys());
 	
     }
 
     ngOnInit(): void {
-        //Inicializamos los profesores
-		this.profesorService.listProfesores().subscribe((resProfesores: any) => {
-			this.profesores = resProfesores;
-		}, err => console.error(err))
+        //Inicializamos los institutos 
+		this.institutoService.listInstitutos().subscribe((resInstitutos: any) => {
+			this.institutos = resInstitutos;
+			this.institutoActual = resInstitutos[1].idInstituto;
+			this.profesorService.listProfesoresByInstituto(this.institutoActual).subscribe((resProfesores: any) => {
+				this.profesores = resProfesores;
+				this.profesorActual = resProfesores[1].idProfesor;
+		
+			},err => console.error(err));
+		
+		}, err => console.error(err));
+		
 	
 		this.articuloService.listByProfesor(this.idProfesor).subscribe((resArticulos: any) => {
 			this.articulos = resArticulos;
@@ -134,5 +145,9 @@ export class ArticulosImprimirComponent implements OnInit {
 		  return false;
 		}
 		return true;
+	}
+
+	cambioInstituto(op: any) {
+		this.institutoActual = op.value;
 	}
 }

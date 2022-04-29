@@ -1,6 +1,17 @@
 <div class="container row">
     <div class="seccionMenu col s12 l3">
         <div class="row">
+            <div class="col s12">
+                <label>Selecciona un Instituto</label>
+                <select class="browser-default" (change)="cambioInstituto($event.target)">
+                    <ng-container *ngFor="let instituto of institutos">
+                        <option [value]="instituto.idInstituto" *ngIf="instituto.idInstituto!=0"> {{instituto.nombreInstituto}}</option>
+                    </ng-container>
+                </select>
+            </div>
+            
+
+
             <ul class="collection with-header">
                 <li class="collection-header center">
                     <h5>Articulos disponibles</h5>

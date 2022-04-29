@@ -13,6 +13,13 @@
                 </li>
 
                 <li>
+                    <a class="dropdown-trigger" data-target="menuImprimir">
+                        Imprimir
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
+
+                <li>
                     <a class="img dropdown-trigger" data-target="menuLogout">
                         <img src="http://localhost:3000/avataaars.png" class="circle center responsive-img">
                     </a>
@@ -108,7 +115,10 @@
                 <li (click)="listarCarreras()"><a>Carreras</a></li>
                 <li (click)="listarInstitutos()"><a>Institutos</a></li>
                 <li (click)="listarArticulos()"><a>Articulos</a></li>
-                <li (click)="redirArticulosImprimir()"><a>Articulos Imprimir</a></li>
+            </ul>
+
+            <ul id="menuImprimir" class="dropdown-content">
+                <li (click)="redirArticulosImprimir()"><a>Articulos</a></li>
             </ul>
 
             <ul id="menu_modificar" class="dropdown-content">
