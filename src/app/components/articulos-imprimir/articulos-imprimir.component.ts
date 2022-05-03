@@ -34,7 +34,6 @@ export class ArticulosImprimirComponent implements OnInit {
     constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private institutoService: InstitutoService) { 
         this.idProfesor = Number(localStorage.getItem('idProfesor'));
         this.numeroHojas = Array.from(Array(this.contadorHojas).keys());
-	
     }
 
     ngOnInit(): void {
@@ -45,27 +44,23 @@ export class ArticulosImprimirComponent implements OnInit {
 			this.profesorService.listProfesoresByInstituto(this.institutoActual).subscribe((resProfesores: any) => {
 				this.profesores = resProfesores;
 				this.profesorActual = resProfesores[1].idProfesor;
-		
-			},err => console.error(err));
-		
-		}, err => console.error(err));
-		
-	
-		this.articuloService.listByProfesor(this.idProfesor).subscribe((resArticulos: any) => {
-			this.articulos = resArticulos;
-            console.log(this.articulos)
-			this.articulosFinal.push(resArticulos);
-			//Inicializamos los arreglos de boolean con el tamaño total de resArticulos
-			for (let index = 0; index < resArticulos.length; index++) {
-				this.arregloNumeros[index] = false;
-				this.arregloCanvas[index] = false
-			}
-			console.log(this.articulos)
-			this.articulos.forEach((element: any) => {
-				this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) => {
-					this.autores.push(resAutores);
+				//Obtenemos los articulos de profesor actual
+				this.articuloService.listByProfesor(this.profesorActual).subscribe((resArticulos: any) => {
+					this.articulos = resArticulos;
+					this.articulosFinal.push(resArticulos);
+					//Inicializamos los arreglos de boolean con el tamaño total de resArticulos
+					for (let index = 0; index < resArticulos.length; index++) {
+						this.arregloNumeros[index] = false;
+						this.arregloCanvas[index] = false
+					}
+					this.articulos.forEach((element:any) => {
+						this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) => {
+							this.autores.push(resAutores);
+						}, err => console.error(err));
+					})
 				}, err => console.error(err));
-			})
+			},err => console.error(err));
+			
 		}, err => console.error(err));
     }
 
@@ -124,6 +119,33 @@ export class ArticulosImprimirComponent implements OnInit {
 		}
 	}
 
+	cambioProfesor(op: any){
+		this.profesorActual = op.value;
+
+		//Mandamos a llamar a cambiar los articulos del profesor
+		this.articuloService.listByProfesor(this.profesorActual).subscribe((resArticulos : any) => {
+			this.articulos = resArticulos;
+			//Popeamos lo que tengamos en articulosfinal para pueda trabajar con lo del ultimo profesor cambiado
+			this.articulosFinal.pop();
+			this.articulosFinal.push(resArticulos);
+			console.log(this.articulosFinal)
+			//Inicializamos los arreglos de boolean con el tamaño total de resArticulos
+			for (let index = 0; index < resArticulos.length; index++) {
+				this.arregloNumeros[index] = false;
+				this.arregloCanvas[index] = false
+			}
+
+			//Vaciamos el arreglo de autores
+			this.autores = [];
+
+			this.articulos.forEach((element:any) => {
+				this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) => {
+					this.autores.push(resAutores);
+				}, err => console.error(err));
+			})
+		}, err => console.error(err))
+	}
+
 	onResizeEnd(event: ResizeEvent): void {
 		this.style = {
 		  position: 'fixed',
@@ -148,6 +170,47 @@ export class ArticulosImprimirComponent implements OnInit {
 	}
 
 	cambioInstituto(op: any) {
-		this.institutoActual = op.value;
+		if(op.value == 99){
+			console.log("Entre")
+			//Si el op es 99 es para todos los institutos
+			this.profesorService.listProfesores().subscribe((resProfesores: any) => {
+				this.profesores = resProfesores;
+				this.profesorActual = resProfesores[1].idProfesor;
+				this.articuloService.listArticulos().subscribe((resArticulos: any) => {
+					//Popeamos lo que tengamos en articulosfinal para pueda trabajar con lo del ultimo profesor cambiado
+					this.articulosFinal.pop();
+					this.articulosFinal.push(resArticulos);
+
+					this.articulos = resArticulos;
+					this.articulosFinal = resArticulos;
+					console.log(this.articulosFinal)
+
+					//Inicializamos los arreglos de boolean con el tamaño total de resArticulos
+					for (let index = 0; index < resArticulos.length; index++) {
+						this.arregloNumeros[index] = false;
+						this.arregloCanvas[index] = false
+					}
+					this.articulos.forEach((element:any) => {
+						this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) => {
+							this.autores.push(resAutores);
+						}, err => console.error(err));
+					})
+					console.log(this.autores)
+				},err => console.error(err));
+			}, err => console.error(err));
+		}else{
+			this.institutoActual = op.value;
+			//Listamos los profesores por Instituto
+			this.profesorService.listProfesoresByInstituto(this.institutoActual).subscribe((resProfesores: any) => {
+				this.profesores = resProfesores;
+				this.profesorActual = resProfesores[1].idProfesor;
+				//Mandamos a llamar los articulos del institutoactual
+				let op = {
+					"value" : this.profesorActual
+				}
+				this.cambioProfesor(op);
+			},err => console.error(err));
+		}
+		
 	}
 }

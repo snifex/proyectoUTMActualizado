@@ -1,16 +1,24 @@
 <div class="container row">
-    <div class="seccionMenu col s12 l3">
+    <div class="seccionMenu col s12 l4">
         <div class="row">
             <div class="col s12">
                 <label>Selecciona un Instituto</label>
                 <select class="browser-default" (change)="cambioInstituto($event.target)">
+                    <option [value]="99">Todos los institutos</option>
                     <ng-container *ngFor="let instituto of institutos">
                         <option [value]="instituto.idInstituto" *ngIf="instituto.idInstituto!=0"> {{instituto.nombreInstituto}}</option>
                     </ng-container>
                 </select>
             </div>
             
-
+            <div class="col s12">
+                <label>Selecciona a un profesor del instituto seleccionado</label>
+                <select class="browser-default" (change)="cambioProfesor($event.target)">
+                    <ng-container *ngFor="let profesor of profesores">
+                        <option [value]="profesor.idProfesor"> {{profesor.nombresP + " " +  profesor.apellidoP + " " + profesor.apellidoM}}</option>
+                    </ng-container>
+                </select>
+            </div>
 
             <ul class="collection with-header">
                 <li class="collection-header center">
@@ -38,7 +46,7 @@
     </div>
 
 
-    <div class="seccionArticulos col s12 l9">
+    <div class="seccionArticulos col s12 l8">
         <div class="seccionPrincipal" *ngFor="let hojas of numeroHojas; let i=index">
             <ul class="collection" *ngFor="let articulo of articulosFinal[i]; let j=index">
                 <li class="collection-item avatar">
@@ -49,8 +57,6 @@
                     <p *ngFor="let autor of autores[j];">
                         {{autor.nombreApa}}
                     </p>
-
-
                 </li>
 
                 <div class="wrapper">

@@ -5,12 +5,6 @@
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <!--hace el menu hamburguesa o lo oculta -->
-                <li *ngIf="nivelProfesor==1"> 
-                    <a class="dropdown-trigger" data-target="dropdown-menu-exportar"> Exportar 
-                        <i class="material-icons right">arrow_drop_down</i> 
-                    </a> 
-                </li>
-
                 <li>
                     <a class="dropdown-trigger" data-target="menu_modificar" href="mobile.html">
                         <!--no te ridecciona, solo se va al menu -->
@@ -19,10 +13,25 @@
                 </li>
 
                 <li>
+                    <a class="dropdown-trigger" data-target="menuImprimir">
+                        Imprimir
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
+
+                <li *ngIf="nivelProfesor == 1">
+                    <a class="dropdown-trigger" data-target="menuExportar">
+                        Exportar
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
+
+                <li>
                     <a class="img dropdown-trigger" data-target="menuLogout">
                         <img src="http://localhost:3000/avataaars.png" class="circle center responsive-img">
                     </a>
                 </li>
+
             </ul>
 
             <!-- Menu derecha logout -->
@@ -31,10 +40,8 @@
                     vertical-align-middle">exit_to_app</i></a></li>
             </ul>
 
-            <ul id="dropdown-menu-exportar" class="dropdown-content" *ngIf="nivelProfesor==1"> 
-                <li>
-                    <a href="#exportarArticulos" class="modal-trigger">Articulos</a>
-                </li> 
+            <ul id="menuExportar" class="dropdown-content" *ngIf="nivelProfesor == 1">
+                <li><a href="#exportarArticulos"class="modal-trigger">Articulos</a></li>
             </ul>
 
 
@@ -119,7 +126,10 @@
                 <li (click)="listarCarreras()"><a>Carreras</a></li>
                 <li (click)="listarInstitutos()"><a>Institutos</a></li>
                 <li (click)="listarArticulos()"><a>Articulos</a></li>
-                <li (click)="redirArticulosImprimir()"><a>Articulos Imprimir</a></li>
+            </ul>
+
+            <ul id="menuImprimir" class="dropdown-content">
+                <li (click)="redirArticulosImprimir()"><a>Articulos</a></li>
             </ul>
 
             <ul id="menu_modificar" class="dropdown-content">

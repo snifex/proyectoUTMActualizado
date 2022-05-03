@@ -260,154 +260,149 @@ export class HomeComponent implements OnInit {
         },err => console.error(err))
     }
 
-    // // Exportar
-    // arregloALista(elementos:any[]):Paragraph[]{
-    //     let lista: Paragraph[] = [];
-    //     elementos.forEach(elemento =>{
-    //         lista.push(
-    //             new Paragraph({
-    //                 text: `${elemento.nombresP} ${elemento.apellidoP} ${elemento.apellidoM}`,
-    //                 bullet: {
-    //                     level: 0
-    //                 },
-    //                 alignment: AlignmentType.LEFT
-    //             })
-    //         )
-    //     })
-    //     return lista;
-    // }
+    // Exportar
+    arregloALista(elementos:any[]):Paragraph[]{
+        let lista: Paragraph[] = [];
+        elementos.forEach(elemento =>{
+            lista.push(
+                new Paragraph({
+                    text: `${elemento.nombresP} ${elemento.apellidoP} ${elemento.apellidoM}`,
+                    bullet: {
+                        level: 0
+                    },
+                    alignment: AlignmentType.LEFT
+                })
+            )
+        })
+        return lista;
+    }
 
-    // arregloAFilas(articulos: any[]): TableRow[] {
-    //     let filas: TableRow[] = [];
-    //     articulos.forEach((articulo,i) =>{
-    //         const relleno = (i % 2 == 0 ? rellenoVerdeClaro : rellenoVerdeFuerte);
-    //         let fila = new TableRow({
-    //             children:[
-    //                 new TableCell({
-    //                     shading: relleno,
-    //                     margins: margenes,
-    //                     children:[
-    //                         new Paragraph({
-    //                             text: `${articulo.fechaEdicion}`,
-    //                             alignment: AlignmentType.CENTER
-    //                         })
-    //                     ],
-    //                     verticalAlign: VerticalAlign.CENTER
-    //                 }),
+    arregloAFilas(articulos: any[]): TableRow[] {
+        let filas: TableRow[] = [];
+        articulos.forEach((articulo,i) =>{
+            const relleno = (i % 2 == 0 ? rellenoVerdeClaro : rellenoVerdeFuerte);
+            let fila = new TableRow({
+                children:[
+                    new TableCell({
+                        shading: relleno,
+                        margins: margenes,
+                        children:[
+                            new Paragraph({
+                                text: `${articulo.fechaEdicion}`,
+                                alignment: AlignmentType.CENTER
+                            })
+                        ],
+                        verticalAlign: VerticalAlign.CENTER
+                    }),
                     
-    //                 new TableCell({
-    //                     shading: relleno,
-    //                     margins: margenes,
-    //                     children:[
-    //                         new Paragraph({
-    //                             text: `${articulo.titulo}`,
-    //                             alignment: AlignmentType.CENTER
-    //                         })
-    //                     ],
-    //                     verticalAlign: VerticalAlign.CENTER
-    //                 }),
+                    new TableCell({
+                        shading: relleno,
+                        margins: margenes,
+                        children:[
+                            new Paragraph({
+                                text: `${articulo.titulo}`,
+                                alignment: AlignmentType.CENTER
+                            })
+                        ],
+                        verticalAlign: VerticalAlign.CENTER
+                    }),
 
-    //                 new TableCell({
-    //                     shading: relleno,
-    //                     margins: margenes,
-    //                     children:[
-    //                         ...this.arregloALista(articulo.profesores)
-    //                     ],
-    //                     verticalAlign: VerticalAlign.CENTER
-    //                 }),
-    //             ]
-    //         })
-    //         filas.push(fila);
-    //     })
-    //     return filas;
-    // }
+                    new TableCell({
+                        shading: relleno,
+                        margins: margenes,
+                        children:[
+                            ...this.arregloALista(articulo.profesores)
+                        ],
+                        verticalAlign: VerticalAlign.CENTER
+                    }),
+                ]
+            })
+            filas.push(fila);
+        })
+        return filas;
+    }
 
-    // exportarArticulosWord(){
-    //     let id = this.institutos[this.indexInstitutoArticulosExportar].idInstituto;
-    //     let nombre = this.institutos[this.indexInstitutoArticulosExportar].nombreInstituto;
+    exportarArticulosWord(){
+        let id = this.institutos[this.indexInstitutoArticulosExportar].idInstituto;
+        let nombre = this.institutos[this.indexInstitutoArticulosExportar].nombreInstituto;
 
-    //     this.articuloService.listByInstituto(id).subscribe((articulosRes: any) => {
-    //         //Crear documento
-    //         const documento = new Document({
-    //             styles:{
-    //                 default:{
-    //                     document:{
-    //                         run:{
-    //                             font: 'Arial'
-    //                         }
-    //                     }
-    //                 }
-    //             },
-    //             sections:[{
-    //                 children:[
-    //                     //titulo
-    //                     new Paragraph({
-    //                         children: [
-    //                             new TextRun({
-    //                                 text: `Artículos ${nombre}`,
-    //                                 size: 36
-    //                             })
-    //                         ],
-    //                         alignment: AlignmentType.CENTER
-    //                     }),
-    //                     new Table({
-    //                         rows:[
-    //                             new TableRow({
-    //                                 tableHeader: true,
-    //                                 height:{
-    //                                     value: 400,
-    //                                     rule: HeightRule.EXACT
-    //                                 },
-    //                                 children:[
-    //                                     new TableCell({
-    //                                         shading: rellenoVerdeFuerte,
-    //                                         children:[
-    //                                             new Paragraph({
-    //                                                 text: 'Fecha',
-    //                                                 alignment: AlignmentType.CENTER
-    //                                             })
-    //                                         ],
-    //                                         verticalAlign: VerticalAlign.CENTER
-    //                                     }),
+        this.articuloService.listByInstituto(id).subscribe((articulosRes: any) => {
+            //Crear documento
+            const documento = new Document({
+                styles:{
+                    default:{
+                        document:{
+                            run:{
+                                font: 'Arial'
+                            }
+                        }
+                    }
+                },
+                sections:[{
+                    children:[
+                        //titulo
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: `Artículos ${nombre}`,
+                                    size: 36
+                                })
+                            ],
+                            alignment: AlignmentType.CENTER
+                        }),
+                        new Table({
+                            rows:[
+                                new TableRow({
+                                    tableHeader: true,
+                                    height:{
+                                        value: 400,
+                                        rule: HeightRule.EXACT
+                                    },
+                                    children:[
+                                        new TableCell({
+                                            shading: rellenoVerdeFuerte,
+                                            children:[
+                                                new Paragraph({
+                                                    text: 'Fecha',
+                                                    alignment: AlignmentType.CENTER
+                                                })
+                                            ],
+                                            verticalAlign: VerticalAlign.CENTER
+                                        }),
 
-    //                                     new TableCell({
-    //                                         shading: rellenoVerdeFuerte,
-    //                                         children:[
-    //                                             new Paragraph({
-    //                                                 text: 'Titulo',
-    //                                                 alignment: AlignmentType.CENTER
-    //                                             })
-    //                                         ],
-    //                                         verticalAlign: VerticalAlign.CENTER
-    //                                     }),
+                                        new TableCell({
+                                            shading: rellenoVerdeFuerte,
+                                            children:[
+                                                new Paragraph({
+                                                    text: 'Titulo',
+                                                    alignment: AlignmentType.CENTER
+                                                })
+                                            ],
+                                            verticalAlign: VerticalAlign.CENTER
+                                        }),
 
-    //                                     new TableCell({
-    //                                         shading: rellenoVerdeFuerte,
-    //                                         children:[
-    //                                             new Paragraph({
-    //                                                 text: 'Autores',
-    //                                                 alignment: AlignmentType.CENTER
-    //                                             })
-    //                                         ],
-    //                                         verticalAlign: VerticalAlign.CENTER
-    //                                     })
-    //                                 ]
-    //                             }),
-    //                             ...this.arregloAFilas(articulosRes)
-    //                         ],
-    //                         width:{
-    //                             size: 100,
-    //                             type: WidthType.PERCENTAGE
-    //                         }
-    //                     })
-    //                 ]
-    //             }]
-    //         })
-
-    //         //Descargar Word
-    //         Packer.toBlob(documento).then(blob =>{
-    //             saveAs(blob, 'Articulos.docx')
-    //         })
-    //     },err => console.error(err));
-    // }
+                                        new TableCell({
+                                            shading: rellenoVerdeFuerte,
+                                            children:[
+                                                new Paragraph({
+                                                    text: 'Autores',
+                                                    alignment: AlignmentType.CENTER
+                                                })
+                                            ],
+                                            verticalAlign: VerticalAlign.CENTER
+                                        })
+                                    ]
+                                }),
+                                ...this.arregloAFilas(articulosRes)
+                            ],
+                            width:{
+                                size: 100,
+                                type: WidthType.PERCENTAGE
+                            }
+                        })
+                    ]
+                }]
+            })
+        },err => console.error(err));
+    }
 }
