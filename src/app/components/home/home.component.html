@@ -351,3 +351,32 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Importar Profesores -->
+<div id="exportarArticulos" class="modal">
+    <div class="modal-content row">
+        <div class="row">
+            <h4 class="center-align">Exportar Artículos</h4>
+        </div>
+        <div class="row">
+            <div class="row col s12">
+                <label>Instituto</label>
+                <select [(ngModel)]="indexInstitutoArticulosExportar" class="browser-default">
+                    <option *ngFor="let instituto of institutos;let i=index" [value]="i">
+                        {{instituto.nombreInstituto}}
+                    </option>
+                </select>
+            </div>
+            <div class="row col s6">
+                <a (click)="exportarArticulosWord()" class="waves-effect wavesblue
+    btn blue darken-3">Exportar WORD</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 center">
+                <a class="modal-action modal-close waves-effect waves-red btn
+    red">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>

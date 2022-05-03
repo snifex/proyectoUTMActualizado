@@ -109,10 +109,20 @@ mwlResizable {
     right: 0;
 }
 
+/*temporal*/
+.impresionPDF .impresionPDFTodos{
+    display: none;
+}
+
 /*Seccion de impresión*/
 @media print {
     .seccionMenu {
         display: none;
+    }
+
+    /* Temporal */
+    .seccionArticulos{
+        display:none;
     }
 
     .fixed-action-btn {
@@ -132,4 +142,10 @@ mwlResizable {
     .saltoPagina {
         page-break-after: always;
     }
+
+    .collection-item{
+        page-break-inside: avoid;
+    }
+
+
 }

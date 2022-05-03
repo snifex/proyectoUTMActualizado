@@ -28,6 +28,7 @@ export class ArticulosImprimirComponent implements OnInit {
 	contador: number = 0;
 	arregloCanvas: boolean[] = [];
 	institutoActual: any;
+	nombreInstitutoActual: string = '';
 	institutos: any;
 	public style: object = {};
 
@@ -41,6 +42,7 @@ export class ArticulosImprimirComponent implements OnInit {
 		this.institutoService.listInstitutos().subscribe((resInstitutos: any) => {
 			this.institutos = resInstitutos;
 			this.institutoActual = resInstitutos[1].idInstituto;
+			this.nombreInstitutoActual = resInstitutos[1].nombreInstituto;
 			this.profesorService.listProfesoresByInstituto(this.institutoActual).subscribe((resProfesores: any) => {
 				this.profesores = resProfesores;
 				this.profesorActual = resProfesores[1].idProfesor;
@@ -176,30 +178,37 @@ export class ArticulosImprimirComponent implements OnInit {
 			this.profesorService.listProfesores().subscribe((resProfesores: any) => {
 				this.profesores = resProfesores;
 				this.profesorActual = resProfesores[1].idProfesor;
-				this.articuloService.listArticulos().subscribe((resArticulos: any) => {
+				this.articuloService.listArticulos().subscribe(async (resArticulos: any) =>{
 					//Popeamos lo que tengamos en articulosfinal para pueda trabajar con lo del ultimo profesor cambiado
 					this.articulosFinal.pop();
-					this.articulosFinal.push(resArticulos);
+					this.articulosFinal.push();
 
 					this.articulos = resArticulos;
-					this.articulosFinal = resArticulos;
-					console.log(this.articulosFinal)
 
 					//Inicializamos los arreglos de boolean con el tamaño total de resArticulos
 					for (let index = 0; index < resArticulos.length; index++) {
 						this.arregloNumeros[index] = false;
 						this.arregloCanvas[index] = false
 					}
-					this.articulos.forEach((element:any) => {
+
+					//Vaciamos el arreglo de autores
+					this.autores = [];
+
+					await this.articulos.forEach((element:any) => {
 						this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) => {
 							this.autores.push(resAutores);
 						}, err => console.error(err));
 					})
-					console.log(this.autores)
-				},err => console.error(err));
+				}, err => console.error(err));
 			}, err => console.error(err));
 		}else{
 			this.institutoActual = op.value;
+			this.institutos.forEach((element:any) => {
+				if(element.idInstituto == op.value){
+					//Obtenemos el nombre del instituto actual para la impresión
+					this.nombreInstitutoActual = element.nombreInstituto;
+				}
+			});
 			//Listamos los profesores por Instituto
 			this.profesorService.listProfesoresByInstituto(this.institutoActual).subscribe((resProfesores: any) => {
 				this.profesores = resProfesores;

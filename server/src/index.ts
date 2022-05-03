@@ -12,6 +12,8 @@ import swagger_ui_express from 'swagger-ui-express';
 import swaggerDocument from './swagger.json';
 import tipoProfesorRoutes from './routes/tipoProfesorRoutes';
 import archivoyarticuloRoutes from './routes/archivoyarticuloRoutes';
+import eventosRoutes from './routes/eventosRoutes';
+import actividadesRoutes from './routes/actividadesRoutes';
 class Server
 {
 	public app:Application;
@@ -42,7 +44,9 @@ class Server
 		this.app.use('/api/articuloYprofesor',articuloyprofesorRoutes);
 		this.app.use('/api/articulo',articuloRoutes);
 		this.app.use('/api/tipoprofesor',tipoProfesorRoutes);
-		this.app.use('/api/archivoyarticulo',archivoyarticuloRoutes)
+		this.app.use('/api/archivoyarticulo',archivoyarticuloRoutes);
+		this.app.use('/api/eventos',eventosRoutes);
+		this.app.use('/api/actividades',actividadesRoutes);
 	}
 	start(): void
 	{

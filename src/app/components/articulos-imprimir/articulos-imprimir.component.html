@@ -6,16 +6,18 @@
                 <select class="browser-default" (change)="cambioInstituto($event.target)">
                     <option [value]="99">Todos los institutos</option>
                     <ng-container *ngFor="let instituto of institutos">
-                        <option [value]="instituto.idInstituto" *ngIf="instituto.idInstituto!=0"> {{instituto.nombreInstituto}}</option>
+                        <option [value]="instituto.idInstituto" *ngIf="instituto.idInstituto!=0">
+                            {{instituto.nombreInstituto}}</option>
                     </ng-container>
                 </select>
             </div>
-            
+
             <div class="col s12">
                 <label>Selecciona a un profesor del instituto seleccionado</label>
                 <select class="browser-default" (change)="cambioProfesor($event.target)">
                     <ng-container *ngFor="let profesor of profesores">
-                        <option [value]="profesor.idProfesor"> {{profesor.nombresP + " " +  profesor.apellidoP + " " + profesor.apellidoM}}</option>
+                        <option [value]="profesor.idProfesor"> {{profesor.nombresP + " " + profesor.apellidoP + " " +
+                            profesor.apellidoM}}</option>
                     </ng-container>
                 </select>
             </div>
@@ -60,13 +62,13 @@
                 </li>
 
                 <div class="wrapper">
-                    <div *ngIf="arregloCanvas[j] ===true" class="center rectangle" mwlResizable [validateResize]="validate" [ngStyle]="style"
-                        [enableGhostResize]="true" [resizeSnapGrid]="{left: 1, right: 1,top: 1, bottom: 1}"
-                        (resizeEnd)="onResizeEnd($event)">
-                        
+                    <div *ngIf="arregloCanvas[j] ===true" class="center rectangle" mwlResizable
+                        [validateResize]="validate" [ngStyle]="style" [enableGhostResize]="true"
+                        [resizeSnapGrid]="{left: 1, right: 1,top: 1, bottom: 1}" (resizeEnd)="onResizeEnd($event)">
+
                         <canvas id="idCanvas" class="rectangle" mwlResizable [validateResize]="validate"
-                                [enableGhostResize]="true" [resizeSnapGrid]="{ left: 1, right: 1 }"
-                                (resizeEnd)="onResizeEnd($event)">
+                            [enableGhostResize]="true" [resizeSnapGrid]="{ left: 1, right: 1 }"
+                            (resizeEnd)="onResizeEnd($event)">
                         </canvas>
 
                         <!-- Divs para manipular el resize -->
@@ -86,6 +88,40 @@
     </div>
 </div>
 
+<!-- IMPRESIONES -->
+
+<div class="impresionPDFTodos" *ngIf="institutoActual == 99">
+    <ng-container *ngFor="let instituto of institutos;let i=index">
+        <h4 class="center">{{instituto.nombreInstituto}}</h4>
+        <ul class="collection" *ngFor="let articulo of articulos; let j=index">
+            <li class="collection-item avatar">
+                <i class="material-icons circle">
+                    article
+                </i>
+                <b><span class="title">{{articulo.titulo}}</span></b>
+                <p *ngFor="let autor of autores[j];">
+                    {{autor.nombreApa}}
+                </p>
+            </li>
+        </ul>
+    </ng-container>
+</div>
+
+<div class="impresionPDF">
+    <h4 class="center">{{nombreInstitutoActual}}</h4>
+    <ul class="collection" *ngFor="let articulo of articulos; let j=index">
+        <li class="collection-item avatar">
+            <i class="material-icons circle">
+                article
+            </i>
+            <b><span class="title">{{articulo.titulo}}</span></b>
+            <p *ngFor="let autor of autores[j];">
+                {{autor.nombreApa}}
+            </p>
+        </li>
+    </ul>
+
+</div>
 
 <!-- 
   <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>

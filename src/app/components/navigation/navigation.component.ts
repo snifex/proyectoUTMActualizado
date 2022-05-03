@@ -67,6 +67,11 @@ export class NavigationComponent implements OnInit {
 		$('#migrarProfesor').modal("open");
 	}
 
+	exportarArticulos(): void {
+		$('#exportarArticulos').modal();
+		$('#exportarArticulos').modal("open");
+	}
+
 	cargarExcel(event: any): void {
 		if (event.target.files.length > 0) {
 			this.file = event.target.files[0];

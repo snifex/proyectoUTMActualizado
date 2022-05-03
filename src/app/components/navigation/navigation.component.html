@@ -6,7 +6,7 @@
             <ul class="right hide-on-med-and-down">
                 <!--hace el menu hamburguesa o lo oculta -->
                 <li *ngIf="nivelProfesor==1"> 
-                    <a class="dropdown-trigger" data-target="dropdown-menu-exportar"> Exportar 
+                    <a class="dropdown-trigger" data-target="menuExportar"> Exportar 
                         <i class="material-icons right">arrow_drop_down</i> 
                     </a> 
                 </li>
@@ -31,13 +31,13 @@
                     vertical-align-middle">exit_to_app</i></a></li>
             </ul>
 
-            <ul id="dropdown-menu-exportar" class="dropdown-content" *ngIf="nivelProfesor==1"> 
+            <ul id="menuExportar" class="dropdown-content" *ngIf="nivelProfesor==1"> 
                 <li>
-                    <a href="#exportarArticulos" class="modal-trigger">Articulos</a>
+                    <a (click)="exportarArticulos()">Articulos</a>
                 </li> 
             </ul>
 
-
+            <!-- Menu izquierda -->
             <!-- Si el nivelProfesor es vice rector -->
             <ul class="left hide-on-med-and-down" *ngIf="nivelProfesor !== undefined && nivelProfesor === 1 ">
                 <li>
@@ -60,6 +60,12 @@
                 </li>
                 <li>
                     <a data-target="menuImportar" class="left dropdown-trigger">Importar
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
+
+                <li>
+                    <a data-target="menuImprimir" class="left dropdown-trigger">Imprimir
                         <i class="material-icons right">arrow_drop_down</i>
                     </a>
                 </li>
@@ -100,7 +106,7 @@
             </ul>
 
 
-            <!-- Opciones lado izquierdo -->
+            <!-- Opciones lado izquierdo Vice-->
             <ul id="menuImportar" class="dropdown-content" >
                 <li (click)="migrarProfesor()"><a >Profesores</a></li>
                 <li><a>Articulos</a></li>
@@ -119,7 +125,6 @@
                 <li (click)="listarCarreras()"><a>Carreras</a></li>
                 <li (click)="listarInstitutos()"><a>Institutos</a></li>
                 <li (click)="listarArticulos()"><a>Articulos</a></li>
-                <li (click)="redirArticulosImprimir()"><a>Articulos Imprimir</a></li>
             </ul>
 
             <ul id="menu_modificar" class="dropdown-content">
@@ -135,6 +140,10 @@
                 <li><a>Comisiones</a></li>
                 <li><a>Eventos</a></li>
                 <li><a>Tesistas</a></li>
+            </ul>
+
+            <ul id="menuImprimir" class="dropdown-content">
+                <li (click)="redirArticulosImprimir()"><a>Articulos</a></li>
             </ul>
         </div>
     </nav>
