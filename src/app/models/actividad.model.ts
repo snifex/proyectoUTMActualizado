@@ -2,8 +2,8 @@ export class Actividad{
     idActividad : number;
     idProfesor : number;
     actividad : string;
-    inicio : Date;
-    fin : Date;
+    inicio : string;
+    fin : string;
     descripcion : string;
     validado: number;
     comprobante : string;
@@ -12,8 +12,8 @@ export class Actividad{
         this.idActividad = 0;
         this.idProfesor = 0;
         this.actividad = "";
-        this.inicio = new Date();
-        this.fin = new Date();
+        this.inicio = "";
+        this.fin = "";
         this.descripcion = "";
         this.validado = 0;
         this.comprobante = "";

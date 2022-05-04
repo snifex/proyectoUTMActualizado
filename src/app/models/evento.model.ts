@@ -6,8 +6,8 @@ export class Evento{
     afectaLinea: string;
     tipoParticipacion: string;
     titulo: string;
-    inicio: Date;
-    fin: Date;
+    inicio: string;
+    fin: string;
     comprobante: string;
 
     constructor() {
@@ -18,8 +18,8 @@ export class Evento{
         this.afectaLinea = "";
         this.tipoParticipacion = "";
         this.titulo = "";
-        this.inicio = new Date();
-        this.fin = new Date();
+        this.inicio = "";
+        this.fin = "";
         this.comprobante = "";
     }
 }

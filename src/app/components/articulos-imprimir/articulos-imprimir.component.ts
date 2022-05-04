@@ -13,7 +13,6 @@ declare var $: any;
   styleUrls: ['./articulos-imprimir.component.css']
 })
 export class ArticulosImprimirComponent implements OnInit {
-
     articulos: any = [];
 	autores: any = [];
     profesores: any;
@@ -31,10 +30,32 @@ export class ArticulosImprimirComponent implements OnInit {
 	nombreInstitutoActual: string = '';
 	institutos: any;
 	public style: object = {};
+	fechaInicio: string;
+	fechaFin: string;
+	arregloFiltros: boolean[] = [];
+	filtros: any [] = ['Fechas', 'Institutos', 'Profesores'];
 
     constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private institutoService: InstitutoService) { 
         this.idProfesor = Number(localStorage.getItem('idProfesor'));
         this.numeroHojas = Array.from(Array(this.contadorHojas).keys());
+
+		//hacemos el arreglo de filtros para seleccionar que necesitamos en los filtos
+		for (let index = 0; index < this.arregloFiltros.length; index++) {
+			this.arregloFiltros[index] = false;
+		}
+
+		$(document).ready(function(){
+			$('.datepicker').datepicker({
+				format:'yyyy-mm-dd'
+			});
+			$('.collapsible').collapsible();
+		});
+
+		//Ponemos la fecha de hoy
+		let hoy = new Date();
+		console.log(hoy);
+		this.fechaInicio = (hoy.getFullYear() - 3) + '-01-01';
+		this.fechaFin = hoy.getFullYear() + '-' + (((hoy.getMonth() + 1) < 10) ? '0' + (hoy.getMonth() + 1) : (hoy.getMonth() + 1)) + '-' + (((hoy.getDate()) < 10) ? '0' + (hoy.getDate()) : (hoy.getDate()));
     }
 
     ngOnInit(): void {
@@ -127,6 +148,7 @@ export class ArticulosImprimirComponent implements OnInit {
 		//Mandamos a llamar a cambiar los articulos del profesor
 		this.articuloService.listByProfesor(this.profesorActual).subscribe((resArticulos : any) => {
 			this.articulos = resArticulos;
+			console.log(this.articulos)
 			//Popeamos lo que tengamos en articulosfinal para pueda trabajar con lo del ultimo profesor cambiado
 			this.articulosFinal.pop();
 			this.articulosFinal.push(resArticulos);
@@ -220,6 +242,19 @@ export class ArticulosImprimirComponent implements OnInit {
 				this.cambioProfesor(op);
 			},err => console.error(err));
 		}
-		
+	}
+	
+	seleccionarCheckboxFiltros(check:any, index:any){
+		//Verificamos si se marco algun filtro
+		var filtro = check.currentTarget.checked;
+
+		if(filtro){
+			//Si se marco algun filtro
+			this.arregloFiltros[index] = true;
+		}else{
+			this.arregloFiltros[index] = false;
+		}
+
+		console.log(this.arregloFiltros[index]);
 	}
 }

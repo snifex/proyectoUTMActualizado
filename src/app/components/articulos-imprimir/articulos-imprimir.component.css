@@ -110,7 +110,7 @@ mwlResizable {
 }
 
 /*temporal*/
-.impresionPDF .impresionPDFTodos{
+.impresionPDF, .impresionPDFTodos{
     display: none;
 }
 
@@ -147,5 +147,9 @@ mwlResizable {
         page-break-inside: avoid;
     }
 
+    /*temporal*/
+    .impresionPDF, .impresionPDFTodos{
+        display:contents;
+    }
 
 }

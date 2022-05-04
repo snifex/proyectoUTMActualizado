@@ -57,5 +57,7 @@ class ArticuloYProfesorController
 		
 		res.json(respuesta);
     }
+
+	
 }
 export const articuloyprofesorController = new ArticuloYProfesorController();

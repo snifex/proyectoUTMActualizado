@@ -1,51 +1,95 @@
 <div class="container row">
     <div class="seccionMenu col s12 l4">
-        <div class="row">
-            <div class="col s12">
-                <label>Selecciona un Instituto</label>
-                <select class="browser-default" (change)="cambioInstituto($event.target)">
-                    <option [value]="99">Todos los institutos</option>
-                    <ng-container *ngFor="let instituto of institutos">
-                        <option [value]="instituto.idInstituto" *ngIf="instituto.idInstituto!=0">
-                            {{instituto.nombreInstituto}}</option>
-                    </ng-container>
-                </select>
-            </div>
+        <ul class="collapsible">
+            <li>
+                <div class="collapsible-header">
+                    <i class="material-icons">filter_list</i>Filtros
+                </div>
 
-            <div class="col s12">
-                <label>Selecciona a un profesor del instituto seleccionado</label>
-                <select class="browser-default" (change)="cambioProfesor($event.target)">
-                    <ng-container *ngFor="let profesor of profesores">
-                        <option [value]="profesor.idProfesor"> {{profesor.nombresP + " " + profesor.apellidoP + " " +
-                            profesor.apellidoM}}</option>
-                    </ng-container>
-                </select>
-            </div>
+                <div class="collapsible-body">
+                    <div class="row">
+                        <!-- TODO:Terminar el fecha filtro -->
+                        <label>Selecciona un rango de fechas</label>
+                        <div class="col s12">
+                            <div class="col s6">
+                                <input [value]="fechaInicio" type="text" class="datepicker" id="fechaInicio">
+                            </div>
+                            <div class="col s6">
+                                <input [value]="fechaFin" type="text" class="datepicker" id="fechaFin">
+                            </div>
+                        </div>
+                
+                        <div class="col s12">
+                            <label>Selecciona un Instituto</label>
+                            <select class="browser-default" (change)="cambioInstituto($event.target)">
+                                <option [value]="99">Todos los institutos</option>
+                                <ng-container *ngFor="let instituto of institutos">
+                                    <option [value]="instituto.idInstituto" *ngIf="instituto.idInstituto!=0">
+                                        {{instituto.nombreInstituto}}</option>
+                                </ng-container>
+                            </select>
+                            <br>
+                        </div>
+                
+                        <div class="col s12">
+                            <label>Selecciona a un profesor del instituto seleccionado</label>
+                            <select class="browser-default" (change)="cambioProfesor($event.target)">
+                                <ng-container *ngFor="let profesor of profesores">
+                                    <option [value]="profesor.idProfesor"> {{profesor.nombresP + " " + profesor.apellidoP + " " +
+                                        profesor.apellidoM}}</option>
+                                </ng-container>
+                            </select>
+                            <br>
+                        </div>
+                        
 
-            <ul class="collection with-header">
-                <li class="collection-header center">
-                    <h5>Articulos disponibles</h5>
-                </li>
-                <li *ngFor="let articuloMenu of articulos; let i=index" class="boton collection-item"
-                    data-target='articulosCanvas'>
+                        <form>
+                            <h6 class="center">Filtros</h6>
+                            <div class="col s4" *ngFor="let textoFiltro of filtros; let i=index">
+                                <p>
+                                    <label>
+                                        <input type="checkbox" (click)="seleccionarCheckboxFiltros($event,i)" />
+                                        <span>{{textoFiltro}}</span>
+                                    </label>
+                                </p>
+                            </div>
+                        </form>
+                        <div class="center">
+                            <!-- TODO:Terminar el boton de aplicar filtros -->
+                            <button class="btn waves-effect waves-light light-blue darken-4" type="submit" name="action">Aplicar Filtros
+                                <i class="material-icons right">filter_alt</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        
+        <!-- menu articulos -->
+        <ul class="collection with-header">
+            <li class="collection-header center">
+                <h5>Articulos disponibles</h5>
+            </li>
+            <li *ngFor="let articuloMenu of articulos; let i=index" class="boton collection-item"
+                data-target='articulosCanvas'>
+                <p>
+                    <label>
+                        <input type="checkbox" (click)="seleccionarCheckbox($event,articuloMenu,i)" />
+                        <span>{{articuloMenu.titulo}}</span>
+                    </label>
+                </p>
+                <div class="agregarCanvas center" *ngIf="arregloNumeros[i] === true">
                     <p>
                         <label>
-                            <input type="checkbox" (click)="seleccionarCheckbox($event,articuloMenu,i)" />
-                            <span>{{articuloMenu.titulo}}</span>
+                            <input type="checkbox" (click)="agregarCanvas($event,articuloMenu,i)" />
+                            <span>Agregar canvas</span>
                         </label>
                     </p>
-                    <div class="agregarCanvas center" *ngIf="arregloNumeros[i] === true">
-                        <p>
-                            <label>
-                                <input type="checkbox" (click)="agregarCanvas($event,articuloMenu,i)" />
-                                <span>Agregar canvas</span>
-                            </label>
-                        </p>
-                    </div>
-                </li>
-            </ul>
-        </div>
+                </div>
+            </li>
+        </ul>
     </div>
+    
 
 
     <div class="seccionArticulos col s12 l8">
