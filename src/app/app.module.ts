@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfesorComponent } from './components/profesor/profesor.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { GeneralesComponent } from './components/generales/generales.component';
 import { HomeComponent } from './components/home/home.component';
@@ -20,6 +20,12 @@ import { InstitutosViceComponent } from './components/institutos-vice/institutos
 import { ArticulosImprimirComponent } from './components/articulos-imprimir/articulos-imprimir.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ResizableModule } from 'angular-resizable-element';
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+
+export function HttpLoaderFactory(http: HttpClient) {
+	return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
+}	
 @NgModule({ /* para hacer la relacion entre formulario con el modelo */
 	declarations: [
 		AppComponent,
@@ -43,7 +49,14 @@ import { ResizableModule } from 'angular-resizable-element';
 		AppRoutingModule,
 		FormsModule,
 		NgxPaginationModule,
-		ResizableModule
+		ResizableModule,
+		TranslateModule.forRoot({
+			loader: {
+			provide: TranslateLoader,
+			useFactory: HttpLoaderFactory,
+			deps: [HttpClient],
+			},
+		}),
 	],
 	providers: [CambioInfoService],
 	bootstrap: [AppComponent]
