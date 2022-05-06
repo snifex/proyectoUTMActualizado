@@ -47,17 +47,27 @@ class ArticuloYProfesorController
     }
 	public async listByInstitutoOfFirstAutor(req: Request, res: Response): Promise<void> {
         const {idInstituto} = req.params;
-        let respuesta = await pool.query("SELECT P.idInstituto, A.* FROM profesores P JOIN articuloyprofesor AyP ON P.idProfesor = AyP.idProfesor JOIN articulo A ON A.idArticulo = AyP.idArticulo WHERE AyP.pos = 1 AND ? = P.idInstituto",[idInstituto]);
-        
-		//Obtenemos los autores de los articulos
-		for (let index = 0; index < respuesta.length; index++) {
-			const respuesta2 = await pool.query("SELECT * FROM Profesores as P INNER JOIN ArticuloYProfesor AP ON AP.idProfesor=P.idProfesor WHERE AP.idArticulo = ?",respuesta[index].idArticulo);
-			respuesta[index].profesores = respuesta2;
-		}
-		
+        let respuesta = await pool.query("SELECT A.* FROM profesores P JOIN articuloyprofesor AyP ON P.idProfesor = AyP.idProfesor JOIN articulo A ON A.idArticulo = AyP.idArticulo WHERE AyP.pos = 1 AND ? = P.idInstituto",[idInstituto]);
 		res.json(respuesta);
     }
 
+	public async listByInstitutoAndDate(req: Request, res: Response): Promise<void>{
+		const {idInstituto,fechaInicio,fechaFin} = req.params;
+		let respuesta = await pool.query("SELECT A.* FROM profesores P JOIN articuloyprofesor AyP ON P.idProfesor = AyP.idProfesor JOIN articulo A ON A.idArticulo = AyP.idArticulo WHERE AyP.pos = 1 AND P.idInstituto = ? AND A.fechaEdicion >= ? AND A.fechaEdicion <= ?",[idInstituto,fechaInicio,fechaFin])
+		res.json(respuesta);
+	}
+
+	public async listByFirstAutorAndDate(req: Request, res: Response): Promise<void>{
+		const{idProfesor,fechaInicio,fechaFin} = req.params;
+		let respuesta = await pool.query("SELECT A.* FROM profesores P JOIN articuloyprofesor AyP ON P.idProfesor = AyP.idProfesor JOIN articulo A ON A.idArticulo = AyP.idArticulo WHERE AyP.pos = 1 AND P.idProfesor = ? AND A.fechaEdicion >= ? AND A.fechaEdicion <= ?",[idProfesor,fechaInicio,fechaFin]);
+		res.json(respuesta);
+	}
+	
+	public async listByAllFilters(req: Request, res: Response): Promise<void>{
+		const{idInstituto, idProfesor, fechaInicio, fechaFin} = req.params;
+		let respuesta = await pool.query("SELECT A.* FROM profesores P JOIN articuloyprofesor AyP ON P.idProfesor = AyP.idProfesor JOIN articulo A ON A.idArticulo = AyP.idArticulo WHERE AyP.pos = 1 AND P.idInstituto = ? AND P.idProfesor = ? AND A.fechaEdicion >= ? AND A.fechaEdicion <= ?",[idInstituto,idProfesor,fechaInicio,fechaFin])
+		res.json(respuesta);
+	}
 	
 }
 export const articuloyprofesorController = new ArticuloYProfesorController();

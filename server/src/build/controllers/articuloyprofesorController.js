@@ -64,12 +64,28 @@ class ArticuloYProfesorController {
     listByInstitutoOfFirstAutor(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { idInstituto } = req.params;
-            let respuesta = yield database_1.default.query("SELECT P.idInstituto, A.* FROM profesores P JOIN articuloyprofesor AyP ON P.idProfesor = AyP.idProfesor JOIN articulo A ON A.idArticulo = AyP.idArticulo WHERE AyP.pos = 1 AND ? = P.idInstituto", [idInstituto]);
-            //Obtenemos los autores de los articulos
-            for (let index = 0; index < respuesta.length; index++) {
-                const respuesta2 = yield database_1.default.query("SELECT * FROM Profesores as P INNER JOIN ArticuloYProfesor AP ON AP.idProfesor=P.idProfesor WHERE AP.idArticulo = ?", respuesta[index].idArticulo);
-                respuesta[index].profesores = respuesta2;
-            }
+            let respuesta = yield database_1.default.query("SELECT A.* FROM profesores P JOIN articuloyprofesor AyP ON P.idProfesor = AyP.idProfesor JOIN articulo A ON A.idArticulo = AyP.idArticulo WHERE AyP.pos = 1 AND ? = P.idInstituto", [idInstituto]);
+            res.json(respuesta);
+        });
+    }
+    listByInstitutoAndDate(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { idInstituto, fechaInicio, fechaFin } = req.params;
+            let respuesta = yield database_1.default.query("SELECT A.* FROM profesores P JOIN articuloyprofesor AyP ON P.idProfesor = AyP.idProfesor JOIN articulo A ON A.idArticulo = AyP.idArticulo WHERE AyP.pos = 1 AND P.idInstituto = ? AND A.fechaEdicion >= ? AND A.fechaEdicion <= ?", [idInstituto, fechaInicio, fechaFin]);
+            res.json(respuesta);
+        });
+    }
+    listByFirstAutorAndDate(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { idProfesor, fechaInicio, fechaFin } = req.params;
+            let respuesta = yield database_1.default.query("SELECT A.* FROM profesores P JOIN articuloyprofesor AyP ON P.idProfesor = AyP.idProfesor JOIN articulo A ON A.idArticulo = AyP.idArticulo WHERE AyP.pos = 1 AND P.idProfesor = ? AND A.fechaEdicion >= ? AND A.fechaEdicion <= ?", [idProfesor, fechaInicio, fechaFin]);
+            res.json(respuesta);
+        });
+    }
+    listByAllFilters(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { idInstituto, idProfesor, fechaInicio, fechaFin } = req.params;
+            let respuesta = yield database_1.default.query("SELECT A.* FROM profesores P JOIN articuloyprofesor AyP ON P.idProfesor = AyP.idProfesor JOIN articulo A ON A.idArticulo = AyP.idArticulo WHERE AyP.pos = 1 AND P.idInstituto = ? AND P.idProfesor = ? AND A.fechaEdicion >= ? AND A.fechaEdicion <= ?", [idInstituto, idProfesor, fechaInicio, fechaFin]);
             res.json(respuesta);
         });
     }

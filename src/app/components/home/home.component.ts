@@ -12,6 +12,7 @@ import { TipoProfesorService } from 'src/app/services/tipoprofesor.service';
 import { Packer, Document, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, VerticalAlign, WidthType, HeightRule, ShadingType } from 'docx';
 import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
+import { AypService } from 'src/app/services/ayp.service';
 
 declare var $: any;
 
@@ -69,7 +70,7 @@ export class HomeComponent implements OnInit {
     carreraActualModal: any;
     carrerasModal: any;
 
-    constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService, private institutoService: InstitutoService, private cambioInfoService: CambioInfoService) {
+    constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService, private institutoService: InstitutoService, private cambioInfoService: CambioInfoService, private aypService : AypService) {
         this.articulito = new Articulo();
         this.profesor = new Profesor();
         this.idProfesor = Number(localStorage.getItem('idProfesor'));
@@ -326,7 +327,7 @@ export class HomeComponent implements OnInit {
         let id = this.institutos[this.indexInstitutoArticulosExportar].idInstituto;
         let nombre = this.institutos[this.indexInstitutoArticulosExportar].nombreInstituto;
 
-        this.articuloService.listByInstitutoOfFirstAutor(id).subscribe((articulosRes: any) => {
+        this.aypService.listByInstitutoOfFirstAutor(id).subscribe((articulosRes: any) => {
             //Crear documento
             const documento = new Document({
                 styles: {

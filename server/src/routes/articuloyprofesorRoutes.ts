@@ -15,6 +15,9 @@ class ArticuloYProfesorRoutes
 		this.router.put('/actualizar/:idAyP',articuloyprofesorController.actualizar);
 		this.router.delete('/eliminar/:idAyP',articuloyprofesorController.eliminar);
         this.router.get('/listbyinstitutooffirstautor/:idInstituto', articuloyprofesorController.listByInstitutoOfFirstAutor)
+        this.router.get('/listbyfirstautoranddate/:idProfesor/:fechaInicio/:fechaFin',articuloyprofesorController.listByFirstAutorAndDate);
+        this.router.get('/listbyinstitutoanddate/:idInstituto/:fechaInicio/:fechaFin',articuloyprofesorController.listByInstitutoAndDate);
+        this.router.get('/listbyallfilters/:idInstituto/:idProfesor/:fechaInicio/:fechaFin',articuloyprofesorController.listByAllFilters);
     }
 }
 const articuloyprofesorRoutes= new ArticuloYProfesorRoutes();

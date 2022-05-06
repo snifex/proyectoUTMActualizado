@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticuloService } from 'src/app/services/articulo.service';
+import { AypService } from 'src/app/services/ayp.service';
 import { CambioInfoService } from 'src/app/services/cambio-info.service';
 import { CarrerasService } from 'src/app/services/carreras.service';
 import { InstitutoService } from 'src/app/services/instituto.service';
@@ -27,7 +28,7 @@ export class ArticulosViceComponent implements OnInit {
 	institutoActualProfesores:any
 	pages: number = 1;
 
-	constructor(private articuloService: ArticuloService, private profesorService:ProfesorService, private cambioInfoService: CambioInfoService, private carrerasService: CarrerasService, private institutoService: InstitutoService) { 
+	constructor(private articuloService: ArticuloService, private profesorService:ProfesorService, private cambioInfoService: CambioInfoService, private carrerasService: CarrerasService, private institutoService: InstitutoService, private aypService: AypService) { 
 		//Ponemos a escuchar el cambio
 		this.cambioInfoService.currentMsg$.subscribe((msg) =>{
 			console.log("msg",msg);
@@ -52,7 +53,7 @@ export class ArticulosViceComponent implements OnInit {
 			console.log(resInstitutos);
 			this.institutos = resInstitutos;
 			resInstitutos.forEach((element: any) => {
-				this.articuloService.listByInstitutoOfFirstAutor(element.idInstituto).subscribe((resArticulosSR: any) =>{
+				this.aypService.listByInstitutoOfFirstAutor(element.idInstituto).subscribe((resArticulosSR: any) =>{
 					this.articulos.push(resArticulosSR);
 				},err => console.error(err))
 			});

@@ -1,4 +1,5 @@
 <div class="container row">
+    <div id="custom-target" class="right"></div>
     <div class="seccionMenu col s12 l4">
         <ul class="collapsible">
             <li>
@@ -12,10 +13,10 @@
                         <label>Selecciona un rango de fechas</label>
                         <div class="col s12">
                             <div class="col s6">
-                                <input [value]="fechaInicio" type="text" class="datepicker" id="fechaInicio">
+                                <input [value]="fechaInicio" type="text" class="datepicker" id="fechaInicio" (change)="CambioFechaInicio()">
                             </div>
                             <div class="col s6">
-                                <input [value]="fechaFin" type="text" class="datepicker" id="fechaFin">
+                                <input [value]="fechaFin" type="text" class="datepicker" id="fechaFin" (change)="CambioFechaFin()">
                             </div>
                         </div>
                 
@@ -40,25 +41,6 @@
                                 </ng-container>
                             </select>
                             <br>
-                        </div>
-                        
-
-                        <form>
-                            <h6 class="center">Filtros</h6>
-                            <div class="col s4" *ngFor="let textoFiltro of filtros; let i=index">
-                                <p>
-                                    <label>
-                                        <input type="checkbox" (click)="seleccionarCheckboxFiltros($event,i)" />
-                                        <span>{{textoFiltro}}</span>
-                                    </label>
-                                </p>
-                            </div>
-                        </form>
-                        <div class="center">
-                            <!-- TODO:Terminar el boton de aplicar filtros -->
-                            <button class="btn waves-effect waves-light light-blue darken-4" type="submit" name="action">Aplicar Filtros
-                                <i class="material-icons right">filter_alt</i>
-                            </button>
                         </div>
                     </div>
                 </div>

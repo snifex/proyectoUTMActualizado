@@ -114,6 +114,9 @@ mwlResizable {
     display: none;
 }
 
+.position-absolute {
+    position: absolute;
+}
 /*Seccion de impresión*/
 @media print {
     .seccionMenu {

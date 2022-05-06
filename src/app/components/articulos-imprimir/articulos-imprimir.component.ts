@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ResizeEvent } from 'angular-resizable-element';
 import { ArticuloService } from 'src/app/services/articulo.service';
+import { AypService } from 'src/app/services/ayp.service';
 import { InstitutoService } from 'src/app/services/instituto.service';
 import { ProfesorService } from 'src/app/services/profesor.service';
+import Swal from 'sweetalert2';
 
 
 declare var $: any;
@@ -32,17 +34,10 @@ export class ArticulosImprimirComponent implements OnInit {
 	public style: object = {};
 	fechaInicio: string;
 	fechaFin: string;
-	arregloFiltros: boolean[] = [];
-	filtros: any [] = ['Fechas', 'Institutos', 'Profesores'];
 
-    constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private institutoService: InstitutoService) { 
+    constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private institutoService: InstitutoService, private aypService: AypService) { 
         this.idProfesor = Number(localStorage.getItem('idProfesor'));
         this.numeroHojas = Array.from(Array(this.contadorHojas).keys());
-
-		//hacemos el arreglo de filtros para seleccionar que necesitamos en los filtos
-		for (let index = 0; index < this.arregloFiltros.length; index++) {
-			this.arregloFiltros[index] = false;
-		}
 
 		$(document).ready(function(){
 			$('.datepicker').datepicker({
@@ -146,7 +141,7 @@ export class ArticulosImprimirComponent implements OnInit {
 		this.profesorActual = op.value;
 
 		//Mandamos a llamar a cambiar los articulos del profesor
-		this.articuloService.listByProfesor(this.profesorActual).subscribe((resArticulos : any) => {
+		this.aypService.listByFirstAutorAndDate(this.profesorActual,this.fechaInicio,this.fechaFin).subscribe((resArticulos : any) => {
 			this.articulos = resArticulos;
 			console.log(this.articulos)
 			//Popeamos lo que tengamos en articulosfinal para pueda trabajar con lo del ultimo profesor cambiado
@@ -239,22 +234,79 @@ export class ArticulosImprimirComponent implements OnInit {
 				let op = {
 					"value" : this.profesorActual
 				}
-				this.cambioProfesor(op);
+				//Mandamos a llamar a los articulos por instituto
+				this.aypService.listByInstitutoAndDate(this.institutoActual,this.fechaInicio,this.fechaFin).subscribe((resArticulos : any) =>{
+					this.articulos = resArticulos;
+					
+					//Popeamos lo que tengamos en articulosfinal para trabajar
+					this.articulosFinal.pop();
+					this.articulosFinal.push(resArticulos);
+					console.log(this.articulosFinal)
+					//Inicializamos los arreglos de boolean con el tamaño total de resArticulos
+					for (let index = 0; index < resArticulos.length; index++) {
+						this.arregloNumeros[index] = false;
+						this.arregloCanvas[index] = false
+					}
+		
+					//Vaciamos el arreglo de autores
+					this.autores = [];
+		
+					this.articulos.forEach((element:any) => {
+						this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) => {
+							this.autores.push(resAutores);
+						}, err => console.error(err));
+					})
+				})
 			},err => console.error(err));
 		}
 	}
-	
-	seleccionarCheckboxFiltros(check:any, index:any){
-		//Verificamos si se marco algun filtro
-		var filtro = check.currentTarget.checked;
+		
+	CambioFechaInicio() {
+		this.fechaInicio = $('#fechaInicio').val();
+		//Listamos por la fecha que cambio
+		this.aypService.listByAllFilters(this.institutoActual,this.profesorActual,this.fechaInicio,this.fechaFin).subscribe((resArticulos : any) =>{
+			//Popeamos lo que tengamos en articulosfinal para trabajar
+			this.articulosFinal.pop();
+			this.articulosFinal.push(resArticulos);
+			//Inicializamos los arreglos de boolean con el tamaño total de resArticulos
+			for (let index = 0; index < resArticulos.length; index++) {
+				this.arregloNumeros[index] = false;
+				this.arregloCanvas[index] = false
+			}
 
-		if(filtro){
-			//Si se marco algun filtro
-			this.arregloFiltros[index] = true;
-		}else{
-			this.arregloFiltros[index] = false;
-		}
+			//Vaciamos el arreglo de autores
+			this.autores = [];
 
-		console.log(this.arregloFiltros[index]);
+			this.articulos.forEach((element:any) => {
+				this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) => {
+					this.autores.push(resAutores);
+				}, err => console.error(err));
+			})
+		})
+	}
+
+	CambioFechaFin(){
+		this.fechaFin = $('#fechaFin').val();
+		console.log(this.fechaInicio	)
+		//Listamos por la fecha que cambio
+		this.aypService.listByAllFilters(this.institutoActual,this.profesorActual,this.fechaInicio,this.fechaFin).subscribe((resArticulos : any) =>{
+			//Popeamos lo que tengamos en articulosfinal para trabajar
+			this.articulosFinal.pop();
+			this.articulosFinal.push(resArticulos);
+			//Inicializamos los arreglos de boolean con el tamaño total de resArticulos
+			for (let index = 0; index < resArticulos.length; index++) {
+				this.arregloNumeros[index] = false;
+				this.arregloCanvas[index] = false
+			}
+
+			//Vaciamos el arreglo de autores
+			this.autores = [];
+
+			this.articulos.forEach((element:any) => {
+				this.profesorService.listAutorByArticulo(element.idArticulo).subscribe((resAutores: any) => {
+					this.autores.push(resAutores);
+				}, err => console.error(err));
+			})
+		})
 	}
 }
