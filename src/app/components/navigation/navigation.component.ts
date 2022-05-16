@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { CambioInfoService } from 'src/app/services/cambio-info.service';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 
@@ -17,7 +19,8 @@ export class NavigationComponent implements OnInit {
 	uploadEvent: any;
 	arrayBuffer: any;
 	exceljsondata: any;
-	constructor(private router: Router) { }
+	ingles : boolean = false;
+	constructor(private router: Router, private cambioInfoService : CambioInfoService, private translate : TranslateService) { }
 
 	ngOnInit(): void {
 		this.idProfesor=Number(localStorage.getItem('idProfesor'));
@@ -40,6 +43,22 @@ export class NavigationComponent implements OnInit {
 
 	}
 
+	enviarMensajeIdioma(): void {
+		this.cambioInfoService.enviar();
+	}
+
+	cambioIdioma(){
+		this.ingles = (this.ingles == true) ? false : true;
+		//Mandamos a avisarle a los demas componentes
+		this.enviarMensajeIdioma();
+		if(this.ingles == true){
+			this.translate.use("en");
+		}else{
+			this.translate.use("es");
+		}
+		console.log(this.ingles);
+	}
+
 	/* MODALES*/
 	
 	agregarProfesor(): void {
@@ -51,6 +70,16 @@ export class NavigationComponent implements OnInit {
         $('#agregarProfesorJC').modal();
         $('#agregarProfesorJC').modal("open");
     }
+
+	agregarEvento(): void {
+		$('#agregarEvento').modal();
+		$('#agregarEvento').modal("open");
+	}
+
+	agregarActividad(): void {
+		$('#agregarActividad').modal();
+		$('#agregarActividad').modal("open");
+	}
 
 	agregarCarrera(): void {
         $('#agregarCarrera').modal();

@@ -6,11 +6,12 @@
       <i class="large material-icons">mode_edit</i>
     </a>
     <ul>
-      <li><a class="btn-floating black" (click)="agregarArticulo()"><i class="material-icons">article</i></a></li>
-      <li><a class="btn-floating grey" (click)="agregarProfesor()"><i class="material-icons">account_circle</i></a></li>
-      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+        <!-- //TODO: Agregar opción de agregarEvento y agregarActividad -->
+        <li><a class="btn-floating black" (click)="agregarArticulo()"><i class="material-icons">article</i></a></li>
+        <li><a class="btn-floating grey" (click)="agregarProfesor()"><i class="material-icons">account_circle</i></a></li>
+        <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+        <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+        <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
     </ul>
 </div>
 
@@ -376,6 +377,151 @@
             <div class="col s12 center">
                 <a class="modal-action modal-close waves-effect waves-red btn
     red">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Evento -->
+<div class="container">
+    <div class="modal" id="agregarEvento">
+        <div class ="modal-content">
+            <div class="col s12 m12 l8 offset-12 loginDiv">
+                <div class="row loginContainer">
+                    <div class="row" style="margin-bottom: 0px !important;">
+                        <div class="col s12">
+                            <h5 class="center">
+                                {{"Ingresa Evento" | translate}}
+                            </h5>
+                        </div>
+                    </div>
+                    <div style="border: .5px solid #78909c; padding: 10px">
+                        <div class="row">
+                            <div class="col s12">
+                                <label>{{"Tipo de Evento" | translate}}</label>
+                                <input [(ngModel)]="evento.tipoEvento" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>{{"Participacion" | translate}}</label>
+                                <input [(ngModel)]="evento.participacion" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Afecta linea</label>
+                                <input [(ngModel)]="evento.afectaLinea" type="email" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>{{"Tipo Participación" | translate}}</label>
+                                <input [(ngModel)]="evento.tipoParticipacion" type="password" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>{{"Titulo" | translate}}</label>
+                                <input [(ngModel)]="evento.titulo" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>{{"Inicio" | translate}}</label>
+                                <input [(ngModel)]="evento.inicio"type="text" class="datepicker" placeholder="Fecha" id="fechaInicio">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>{{"Fin" | translate}}</label>
+                                <input [(ngModel)]="evento.fin"type="text" class="datepicker" placeholder="Fecha" id="fechaFin">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>{{"Comprobante" | translate}}</label>
+                                <input [(ngModel)]="evento.comprobante" type="text" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12 center">
+                                <button class="btn waves-effect waves-light" type="submit" name="action" (click)="altaEvento()">{{"Dar de alta evento" | translate}}
+                                    <i class="material-icons right">send</i>
+                                </button>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Actividad -->
+<div class="container">
+    <div class="modal" id="agregarActividad">
+        <div class ="modal-content">
+            <div class="col s12 m12 l8 offset-12 loginDiv">
+                <div class="row loginContainer">
+                    <div class="row" style="margin-bottom: 0px !important;">
+                        <div class="col s12">
+                            <h5 class="center">
+                                {{"Ingresa Actividad" | translate}}
+                            </h5>
+                        </div>
+                    </div>
+                    <div style="border: .5px solid #78909c; padding: 10px">
+                        <div class="row">
+                            <div class="col s12">
+                                <label>{{"Actividad" | translate}}</label>
+                                <input [(ngModel)]="actividad.actividad" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>{{"Inicio" | translate}}</label>
+                                <input [(ngModel)]="actividad.inicio"type="text" class="datepicker" placeholder="Fecha" id="fechaInicioAct">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>{{"Fin" | translate}}</label>
+                                <input [(ngModel)]="actividad.fin"type="text" class="datepicker" placeholder="Fecha" id="fechaFinAct">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>{{"Descripción" | translate}}</label>
+                                <input [(ngModel)]="actividad.actividad" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>{{"Validado" | translate}}</label>
+                                <select>
+                                    <option [value]="0" [(ngModel)]="actividad.validado">Validado</option>
+                                    <option [value]="1" [(ngModel)]="actividad.validado">No validado</option>
+                                </select>
+                                <input [(ngModel)]="actividad.validado" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <label>{{"Comprobante" | translate}}</label>
+                                <input [(ngModel)]="actividad.comprobante" type="text" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 center">
+                                <button class="btn waves-effect waves-light" type="submit" name="action" (click)="altaActividad()">{{"Dar de alta actividad" | translate}}
+                                    <i class="material-icons right">send</i>
+                                </button>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

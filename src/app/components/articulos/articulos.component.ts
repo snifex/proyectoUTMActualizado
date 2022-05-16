@@ -1,5 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ArticuloService } from 'src/app/services/articulo.service';
 import { CambioInfoService } from 'src/app/services/cambio-info.service';
 import { ImagenesService } from 'src/app/services/imagenes.service';
@@ -27,7 +28,7 @@ export class ArticulosComponent implements OnInit {
 	contadorHojas: number = 1;
 	contador: number = 0;
 
-	constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private cambioInfoService: CambioInfoService, private imagenesService: ImagenesService) {
+	constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private cambioInfoService: CambioInfoService, private imagenesService: ImagenesService, private translate : TranslateService) {
 		let hoy = new Date();
 		console.log(hoy);
 		this.ini = (hoy.getFullYear() - 3) + '-01-01';

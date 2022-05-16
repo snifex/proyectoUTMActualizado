@@ -13,6 +13,9 @@ import { Packer, Document, Paragraph, TextRun, AlignmentType, Table, TableRow, T
 import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
 import { AypService } from 'src/app/services/ayp.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Evento } from 'src/app/models/evento.model';
+import { Actividad } from 'src/app/models/actividad.model';
 
 declare var $: any;
 
@@ -64,19 +67,24 @@ export class HomeComponent implements OnInit {
     indexInstitutoArticulosExportar: number = 0;
     carreraEliminar: any;
     carreraModificar: Carrera;
+    esp : boolean = true;
+    evento: Evento;
+    actividad : Actividad;
 
     /* Modal variables*/
     institutoActualModal: any;
     carreraActualModal: any;
     carrerasModal: any;
 
-    constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService, private institutoService: InstitutoService, private cambioInfoService: CambioInfoService, private aypService : AypService) {
+    constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private carrerasService: CarrerasService, private tipoProfesorService: TipoProfesorService, private institutoService: InstitutoService, private cambioInfoService: CambioInfoService, private aypService : AypService, private translate: TranslateService) {
         this.articulito = new Articulo();
         this.profesor = new Profesor();
         this.idProfesor = Number(localStorage.getItem('idProfesor'));
         this.institutoModel = new Instituto();
         this.carreraModel = new Carrera();
         this.carreraModificar = new Carrera();
+        this.evento = new Evento();
+        this.actividad = new Actividad();
     }
 
     ngOnInit(): void {
@@ -261,6 +269,16 @@ export class HomeComponent implements OnInit {
         }, err => console.error(err))
     }
 
+    altaEvento(): void {
+        this.evento.inicio = $('#fechaInicio').val();
+        this.evento.fin = $('#fechaFin').val();
+        console.log(this.evento);
+    }
+
+    altaActividad(): void {
+        this.actividad.inicio = $('#fechaInicioAct').val();
+        this.actividad.fin = $('#fechaFinAct').val();
+    }
     // Exportar
     arregloALista(elementos: any[]): Paragraph[] {
         let lista: Paragraph[] = [];
@@ -277,6 +295,7 @@ export class HomeComponent implements OnInit {
         })
         return lista;
     }
+    
 
     arregloAFilas(articulos: any[]): TableRow[] {
         let filas: TableRow[] = [];

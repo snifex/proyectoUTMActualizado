@@ -1,9 +1,12 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ResizeEvent } from 'angular-resizable-element';
 import { ArticuloService } from 'src/app/services/articulo.service';
 import { AypService } from 'src/app/services/ayp.service';
+import { CambioInfoService } from 'src/app/services/cambio-info.service';
 import { InstitutoService } from 'src/app/services/instituto.service';
 import { ProfesorService } from 'src/app/services/profesor.service';
+
 import Swal from 'sweetalert2';
 
 
@@ -34,8 +37,10 @@ export class ArticulosImprimirComponent implements OnInit {
 	public style: object = {};
 	fechaInicio: string;
 	fechaFin: string;
+	profesoresByInstituto: number = 0;
+	esp : boolean = true;
 
-    constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private institutoService: InstitutoService, private aypService: AypService) { 
+    constructor(private articuloService: ArticuloService, private profesorService: ProfesorService, private institutoService: InstitutoService, private aypService: AypService, private cambioInfoService: CambioInfoService, private translate : TranslateService) { 
         this.idProfesor = Number(localStorage.getItem('idProfesor'));
         this.numeroHojas = Array.from(Array(this.contadorHojas).keys());
 
@@ -46,6 +51,15 @@ export class ArticulosImprimirComponent implements OnInit {
 			$('.collapsible').collapsible();
 		});
 
+		this.cambioInfoService.currentMsg$.subscribe((msg) => {
+            if(this.esp == true){
+                this.translate.use("es");
+                this.esp = false;
+            }else{
+                this.translate.use("en");
+                this.esp = true;
+            }
+        })
 		//Ponemos la fecha de hoy
 		let hoy = new Date();
 		console.log(hoy);
@@ -61,6 +75,7 @@ export class ArticulosImprimirComponent implements OnInit {
 			this.nombreInstitutoActual = resInstitutos[1].nombreInstituto;
 			this.profesorService.listProfesoresByInstituto(this.institutoActual).subscribe((resProfesores: any) => {
 				this.profesores = resProfesores;
+				this.profesoresByInstituto = resProfesores.length;
 				this.profesorActual = resProfesores[1].idProfesor;
 				//Obtenemos los articulos de profesor actual
 				this.articuloService.listByProfesor(this.profesorActual).subscribe((resArticulos: any) => {
@@ -228,6 +243,7 @@ export class ArticulosImprimirComponent implements OnInit {
 			});
 			//Listamos los profesores por Instituto
 			this.profesorService.listProfesoresByInstituto(this.institutoActual).subscribe((resProfesores: any) => {
+				this.profesoresByInstituto = resProfesores.length;
 				this.profesores = resProfesores;
 				this.profesorActual = resProfesores[1].idProfesor;
 				//Mandamos a llamar los articulos del institutoactual
@@ -287,7 +303,6 @@ export class ArticulosImprimirComponent implements OnInit {
 
 	CambioFechaFin(){
 		this.fechaFin = $('#fechaFin').val();
-		console.log(this.fechaInicio	)
 		//Listamos por la fecha que cambio
 		this.aypService.listByAllFilters(this.institutoActual,this.profesorActual,this.fechaInicio,this.fechaFin).subscribe((resArticulos : any) =>{
 			//Popeamos lo que tengamos en articulosfinal para trabajar

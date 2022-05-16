@@ -1,16 +1,17 @@
 <div class="container row">
     <div id="custom-target" class="right"></div>
     <div class="seccionMenu col s12 l4">
+
+        <!-- Seccion Filtros -->
         <ul class="collapsible">
             <li>
                 <div class="collapsible-header">
-                    <i class="material-icons">filter_list</i>Filtros
+                    <i class="material-icons">filter_list</i>{{"Filtros" | translate}}
                 </div>
 
                 <div class="collapsible-body">
                     <div class="row">
-                        <!-- TODO:Terminar el fecha filtro -->
-                        <label>Selecciona un rango de fechas</label>
+                        <label>{{"Selecciona un rango de fechas" | translate}}</label>
                         <div class="col s12">
                             <div class="col s6">
                                 <input [value]="fechaInicio" type="text" class="datepicker" id="fechaInicio" (change)="CambioFechaInicio()">
@@ -21,9 +22,9 @@
                         </div>
                 
                         <div class="col s12">
-                            <label>Selecciona un Instituto</label>
+                            <label>{{"Selecciona un Instituto" | translate}}</label>
                             <select class="browser-default" (change)="cambioInstituto($event.target)">
-                                <option [value]="99">Todos los institutos</option>
+                                <option [value]="99">{{"Todos los institutos" | translate}}</option>
                                 <ng-container *ngFor="let instituto of institutos">
                                     <option [value]="instituto.idInstituto" *ngIf="instituto.idInstituto!=0">
                                         {{instituto.nombreInstituto}}</option>
@@ -32,8 +33,8 @@
                             <br>
                         </div>
                 
-                        <div class="col s12">
-                            <label>Selecciona a un profesor del instituto seleccionado</label>
+                        <div class="col s12" *ngIf="profesoresByInstituto != 0">
+                            <label>{{"Selecciona a un profesor del instituto seleccionado" | translate}}</label>
                             <select class="browser-default" (change)="cambioProfesor($event.target)">
                                 <ng-container *ngFor="let profesor of profesores">
                                     <option [value]="profesor.idProfesor"> {{profesor.nombresP + " " + profesor.apellidoP + " " +
@@ -50,7 +51,7 @@
         <!-- menu articulos -->
         <ul class="collection with-header">
             <li class="collection-header center">
-                <h5>Articulos disponibles</h5>
+                <h5>{{"Articulos disponibles" | translate}}</h5>
             </li>
             <li *ngFor="let articuloMenu of articulos; let i=index" class="boton collection-item"
                 data-target='articulosCanvas'>
@@ -114,7 +115,7 @@
     </div>
 </div>
 
-<!-- IMPRESIONES -->
+<!-- IMPRESIONES  //TODO:Arreglar la impresión del documento y generar el word del mismo -->
 
 <div class="impresionPDFTodos" *ngIf="institutoActual == 99">
     <ng-container *ngFor="let instituto of institutos;let i=index">
